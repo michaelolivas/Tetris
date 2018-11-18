@@ -53,8 +53,7 @@ namespace game
             bar.Children.Add(one);
             bar.Children.Add(two);
             GridOne.Children.Add(bar);
-            //aTimer = new System.Timers.Timer(5000);
-            //aTimer.Start();
+
             bar.Margin = new Thickness(0, 120, 0, 0);
             bar.TranslatePoint(new Point(40,40),bar);
 
