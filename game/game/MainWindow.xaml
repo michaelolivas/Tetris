@@ -1,0 +1,11 @@
+﻿<Window x:Class="game.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:game"
+        mc:Ignorable="d"
+        Title="Tetris" Height="631.607" Width="484">
+    <Grid HorizontalAlignment="Left" Height="605" Margin="0,0,-4,-4" VerticalAlignment="Top" Width="480" Name="GridOne" RenderTransformOrigin="0.502,0.035"/>
+</Window>
+    
