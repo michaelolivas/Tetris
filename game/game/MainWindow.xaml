@@ -1,12 +1,12 @@
-﻿<Window x:Class="window.MainWindow"
+﻿<Window x:Class="game.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:window"
+        xmlns:local="clr-namespace:game"
         mc:Ignorable="d"
-        Title="MainWindow" MaxWidth="600" MaxHeight="700" MinWidth="600" MinHeight="700">
-    <Grid MaxWidth="600" MaxHeight="500">
+        Title="MainWindow" MaxWidth="700" MaxHeight="700" MinWidth="700" MinHeight="700">
+    <Grid MaxWidth="600" MaxHeight="500" Name="GridOne">
         <Grid x:Name="GameWin" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="250" Background="#FFF45E5E" ShowGridLines="True" Margin="29,44,0,0" MaxWidth="250" MaxHeight="450">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
