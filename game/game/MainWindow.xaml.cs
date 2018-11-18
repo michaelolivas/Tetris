@@ -57,7 +57,7 @@ namespace game
             //aTimer.Start();
             bar.Margin = new Thickness(0, 120, 0, 0);
             bar.TranslatePoint(new Point(40,40),bar);
-
+            //Test leo
         }
     }
 }
