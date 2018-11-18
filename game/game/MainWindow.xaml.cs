@@ -36,6 +36,15 @@ namespace game
              one.Margin = new Thickness(0,-500,0,0);
 
              GridOne.Children.Add(one);*/
+
+            Grid bar = create_bar();
+            GridOne.Children.Add(bar);
+            bar.Margin = new Thickness(0, 120, 0, 0);
+            bar.TranslatePoint(new Point(40,40),bar);
+
+        }
+        Grid create_bar()
+        {
             Grid bar = new Grid();
 
             Rectangle one = new Rectangle();
@@ -49,15 +58,28 @@ namespace game
             two.Width = 20;
             two.Fill = Brushes.Red;
             two.Stroke = Brushes.Black;
-            two.Margin = new Thickness(0,-40,0,0);
+            two.Margin = new Thickness(0, -40, 0, 0);
+
+            Rectangle three = new Rectangle();
+            three.Height = 20;
+            three.Width = 20;
+            three.Fill = Brushes.Red;
+            three.Stroke = Brushes.Black;
+            three.Margin = new Thickness(0, -80, 0, 0);
+
+            Rectangle four = new Rectangle();
+            four.Height = 20;
+            four.Width = 20;
+            four.Fill = Brushes.Red;
+            four.Stroke = Brushes.Black;
+            four.Margin = new Thickness(0, -120, 0, 0);
+
             bar.Children.Add(one);
             bar.Children.Add(two);
-            GridOne.Children.Add(bar);
-            //aTimer = new System.Timers.Timer(5000);
-            //aTimer.Start();
-            bar.Margin = new Thickness(0, 120, 0, 0);
-            bar.TranslatePoint(new Point(40,40),bar);
+            bar.Children.Add(three);
+            bar.Children.Add(four);
 
+            return bar;
         }
     }
 }
