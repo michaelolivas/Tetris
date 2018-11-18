@@ -52,10 +52,30 @@ namespace game
             two.Margin = new Thickness(0,-40,0,0);
             bar.Children.Add(one);
             bar.Children.Add(two);
-            GridOne.Children.Add(bar);
+           // GridOne.Children.Add(bar);
 
             bar.Margin = new Thickness(0, 120, 0, 0);
             bar.TranslatePoint(new Point(40,40),bar);
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
 
         }
     }
