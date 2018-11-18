@@ -7,5 +7,6 @@
         mc:Ignorable="d"
         Title="Tetris" Height="631.607" Width="484">
     <Grid HorizontalAlignment="Left" Height="605" Margin="0,0,-4,-4" VerticalAlignment="Top" Width="480" Name="GridOne" RenderTransformOrigin="0.502,0.035"/>
+
 </Window>
     
