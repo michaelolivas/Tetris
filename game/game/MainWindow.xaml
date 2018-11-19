@@ -67,6 +67,6 @@
                 </LinearGradientBrush>
             </TextBox.Foreground>
         </TextBox>
-        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="169" Click="Button_Click_1" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="169" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
     </Grid>
 </Window>

@@ -157,7 +157,7 @@ namespace game
             return bar;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) //high score
         {
 
         }
@@ -172,7 +172,7 @@ namespace game
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Pause_Click(object sender, RoutedEventArgs e)
         {
 
         }
