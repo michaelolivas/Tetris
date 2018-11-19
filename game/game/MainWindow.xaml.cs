@@ -59,5 +59,10 @@ namespace game
             bar.TranslatePoint(new Point(40,40),bar);
             //Test leo
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

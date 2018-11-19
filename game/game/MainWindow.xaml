@@ -6,7 +6,23 @@
         xmlns:local="clr-namespace:game"
         mc:Ignorable="d"
         Title="Tetris" Height="631.607" Width="484">
-    <Grid HorizontalAlignment="Left" Height="605" Margin="0,0,-4,-4" VerticalAlignment="Top" Width="480" Name="GridOne" RenderTransformOrigin="0.502,0.035"/>
+    <Grid HorizontalAlignment="Left" Height="605" Margin="0,0,-4,-4" VerticalAlignment="Top" Width="480" Name="GridOne" RenderTransformOrigin="0.502,0.035" OpacityMask="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}">
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+        <Button Content="PLAY" HorizontalAlignment="Left" VerticalAlignment="Top" Width="152" Margin="186,273,0,0" Height="29" Click="Button_Click" FontSize="18"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+        <Button Content="HIGH SCORE" HorizontalAlignment="Left" VerticalAlignment="Top" Width="152" Margin="186,330,0,0" Height="29" Click="Button_Click" FontSize="18"/>
+        <Button Content="PLAY" HorizontalAlignment="Left" VerticalAlignment="Top" Width="152" Margin="186,273,0,0" Height="29" Click="Button_Click" FontSize="18"/>
+        <Image x:Name="LOGO" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="206,74,0,0">
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="tetris-logo.jpg" Stretch="Uniform"/>
+            </Image.OpacityMask>
+        </Image>
+
+
+    </Grid>
 
 </Window>
     
