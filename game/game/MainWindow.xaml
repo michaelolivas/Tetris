@@ -50,23 +50,22 @@
             </TextBlock.Foreground>
         </TextBlock>
         <Button x:Name="high_scores" Content="High Scores" HorizontalAlignment="Left" Height="56" Margin="29,558,0,0" VerticalAlignment="Top" Width="250" Click="Button_Click" FontFamily="Comic Sans MS" FontSize="36" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}" ClipToBounds="True" Foreground="Red"/>
-        <TextBox x:Name="Score" HorizontalAlignment="Left" Height="66" Margin="366,255,0,0" TextWrapping="Wrap" Text="SCORE" VerticalAlignment="Top" Width="178" TextChanged="TextBox_TextChanged" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}">
-            <TextBox.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="1"/>
-                    <GradientStop Color="#FFC40404"/>
-                    <GradientStop Color="#FF390101" Offset="0.543"/>
-                </LinearGradientBrush>
-            </TextBox.Foreground>
-        </TextBox>
-        <TextBox x:Name="next" HorizontalAlignment="Left" Height="70" Margin="328,108,0,0" TextWrapping="Wrap" Text="Next Block" VerticalAlignment="Top" Width="274" TextChanged="TextBox_TextChanged_1" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold">
-            <TextBox.Foreground>
+        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="169" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Next Block" VerticalAlignment="Top" Margin="328,88,0,0" Height="70" Width="274" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold">
+            <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="1"/>
-                    <GradientStop Color="#FF8F0303"/>
+                    <GradientStop Color="Red"/>
                 </LinearGradientBrush>
-            </TextBox.Foreground>
-        </TextBox>
-        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="169" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
+            </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="69" Margin="366,234,0,0" TextWrapping="Wrap" Text="SCORE" VerticalAlignment="Top" Width="170" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="48">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="1"/>
+                    <GradientStop Color="Red"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
     </Grid>
 </Window>
