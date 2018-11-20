@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:game"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\LeoPeralta\source\repos\Tetris\game\game\tetris-logo.jpg"/>
+
     </Application.Resources>
 </Application>
