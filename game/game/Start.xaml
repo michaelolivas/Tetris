@@ -14,7 +14,8 @@
             </LinearGradientBrush>
         </Grid.Background>
         <TextBlock HorizontalAlignment="Left" Height="82" Margin="64,28,0,0" TextWrapping="Wrap" Text="TETRIS" VerticalAlignment="Top" Width="270" FontSize="72" FontFamily="Courier New" FontWeight="Bold" Foreground="#FFA90000"/>
-        <Button x:Name="start" Content="START" HorizontalAlignment="Left" Height="39" Margin="155,180,0,0" VerticalAlignment="Top" Width="90" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Script" FontSize="24" Click="start_Click"/>
+        <Button x:Name="start" Content="START" HorizontalAlignment="Left" Height="40" Margin="155,180,0,0" VerticalAlignment="Top" Width="90" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Script" FontSize="24" Click="start_Click"/>
+        <Button x:Name="highScore" Content="HIGH SCORES" HorizontalAlignment="Left" Height="40" Margin="110,220,0,0" VerticalAlignment="Top" Width="180" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Print" FontSize="24" Click="highScore_Click"/>
 
     </Grid>
 </Window>

@@ -38,5 +38,12 @@ namespace game
             gameWindow.Close();
             this.Close();
         }
+
+        private void home_Click(object sender, RoutedEventArgs e)
+        {
+            Start toStart = new Start();
+            toStart.Show();
+            this.Close();
+        }
     }
 }

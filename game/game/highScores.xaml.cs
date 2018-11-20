@@ -15,26 +15,19 @@ using System.Windows.Shapes;
 namespace game
 {
     /// <summary>
-    /// Interaction logic for Start.xaml
+    /// Interaction logic for highScores.xaml
     /// </summary>
-    public partial class Start : Window
+    public partial class highScores : Window
     {
-        public Start()
+        public highScores()
         {
             InitializeComponent();
         }
 
-        private void start_Click(object sender, RoutedEventArgs e)
+        private void back_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow gameWindow = new MainWindow(); //pauseMenu is the name of the pauseMenu.xaml file
-            gameWindow.Show();
-            this.Close();
-        }
-
-        private void highScore_Click(object sender, RoutedEventArgs e)
-        {
-            highScores scoreWindow = new highScores();
-            scoreWindow.Show();
+            Start goBack = new Start();
+            goBack.Show();
             this.Close();
         }
     }
