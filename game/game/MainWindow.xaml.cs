@@ -28,6 +28,9 @@ namespace game
         public Rectangle one;
         public MainWindow()
         {
+            
+            //Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
+            //startWindow.Show();
             InitializeComponent();
 
             one = new Rectangle();
@@ -195,24 +198,17 @@ namespace game
             return bar;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) //high score
         {
 
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Pause_Click(object sender, RoutedEventArgs e)
         {
-
+            pauseMenu myMenu = new pauseMenu(); //pauseMenu is the name of the pauseMenu.xaml file
+            myMenu.Show();
+            this.Close();
         }
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
