@@ -10,6 +10,7 @@
         <TextBlock x:Name="paused" HorizontalAlignment="Left" Margin="275,-22,0,0" TextWrapping="Wrap" Text="Paused" VerticalAlignment="Top" Height="106" Width="263" FontFamily="Segoe Print" FontSize="72" Foreground="Red"/>
         <Button x:Name="ResumeButton" Content="RESUME" HorizontalAlignment="Left" Height="106" Margin="10,306,0,0" VerticalAlignment="Top" Width="345" Background="{x:Null}" Foreground="#FFEF0C0C" FontFamily="Segoe Print" FontSize="72" BorderBrush="{x:Null}" Click="ResumeButton_Click"/>
         <Button x:Name="Quit" Content="QUIT" HorizontalAlignment="Left" Height="74" Margin="623,348,0,0" VerticalAlignment="Top" Width="172" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFEF0C0C" FontFamily="Segoe Print" FontSize="36" Click="quit_Click"/>
+        <TextBlock x:Name="score" HorizontalAlignment="Left" Height="53" Margin="325,100,0,0" TextWrapping="Wrap" Text="SCORE" VerticalAlignment="Top" Width="150" FontWeight="Bold" FontFamily="Segoe Script" FontSize="36" Foreground="Red"/>
 
     </Grid>
 </Window>
