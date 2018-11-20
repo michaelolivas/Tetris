@@ -156,7 +156,6 @@ namespace game
 
             return bar;
         }
-        //jorome
         private void Button_Click(object sender, RoutedEventArgs e) //high score
         {
 
