@@ -12,9 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
+using game;
 
 namespace game
 {
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -58,6 +61,14 @@ namespace game
             bar.Margin = new Thickness(0, 120, 0, 0);
             bar.TranslatePoint(new Point(40,40),bar);
 
+
+
+            Game_Grid Prime = new Game_Grid();
+            Prime.Print_Grid();
+
+
         }
+
     }
+
 }
