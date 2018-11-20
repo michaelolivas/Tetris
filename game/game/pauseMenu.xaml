@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:game"
         mc:Ignorable="d"
-        Title="pauseMenu" Height="450" Width="800">
+        Title="pauseMenu" Height="450" Width="400">
     <Grid x:Name="pauseMenu1" Background="Black" OverridesDefaultStyle="True" IsManipulationEnabled="True">
-        <TextBlock x:Name="paused" HorizontalAlignment="Left" Margin="275,-22,0,0" TextWrapping="Wrap" Text="Paused" VerticalAlignment="Top" Height="106" Width="263" FontFamily="Segoe Print" FontSize="72" Foreground="Red"/>
-        <Button x:Name="ResumeButton" Content="RESUME" HorizontalAlignment="Left" Height="106" Margin="10,306,0,0" VerticalAlignment="Top" Width="345" Background="{x:Null}" Foreground="#FFEF0C0C" FontFamily="Segoe Print" FontSize="72" BorderBrush="{x:Null}" Click="ResumeButton_Click"/>
-        <Button x:Name="Quit" Content="QUIT" HorizontalAlignment="Left" Height="74" Margin="623,348,0,0" VerticalAlignment="Top" Width="172" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFEF0C0C" FontFamily="Segoe Print" FontSize="36" Click="quit_Click"/>
-        <TextBlock x:Name="score" HorizontalAlignment="Left" Height="53" Margin="325,100,0,0" TextWrapping="Wrap" Text="SCORE" VerticalAlignment="Top" Width="150" FontWeight="Bold" FontFamily="Segoe Script" FontSize="36" Foreground="Red"/>
+        <TextBlock x:Name="paused" HorizontalAlignment="Left" Margin="70,-25,0,0" TextWrapping="Wrap" Text="Paused" VerticalAlignment="Top" Height="106" Width="260" FontFamily="Segoe Print" FontSize="72" Foreground="Red"/>
+        <Button x:Name="ResumeButton" Content="RESUME" HorizontalAlignment="Left" Height="68" Margin="10,344,0,0" VerticalAlignment="Top" Width="167" Background="{x:Null}" Foreground="#FFEF0C0C" FontFamily="Segoe Print" FontSize="36" BorderBrush="{x:Null}" Click="ResumeButton_Click"/>
+        <Button x:Name="Quit" Content="QUIT" HorizontalAlignment="Left" Height="68" Margin="269,344,0,0" VerticalAlignment="Top" Width="116" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFEF0C0C" FontFamily="Segoe Print" FontSize="36" Click="quit_Click"/>
+        <TextBlock x:Name="score" HorizontalAlignment="Left" Height="53" Margin="130,87,0,0" TextWrapping="Wrap" Text="SCORE" VerticalAlignment="Top" Width="140" FontWeight="Bold" FontFamily="Segoe Script" FontSize="36" Foreground="Red"/>
 
     </Grid>
 </Window>

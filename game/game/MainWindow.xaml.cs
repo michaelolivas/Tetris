@@ -27,8 +27,8 @@ namespace game
         public MainWindow()
         {
             
-            Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
-            startWindow.Show();
+            //Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
+            //startWindow.Show();
             InitializeComponent();
             /* Grid bar = new Grid();
 
