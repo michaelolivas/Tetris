@@ -21,10 +21,14 @@ namespace game
     /// 
     public partial class MainWindow : Window
     {
+
         private static System.Timers.Timer aTimer;
 
         public MainWindow()
         {
+            
+            //Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
+            //startWindow.Show();
             InitializeComponent();
             /* Grid bar = new Grid();
 
