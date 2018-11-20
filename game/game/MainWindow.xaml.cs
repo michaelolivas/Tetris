@@ -166,7 +166,7 @@ namespace game
         {
             pauseMenu myMenu = new pauseMenu(); //pauseMenu is the name of the pauseMenu.xaml file
             myMenu.Show();
-            //this.Close();
+            this.Close();
         }
 
     }

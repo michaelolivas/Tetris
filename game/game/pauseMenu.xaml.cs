@@ -26,12 +26,17 @@ namespace game
 
         private void ResumeButton_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow gameWindow = new MainWindow(); //pauseMenu is the name of the pauseMenu.xaml file
+            gameWindow.Show();
             this.Close();
         }
 
         private void quit_Click(object sender, RoutedEventArgs e)
         {
-           this.Close();
+            //Application.Exit();
+            MainWindow gameWindow = new MainWindow(); //pauseMenu is the name of the pauseMenu.xaml file
+            gameWindow.Close();
+            this.Close();
         }
     }
 }
