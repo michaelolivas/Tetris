@@ -164,7 +164,10 @@ namespace game
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
-
+            pauseMenu myMenu = new pauseMenu(); //pauseMenu is the name of the pauseMenu.xaml file
+            myMenu.Show();
+            //this.Close();
         }
+
     }
 }

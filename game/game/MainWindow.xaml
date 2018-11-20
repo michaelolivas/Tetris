@@ -50,7 +50,7 @@
             </TextBlock.Foreground>
         </TextBlock>
         <Button x:Name="high_scores" Content="High Scores" HorizontalAlignment="Left" Height="56" Margin="29,558,0,0" VerticalAlignment="Top" Width="250" Click="Button_Click" FontFamily="Comic Sans MS" FontSize="36" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}" ClipToBounds="True" Foreground="Red"/>
-        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="169" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="169" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}" IsDefault="True"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Next Block" VerticalAlignment="Top" Margin="328,88,0,0" Height="70" Width="274" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
