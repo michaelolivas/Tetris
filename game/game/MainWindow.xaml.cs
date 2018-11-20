@@ -23,29 +23,25 @@ namespace game
     /// 
     public partial class MainWindow : Window
     {
-        private static System.Timers.Timer aTimer;
         public Grid bar;
         public TransformGroup myTransformGroup;
+        public Rectangle one;
         public MainWindow()
         {
             InitializeComponent();
-            /* Grid bar = new Grid();
 
-             Rectangle one = new Rectangle();
-             one.Height = 20;
-             one.Width = 20;
-             one.Fill = Brushes.Red;
-             one.Stroke = Brushes.Black;
-             one.Margin = new Thickness(0,-500,0,0);
+            one = new Rectangle();
+            one.Height = 20;
+            one.Width = 20;
 
-             GridOne.Children.Add(one);*/
+            //GridOne.Children.Add(one);
             
             bar = create_z();
             GridOne.Children.Add(bar);
             bar.Margin = new Thickness(-25, 75, 0, 0);
-            //bar.TranslatePoint(new Point(40,40),bar);
-            //
 
+
+            /////////////
             ScaleTransform myScaleTransform = new ScaleTransform();
             myScaleTransform.ScaleY = 1;
             myScaleTransform.ScaleX = 1;
@@ -54,8 +50,8 @@ namespace game
             myRotateTransform.Angle = 0;
 
             TranslateTransform myTranslate = new TranslateTransform();
-            myTranslate.X = 12;
-            myTranslate.X = 15;
+            myTranslate.X = 25;
+            myTranslate.Y = -25;
 
             SkewTransform mySkew = new SkewTransform();
             mySkew.AngleX = 0;
@@ -68,18 +64,21 @@ namespace game
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
             myTransformGroup.Children.Add(mySkew);
-
-            // Associate the transforms to the object 
-            //bar.RenderTransform = myTransformGroup;
             
         }
+
+        /*protected void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.FillRectangle(Brushes.DeepSkyBlue, one);
+            //Generates the shape            
+        }*/
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            // ... Test for F5 key.
             if (e.Key == Key.Space)
             {
-                Debug.WriteLine("You pressed F5");
+                Debug.WriteLine("You pressed Space");
                 bar.RenderTransform = myTransformGroup;
+                
             }
         }
         Grid create_z()
