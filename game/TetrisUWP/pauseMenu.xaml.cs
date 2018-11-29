@@ -13,24 +13,33 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TetrisUWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class pauseMenu : Page
     {
-        public MainPage()
+        public pauseMenu()
         {
             this.InitializeComponent();
         }
 
-        private void Pause_Click(object sender, RoutedEventArgs e)
+        private void home_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(pauseMenu)); //opens pause menu page
+            this.Frame.Navigate(typeof(Start)); //back to start page
         }
 
+        private void ResumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage)); //opens game page
+        }
+
+        private void quit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit(); //closes the whole app
+        }
     }
 }
