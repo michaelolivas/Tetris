@@ -1,34 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 using System.Diagnostics;
 
-namespace game
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+
+namespace TetrisUWP
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    /// 
-    public partial class MainWindow : Window
+    public sealed partial class MainPage : Page
     {
         public Grid bar;
         public TransformGroup myTransformGroup;
         public Rectangle one;
-        public MainWindow()
+        public MainPage()
         {
-            
+
             //Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
             //startWindow.Show();
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace game
             one.Width = 20;
 
             //GridOne.Children.Add(one);
-            
+
             bar = create_z();
             GridOne.Children.Add(bar);
             bar.Margin = new Thickness(-25, 75, 0, 0);
@@ -67,7 +68,7 @@ namespace game
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
             myTransformGroup.Children.Add(mySkew);
-            
+
         }
 
         /*protected void OnPaint(PaintEventArgs e)
@@ -75,15 +76,15 @@ namespace game
             e.Graphics.FillRectangle(Brushes.DeepSkyBlue, one);
             //Generates the shape            
         }*/
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        /*private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {
                 Debug.WriteLine("You pressed Space");
                 bar.RenderTransform = myTransformGroup;
-                
+
             }
-        }
+        }*/
         Grid create_z()
         {
             Grid z = new Grid();
@@ -91,28 +92,28 @@ namespace game
             Rectangle one = new Rectangle();
             one.Height = 25;
             one.Width = 25;
-            one.Fill = Brushes.LightGreen;
-            one.Stroke = Brushes.Black;
+            one.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
 
             Rectangle two = new Rectangle();
             two.Height = 25;
             two.Width = 25;
-            two.Fill = Brushes.LightGreen;
-            two.Stroke = Brushes.Black;
+            two.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             two.Margin = new Thickness(-50, 0, 0, 0);
 
             Rectangle three = new Rectangle();
             three.Height = 25;
             three.Width = 25;
-            three.Fill = Brushes.LightGreen;
-            three.Stroke = Brushes.Black;
+            three.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             three.Margin = new Thickness(0, 0, 0, -50);
 
             Rectangle four = new Rectangle();
             four.Height = 25;
             four.Width = 25;
-            four.Fill = Brushes.LightGreen;
-            four.Stroke = Brushes.Black;
+            four.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             four.Margin = new Thickness(0, 0, -50, -50);
 
             z.Children.Add(one);
@@ -129,29 +130,29 @@ namespace game
             Rectangle one = new Rectangle();
             one.Height = 25;
             one.Width = 25;
-            one.Fill = Brushes.Yellow;
-            one.Stroke = Brushes.Black;
+            one.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
 
             Rectangle two = new Rectangle();
             two.Height = 25;
             two.Width = 25;
-            two.Fill = Brushes.Yellow;
-            two.Stroke = Brushes.Black;
+            two.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             two.Margin = new Thickness(0, -50, 0, 0);
 
             Rectangle three = new Rectangle();
             three.Height = 25;
             three.Width = 25;
-            three.Fill = Brushes.Yellow;
-            three.Stroke = Brushes.Black;
+            three.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             three.Margin = new Thickness(0, -50, 50, 0);
 
             Rectangle four = new Rectangle();
             four.Height = 25;
             four.Width = 25;
-            four.Fill = Brushes.Yellow;
-            four.Stroke = Brushes.Black;
-            four.Margin = new Thickness(0, 0, 50,0);
+            four.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+            four.Margin = new Thickness(0, 0, 50, 0);
 
             square.Children.Add(one);
             square.Children.Add(two);
@@ -166,28 +167,28 @@ namespace game
             Rectangle one = new Rectangle();
             one.Height = 25;
             one.Width = 25;
-            one.Fill = Brushes.Red;
-            one.Stroke = Brushes.Black;
+            one.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+            one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
 
             Rectangle two = new Rectangle();
             two.Height = 25;
             two.Width = 25;
-            two.Fill = Brushes.Red;
-            two.Stroke = Brushes.Black;
+            two.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+            two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             two.Margin = new Thickness(0, -50, 0, 0);
 
             Rectangle three = new Rectangle();
             three.Height = 25;
             three.Width = 25;
-            three.Fill = Brushes.Red;
-            three.Stroke = Brushes.Black;
+            three.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+            three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             three.Margin = new Thickness(0, -100, 0, 0);
 
             Rectangle four = new Rectangle();
             four.Height = 25;
             four.Width = 25;
-            four.Fill = Brushes.Red;
-            four.Stroke = Brushes.Black;
+            four.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+            four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             four.Margin = new Thickness(0, -150, 0, 0);
 
             bar.Children.Add(one);
@@ -198,17 +199,14 @@ namespace game
             return bar;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) //high score
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
-            pauseMenu myMenu = new pauseMenu(); //pauseMenu is the name of the pauseMenu.xaml file
-            myMenu.Show();
-            this.Close();
-        }
 
+        }
     }
 }
