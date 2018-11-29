@@ -69,7 +69,8 @@ namespace game
             int[,] Line = new int[4, 1];
             int[,] Flat_Line = new int[1, 4];
             int[,] Square = new int[2, 2] { { 1, 1 }, { 1, 1 } };
-
+            int[,] Z = new int[2, 3] { { 0, 1, 1 }, { 1, 1, 0 } };
+            int[,] L = new int[3, 2] { { 0, 1 } ,{ 0, 1}, { 1, 1} };
             for (int i = 0; i < 4; i++)
             {
                 Flat_Line[0, i] = 1;
@@ -80,11 +81,13 @@ namespace game
                 Line[i, 0] = 1;
                 Debug.WriteLine(Line[i,0]);
             }
+            Prime.Falling_Block(L, 3, 2);
+            Prime.Falling_Block(Z, 2, 3);
+           
             Prime.Falling_Block(Square, 2, 2);
-            Prime.Falling_Block(Line, 4, 1);
-            Prime.Falling_Block(Line, 4, 1);
             Prime.Falling_Block(Flat_Line, 1, 4);
             Prime.Falling_Block(Square, 2, 2);
+
 
 
         }

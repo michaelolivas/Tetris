@@ -127,7 +127,7 @@ namespace game
                     if(i == 0) //bottom row is inserted 
                     {
                         field[i, middle] = block[1, 0];
-                        field[i, middle + 1] = block[1, 0];
+                        field[i, middle + 1] = block[1, 1];
                     }
                     if(i == 1)//the whole square is now visible on the grid
                     {
@@ -150,6 +150,98 @@ namespace game
                         falling = false;
 
                 }
+
+                if( column == 2 && row == 3)
+                {
+                    //Insures that when colliding with onother object it'll be able to be combined
+                    if (field[i, middle] == 1 && block[1, 1] == 0)
+                        block[2, 0] = 1;
+                    if (field[i, middle + 1] == 1 && block[1, 2] == 0)
+                        block[2, 1] = 1;
+                    //Falling object
+                    if (i == 0)//last row inserted 
+                    {
+                        field[i, middle] = block[2, 0];
+                        field[i, middle + 1] = block[2, 1];
+                    }
+                    if (i == 1)// the whole object inserted 
+                    {
+                        field[i - 1, middle] = block[1, 0];
+                        field[i - 1, middle + 1] = block[1, 1];
+                        field[i, middle] = block[2, 0];
+                        field[i, middle + 1] = block[2, 1];
+                    }
+                    if(i == 2)
+                    {
+                        field[i - 2, middle] = block[0, 0]; ;
+                        field[i - 2, middle + 1] = block[0, 1];
+                        field[i - 1, middle] = block[1, 0];
+                        field[i - 1, middle + 1] = block[1, 1];
+                        field[i, middle] = block[2, 0];
+                        field[i, middle + 1] = block[2, 1];
+                    }
+                    if( i > 2)
+                    {
+                        field[i - 3, middle] = 0;
+                        field[i - 3, middle + 1] = 0;
+                        field[i - 2, middle] = block[0, 0];
+                        field[i - 2, middle + 1] = block[0, 1];
+                        field[i - 1, middle] = block[1, 0];
+                        field[i - 1, middle + 1] = block[1, 1];
+                        field[i, middle] = block[2, 0];
+                        field[i, middle + 1] = block[2, 1];
+                    }
+                    if (i < 17 && ((field[i + 1, middle] == 1 && block[2, 0] == 1)
+                        || (field[i + 1, middle+1] == 1 && block[2, 1] == 1)))
+                    {
+                        falling = false;
+                    }
+                }
+                if (column == 3 && row == 2)//for laying down Z T and L 
+                {
+                    //Insures that when colliding with onother object it'll be able to be combined
+                    if (field[i, middle-1] == 1 && block[1, 0] == 0)
+                        block[1, 0] = 1;
+                    if (field[i, middle] == 1 && block[1, 1] == 0)
+                        block[1, 1] = 1;
+                    if (field[i, middle + 1] == 1 && block[1, 2] == 0)
+                        block[1, 2] = 1;
+
+                    //Falling object
+                    if (i == 0)//last row inserted 
+                    {
+                        field[i, middle - 1] = block[1, 0];
+                        field[i, middle] = block[1, 1];
+                        field[i, middle + 1] = block[1, 2];
+                    }
+                    if(i == 1)// the whole object inserted 
+                    {
+                        field[i-1, middle - 1] = block[0, 0];
+                        field[i-1, middle] = block[0, 1];
+                        field[i-1, middle + 1] = block[0, 2];
+                        field[i, middle - 1] = block[1, 0];
+                        field[i, middle] = block[1, 1];
+                        field[i, middle + 1] = block[1, 2];
+                    }
+                    if (i > 1)//keeps moving down while deleting the previous position
+                    {
+                        field[i - 2, middle - 1] = 0;
+                        field[i - 2, middle] = 0;
+                        field[i - 2, middle + 1] = 0;
+                        field[i - 1, middle - 1] = block[0, 0];
+                        field[i - 1, middle] = block[0, 1];
+                        field[i - 1, middle + 1] = block[0, 2];
+                        field[i, middle - 1] = block[1, 0];
+                        field[i, middle] = block[1, 1];
+                        field[i, middle + 1] = block[1, 2];
+                    }
+                    if(i<17 &&((field[i+1, middle -1] ==1 && block[1,0] == 1)
+                        || (field[i+1, middle]==1 && block[1,1] == 1)|| (field[i+1, middle +1] ==1&& block[1,2] ==1)))
+                    {
+                        falling = false;
+                    }
+                }
+
                 if (column == 4)//straight line only, sideways 
                 {
                     if (i == 0)//insertes the whole object
