@@ -26,14 +26,14 @@ namespace game
 
         private void start_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow gameWindow = new MainWindow(); //pauseMenu is the name of the pauseMenu.xaml file
+            MainWindow gameWindow = new MainWindow(); //gameWindow is the name of the MainWindow.xaml file
             gameWindow.Show();
             this.Close();
         }
 
         private void highScore_Click(object sender, RoutedEventArgs e)
         {
-            highScores scoreWindow = new highScores();
+            highScores scoreWindow = new highScores(); //scoreWindow is the name of the highScores.xaml
             scoreWindow.Show();
             this.Close();
         }

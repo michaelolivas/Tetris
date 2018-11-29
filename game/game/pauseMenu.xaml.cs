@@ -34,14 +34,14 @@ namespace game
         private void quit_Click(object sender, RoutedEventArgs e)
         {
             //Application.Exit();
-            MainWindow gameWindow = new MainWindow(); //pauseMenu is the name of the pauseMenu.xaml file
+            MainWindow gameWindow = new MainWindow(); //gameWindow is the name of the MainWindow.xaml file
             gameWindow.Close();
             this.Close();
         }
 
         private void home_Click(object sender, RoutedEventArgs e)
         {
-            Start toStart = new Start();
+            Start toStart = new Start(); //toStart is the name of the Start.xaml file
             toStart.Show();
             this.Close();
         }
