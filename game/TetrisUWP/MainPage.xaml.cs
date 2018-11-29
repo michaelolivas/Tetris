@@ -26,5 +26,15 @@ namespace TetrisUWP
         {
             this.InitializeComponent();
         }
+
+        private void Pause_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Scores_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
