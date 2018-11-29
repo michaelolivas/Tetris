@@ -45,9 +45,6 @@ namespace game
             {
                 Console.WriteLine($"{highscore.Rank}: {highscore.UserName} {highscore.Score}: {highscore.LinesCleared}:");
             }
-
-            record.Add(new highscore { Rank = "#6", UserName = "Amack", Score = "10", LinesCleared = "3" });
-
             Console.ReadLine();
         }
     }
