@@ -60,16 +60,42 @@ namespace game
             //aTimer.Start();
             bar.Margin = new Thickness(0, 120, 0, 0);
             bar.TranslatePoint(new Point(40,40),bar);
+            
+            
             //Test leo
+            Game_Grid Prime = new Game_Grid();
+            Prime.Print_Grid();
+            Debug.WriteLine("");
+            int[,] Line = new int[4, 1];
+            int[,] Flat_Line = new int[1, 4];
+            int[,] Square = new int[2, 2] { { 1, 1 }, { 1, 1 } };
+
+            for (int i = 0; i < 4; i++)
+            {
+                Flat_Line[0, i] = 1;
+                Debug.Write(Flat_Line[0, i]);
+            }
+            for (int i = 0; i< 4; i++)
+            {
+                Line[i, 0] = 1;
+                Debug.WriteLine(Line[i,0]);
+            }
+            Prime.Falling_Block(Square, 2, 2);
+            Prime.Falling_Block(Line, 4, 1);
+            Prime.Falling_Block(Line, 4, 1);
+            Prime.Falling_Block(Flat_Line, 1, 4);
+            Prime.Falling_Block(Square, 2, 2);
+
+
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
 
 
-            Game_Grid Prime = new Game_Grid();
-            Prime.Print_Grid();
+            
 
 
         }

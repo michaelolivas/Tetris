@@ -5,12 +5,12 @@ namespace game
 {
     public class Game_Grid
     {
-        private int[,] field;
+        private int[,] field = new int[18,10]; 
 
 
         public Game_Grid()
         {
-            int[,] field = new int[18,10];
+            //initialize the grid with 0s
             for(int i = 0; i<18; i++)
             {
                 for(int j=0; j<10; j++)
@@ -38,6 +38,7 @@ namespace game
                                 field[i,k] = field[i - 1,k]; //deletes by copying the top row
                             }
                             clear = true;
+                            //We hae to implemement the score function here!
                             i++;
                         }
                     }
@@ -54,120 +55,127 @@ namespace game
 
         public int [,] Rotate(int [,] block, int row, int column)
         {
-            int[,] temp_block = new int[column, row];
+            int[,] temp_block = new int[column, row]; //temp block to switch rows and columns
             for(int i = 0; i < row; i++)
             {
                 for(int j = 0; j < column; j++)
                 {
-                    temp_block[j,i] = block[i,j];
+                    temp_block[j,i] = block[i,j]; //copies the content from the original to the new 
                 }
             }
             return temp_block;
         }
 
+        //Prints out the grid in the console.
         public void Print_Grid()
         {
             for(int i=0; i<18; i++)
             {
                 for(int j=0; j<10; j++)
                 {
-                    Debug.WriteLine($"", field[i,j]);
+                    Debug.Write($"{field[i,j]}");
                 }
+                Debug.WriteLine("");
             }
         }
 
         public void Falling_Block(int[,] block, int row, int column)
         {
-            bool falling = true;
-            while (falling)
+            bool falling = true; 
+            int middle = 4;
+            for (int i = 0; i < 18; i++)
             {
-                int middle = 4;
-                for (int i = 0; i < 18; i++)
+                //Fisrt Insert in the middle
+                if (column == 1)//straight line only
                 {
-                    //Fisrt Insert in the middle
-                    if (column == 1)//straight line only
+                    if (i == 0) //first block ony 
                     {
-
-                        if (i == 0)
+                        field[i, middle] = block[row-1,0];
+                    }
+                    else if (i > 0 && i<4)//inseterts each block one by one.
+                    {
+                        if (i == 1)
                         {
+                            field[i - 1, middle] = block[row - 2, 0];
                             field[i, middle] = block[row - 1, 0];
-
                         }
-                        if (i > 0)
+                        if (i == 2)
                         {
-                            if (i == 1)
-                            {
-                                field[i - 1, middle] = block[row - 2, 0];
-                                field[i, middle] = block[row - 1, 0];
-                            }
-                            if (i == 2)
-                            {
-                                field[i - 2, middle] = block[row - 3, 0];
-                                field[i - 1, middle] = block[row - 2, 0];
-                                field[i, middle] = block[row - 1, 0];
-                            }
-                            if (i == 3)
-                            {
-                                field[i - 3, middle] = block[row - 4, 0];
-                                field[i - 2, middle] = block[row - 3, 0];
-                                field[i - 1, middle] = block[row - 2, 0];
-                                field[i, middle] = block[row - 1, 0];
-                            }
+                            field[i - 2, middle] = block[row - 3, 0];
+                            field[i - 1, middle] = block[row - 2, 0];
+                            field[i, middle] = block[row - 1, 0];
                         }
-                        //checks if there is anywhere else to go
-                        if (field[i + 1, middle] == 1)
+                        if (i == 3)
                         {
-                            //neeeds to add a small delay in oder to move last minute
-                            falling = false;
-                            break;
-                        }
-                        else
-                        {
-                            field[i - 4, middle] = 0;
+                            field[i - 3, middle] = block[row - 4, 0];
+                            field[i - 2, middle] = block[row - 3, 0];
+                            field[i - 1, middle] = block[row - 2, 0];
                             field[i, middle] = block[row - 1, 0];
                         }
                     }
-                    if(column == 2 && row == 2)//square only 
+                    else if(i>=4)//Dropping of block by shifting it one and deleting the top.
                     {
-                        if(i == 0)
-                        {
-                            field[i, middle] = block[1, 0];
-                            field[i, middle + 1] = block[1, 0];
-                        }
-                        if(i > 0)
-                        {
-                            field[i - 1, middle] = block[0, 0];
-                            field[i - 1, middle + 1] = block[0, 1];
-                            field[i, middle] = block[1, 0];
-                            field[i, middle + 1] = block[1, 1];
-                        }
+                        field[i - 4, middle] = 0;
+                        field[i, middle] = block[row - 1, 0];
                     }
-                    if (column == 4)//straight line only 
+                    //checks if there is anywhere else to go
+                    if (i < 17 && field[i + 1, middle] == 1)
+                        falling = false;
+                }
+                if(column == 2 && row == 2)//square only 
+                {
+                    if(i == 0) //bottom row is inserted 
                     {
-                        if (i == 0)
-                        {
-                            field[i, middle - 1] = block[0, column - 1];
-                            field[i, middle] = block[0, column - 2];
-                            field[i, middle + 1] = block[0, column - 3];
-                            field[i, middle + 2] = block[0, column - 4];
-                        }
-                        if (i > 0)
-                        {
-                            int walker = 1;
-                            for (int j = middle-1; j<= middle + 2; j++)
-                            {
-                                field[i - 1, j] = 0;
-                                field[i, j] = block[0, column - walker];
-                                walker++;
-                            }
-                        }
-                        if(field[i,middle -1]==1 && field[i, middle]==1 && field[i, middle +1]==1 && field[i, middle + 2]==1)
-                        {
-                            falling = false;
-                            break;
-                        }
+                        field[i, middle] = block[1, 0];
+                        field[i, middle + 1] = block[1, 0];
+                    }
+                    if(i == 1)//the whole square is now visible on the grid
+                    {
+                        field[i - 1, middle] = block[0, 0];
+                        field[i - 1, middle + 1] = block[0, 1];
+                        field[i, middle] = block[1, 0];
+                        field[i, middle + 1] = block[1, 1];
+                    }
+                    if( i > 1)//Shifts the bottom row down and deletes the top row
+                    {
+                        field[i - 2, middle] = 0;
+                        field[i - 2, middle + 1] = 0;
+                        field[i - 1, middle] = block[0, 0];
+                        field[i - 1, middle + 1] = block[0, 1];
+                        field[i, middle] = block[1, 0];
+                        field[i, middle + 1] = block[1, 1];
+                    }
+                    //Checks if the block can continue to fall 
+                    if (i < 17 && (field[i + 1, middle] == 1 || field[i + 1, middle + 1] == 1))
+                        falling = false;
 
+                }
+                if (column == 4)//straight line only, sideways 
+                {
+                    if (i == 0)//insertes the whole object
+                    {
+                        field[i, middle - 1] = block[0, column - 1];
+                        field[i, middle] = block[0, column - 2];
+                        field[i, middle + 1] = block[0, column - 3];
+                        field[i, middle + 2] = block[0, column - 4];
                     }
+                    if (i > 0)
+                    {
+                        //moves down the object and clear the preious position
+                        int walker = 1;
+                        for (int j = middle-1; j<= middle + 2; j++)
+                        {
+                            field[i - 1, j] = 0;
+                            field[i, j] = block[0, column - walker];
+                            walker++;
+                        }
+                    }
+                    //Checks if it can continue falling
+                    if (i < 17 && (field[i + 1, middle - 1] == 1 || field[i + 1, middle] == 1 || field[i + 1, middle + 1] == 1 || field[i + 1, middle + 2] == 1))
+                    {
+                        falling = false;
+                    }
+                }
                     /*
                        if(rotate){
                             block = Rotate(block, row, column);
@@ -176,8 +184,12 @@ namespace game
                             column = row;
                        }
                    */
-                }
+                Print_Grid();
+                Debug.WriteLine("");
+                if (!falling)
+                    break;
             }
         }
     }
 }
+
