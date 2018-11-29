@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     MaxWidth="700" MaxHeight="700" MinWidth="700" MinHeight="700" Height="700" Width="700">
 
-    <Grid MaxWidth="600" MaxHeight="700" Name="GridOne" Margin="0,10,-5,0.5" >
+    <Grid MaxWidth="600" MaxHeight="700" Name="GridOne" Margin="0,10,-5,0.5" Background="#FFFFF300" >
         <Grid x:Name="GameWin" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="250" Background="#FF042AD6" Margin="25,100,0,0" MaxWidth="250" MaxHeight="450">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
@@ -52,8 +52,7 @@
                 </LinearGradientBrush>
             </TextBlock.Foreground>
         </TextBlock>
-        <Button x:Name="high_scores" Content="High Scores" HorizontalAlignment="Left" Height="56" Margin="29,558,0,0" VerticalAlignment="Top" Width="250" Click="Button_Click" FontFamily="Comic Sans MS" FontSize="36" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Red"/>
-        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="169" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Button x:Name="Pause" Content="PAUSE" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="181" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Next Block" VerticalAlignment="Top" Margin="328,88,0,0" Height="70" Width="274" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

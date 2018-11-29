@@ -208,5 +208,11 @@ namespace TetrisUWP
         {
 
         }
+
+        private void Pause_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(pauseMenu)); //opens pause menu page
+        }
+
     }
 }
