@@ -24,7 +24,7 @@ namespace TetrisUWP
             string scores = @"C:\Users\jorom\source\repos\Tetris\game\TetrisUWP\SavedHighScore.txt";
 
             List<highscore> record = new List<highscore>();
-           // List<string> txt = File.ReadAllLines(scores).ToList(); //reading from text file
+            List<string> txt = File.ReadAllLines(scores).ToList(); //reading from text file
 
             foreach (var line in txt)
             {
