@@ -43,6 +43,8 @@ namespace TetrisUWP
             bar = create_z();
             GameWin.Children.Add(bar);
             bar.Margin = new Thickness(0, 0, 0, 0);
+            
+            
 
 
             /////////////
@@ -197,11 +199,6 @@ namespace TetrisUWP
             bar.Children.Add(four);
 
             return bar;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e)
