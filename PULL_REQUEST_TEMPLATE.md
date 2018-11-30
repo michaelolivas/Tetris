@@ -9,6 +9,6 @@ AFTER WORKING: Push to your branch and create pull request review
   1. Push to your branch
   2. Create Pull Request
   3. DO NOT MERGE
-  4. Assign a Pull request reviewer or wait until we meet in person
+  4. Assign a Pull request reviewer or wait until we meet in group
   
   
