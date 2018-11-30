@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -68,6 +69,9 @@ namespace TetrisUWP
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
             myTransformGroup.Children.Add(mySkew);
+
+
+
 
         }
 
@@ -200,11 +204,6 @@ namespace TetrisUWP
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Pause_Click(object sender, RoutedEventArgs e)
         {
 
         }

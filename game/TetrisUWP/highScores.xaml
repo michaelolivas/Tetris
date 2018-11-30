@@ -8,9 +8,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Height="450" Width="400">
-    <Grid x:Name="highScores1" Background="#FFFF00EE">
+    <Grid x:Name="highScores1" Background="#FF7C7C7C">
         <TextBlock HorizontalAlignment="Left" Height="108" Margin="0,-12,0,0" TextWrapping="Wrap" Text="HIGH" VerticalAlignment="Top" Width="203" FontFamily="Segoe Print" FontSize="72" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
         <TextBlock HorizontalAlignment="Left" Height="70" Margin="152,68,0,0" TextWrapping="Wrap" Text="SCORES" VerticalAlignment="Top" Width="203" FontSize="48" FontFamily="Segoe Print" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-        <Button x:Name="back" Content="BACK" HorizontalAlignment="Left" Height="52" Margin="309,0,0,0" VerticalAlignment="Top" Width="76" FontFamily="Segoe Print" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="back_Click"/>
+        <Button x:Name="back" Content="BACK" HorizontalAlignment="Left" Height="52" Margin="309,0,0,0" VerticalAlignment="Top" Width="76" FontFamily="Segoe Print" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="back_Click" FocusVisualSecondaryBrush="White"/>
     </Grid>
 </Page>
