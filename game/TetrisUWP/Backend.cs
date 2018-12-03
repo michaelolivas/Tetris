@@ -35,28 +35,30 @@ namespace TetrisUWP
                         count++;
                         if (count == 10) //if there is a peice of the object for that whole row, clear it
                         {
-                            for (int k = 0; j < 10; k++)
+                            for (int k = 0; k < 10; k++)
                             {
-                                if(i!= 0)
+                                for(int z = i; z>= 0; z--)
                                 {
-                                    field[i, k] = 0;
-                                    for(int z = i-1; z>=0; z--)
+                                    if(z >= 1)
                                     {
-                                        if(z >= 1)
-                                            field[z, k] = field[z - 1, k];
-                                        if (z == 0)
-                                            field[z, k] = 0;
+                                        field[z, k] = field[z - 1, k];
                                     }
-                                }
 
+                                    if (z == 0)
+                                    {
+                                        field[z, k] = 0;
+                                    }
+                                        
+                                }
+                                Print_Grid();
+                                Debug.WriteLine("");
                             }
                             //We hae to implemement the score function here!
                             i++;
                         }
                     }
                 }
-                Print_Grid();
-                Debug.WriteLine("");
+
             }
             
         }
