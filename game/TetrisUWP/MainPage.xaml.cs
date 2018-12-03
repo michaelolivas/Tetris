@@ -41,8 +41,8 @@ namespace TetrisUWP
             //GridOne.Children.Add(one);
 
             bar = create_z();
-            GridOne.Children.Add(bar);
-            bar.Margin = new Thickness(-25, 75, 0, 0);
+            GameWin.Children.Add(bar);
+            bar.Margin = new Thickness(0, 0, 0, 0);
 
 
             /////////////
