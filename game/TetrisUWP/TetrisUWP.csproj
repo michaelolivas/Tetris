@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Backend.cs" />
     <Compile Include="highScores.xaml.cs">
       <DependentUpon>highScores.xaml</DependentUpon>
     </Compile>
