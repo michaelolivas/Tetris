@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -12,8 +13,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using System.Diagnostics;
+using Newtonsoft.Json;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+
 
 namespace TetrisUWP
 {
@@ -26,6 +29,7 @@ namespace TetrisUWP
         {
             this.InitializeComponent();
         }
+
 
         private void start_Click(object sender, RoutedEventArgs e)
         {

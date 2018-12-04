@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -74,11 +75,12 @@ namespace TetrisUWP
 
 
             /////
+            /*
             Game_Grid Field = new Game_Grid();
             Field.Print_Grid();
 
             int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
-            Field.Falling_Block(Line, 4, 1);
+            Field.Falling_Block(Line, 4, 1);*/
         }
 
         /*protected void OnPaint(PaintEventArgs e)
