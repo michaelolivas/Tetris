@@ -48,33 +48,32 @@ namespace TetrisUWP
             score_block[2] = Score2;
             score_block[3] = Score3;
             score_block[4] = Score4;
-            for(int i = 0; i < NUM_OF_USERS; i++)
+            for (int i = 0; i < NUM_OF_USERS; i++)
             {
-                users[i].Add("", "");
+                users[i].Add("Mike", "2000");
+                //remove_score(0);
+                //add_score(0, "Rigo", "100");
                 name_block[i].Text = users[i].Keys.ElementAt(0);
                 score_block[i].Text = users[i].Values.ElementAt(0);
             }
-            write_highscores();
-        }
-        private Dictionary<string,string>[] write_highscores()
-        {
-            string json = JsonConvert.SerializeObject(users);
-            string path = @"C:\Users\rigom\source\repos\Tetriss\game\TetrisUWP\";
-            //await saveToTxt(path, json);
+            
             save_scores();
             read_scores();
-            return users;
-
+        }
+        private void add_score(int index,string name, string score)
+        {
+            users[index].Add(name, score);
+        }
+        private void remove_score(int index)
+        {
+            users[index].Remove(users[index].Keys.ElementAt(0));
         }
         private async void save_scores()
         {
             string json = JsonConvert.SerializeObject(users);
             scoresFile = await storageFolder.CreateFileAsync("user_scores.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-
             //Write data to the file
             await Windows.Storage.FileIO.WriteTextAsync(scoresFile, json);
-
-
         }
         private async void read_scores()
         {
