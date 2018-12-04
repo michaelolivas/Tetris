@@ -25,19 +25,11 @@ namespace TetrisUWP
     /// </summary>
     public sealed partial class Start : Page
     {
-        public Dictionary<string, string> highscore_data = new Dictionary<string,string>();
         public Start()
         {
             this.InitializeComponent();
-            get_highscores();
         }
-        private void get_highscores()
-        {
-            highscore_data.Add("Hello","You");
-            string json = JsonConvert.SerializeObject(highscore_data);
-            Debug.Write(json);
 
-        }
 
         private void start_Click(object sender, RoutedEventArgs e)
         {

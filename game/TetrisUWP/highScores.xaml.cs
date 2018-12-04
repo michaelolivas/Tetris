@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Diagnostics;
 using Newtonsoft.Json;
 
 
@@ -24,9 +25,37 @@ namespace TetrisUWP
     /// </summary>
     public sealed partial class highScores : Page
     {
+        public Dictionary<string, string>[] users = { new Dictionary<string, string>(), new Dictionary<string, string>(), new Dictionary<string, string>(), new Dictionary<string, string>(), new Dictionary<string, string>() };
+        public const int NUM_OF_USERS = 5;
+
+        public TextBlock[] name_block = new TextBlock[NUM_OF_USERS];
+        public TextBlock[] score_block = new TextBlock[NUM_OF_USERS];
+
         public highScores()
         {
             this.InitializeComponent();
+            name_block[0] = User0;
+            name_block[1] = User1;
+            name_block[2] = User2;
+            name_block[3] = User3;
+            name_block[4] = User4;
+            score_block[0] = Score0;
+            score_block[1] = Score1;
+            score_block[2] = Score2;
+            score_block[3] = Score3;
+            score_block[4] = Score4;
+            for(int i = 0; i < NUM_OF_USERS; i++)
+            {
+                users[i].Add("", "");
+                name_block[i].Text = users[i].Keys.ElementAt(0);
+                score_block[i].Text = users[i].Values.ElementAt(0);
+            }
+        }
+        private Dictionary<string,string>[] get_highscores()
+        {
+            string json = JsonConvert.SerializeObject(users);
+            return users;
+
         }
 
         private void back_Click(object sender, RoutedEventArgs e)

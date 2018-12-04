@@ -73,11 +73,12 @@ namespace TetrisUWP
 
 
             /////
+            /*
             Game_Grid Field = new Game_Grid();
             Field.Print_Grid();
 
             int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
-            Field.Falling_Block(Line, 4, 1);
+            Field.Falling_Block(Line, 4, 1);*/
         }
 
         /*protected void OnPaint(PaintEventArgs e)
