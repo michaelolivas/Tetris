@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Height="450" Width="400">
+    Height="700" Width="700">
 
     <Grid x:Name="startmenu">
         <Grid.Background>
@@ -16,9 +16,10 @@
                 <GradientStop Color="#FF8C0000" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBlock HorizontalAlignment="Left" Height="82" Margin="64,28,0,0" TextWrapping="Wrap" Text="TETRIS" VerticalAlignment="Top" Width="270" FontSize="72" FontFamily="Courier New" FontWeight="Bold" Foreground="#FFA90000"/>
         <Button x:Name="start" Content="START" HorizontalAlignment="Left" Height="40" Margin="155,180,0,0" VerticalAlignment="Top" Width="110" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Script" FontSize="24" Click="start_Click"/>
         <Button x:Name="highScore" Content="HIGH SCORES" HorizontalAlignment="Center" Height="50" Margin="0,220,0,0" VerticalAlignment="Top" Width="200" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Print" FontSize="24" Click="highScore_Click"/>
+        <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
+        <Image x:Name="Tetris_Name" HorizontalAlignment="Left" Height="187" Margin="107,0,0,0" VerticalAlignment="Top" Width="211" Source="/Assets/LargeTile.png"></Image>
 
     </Grid>
 </Page>
