@@ -26,6 +26,7 @@ namespace TetrisUWP
     public sealed partial class MainPage : Page
     {
         public Grid bar;
+        public Grid block;
         public TransformGroup myTransformGroup;
         public Rectangle one;
         public MainPage()
@@ -40,11 +41,14 @@ namespace TetrisUWP
             one.Width = 20;
 
             //GridOne.Children.Add(one);
-
+            
             bar = create_z();
             GameWin.Children.Add(bar);
-            bar.Margin = new Thickness(0, 0, 0, 0);
+            bar.Margin = new Thickness(0, 0, -50, 0);
             
+            block = create_square();
+            GameWin.Children.Add(block);
+            block.Margin = new Thickness(0, 0, -200, 0);
             
 
 
@@ -144,27 +148,28 @@ namespace TetrisUWP
             one.Width = 25;
             one.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+            one.Margin = new Thickness(0, 0, 0, 0);
 
             Rectangle two = new Rectangle();
             two.Height = 25;
             two.Width = 25;
             two.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            two.Margin = new Thickness(0, -50, 0, 0);
+            two.Margin = new Thickness(0, 0, -50, 0);
 
             Rectangle three = new Rectangle();
             three.Height = 25;
             three.Width = 25;
             three.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            three.Margin = new Thickness(0, -50, 50, 0);
+            three.Margin = new Thickness(0, 0, -50, -50);
 
             Rectangle four = new Rectangle();
             four.Height = 25;
             four.Width = 25;
             four.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            four.Margin = new Thickness(0, 0, 50, 0);
+            four.Margin = new Thickness(0, 0, 0, -50);
 
             square.Children.Add(one);
             square.Children.Add(two);

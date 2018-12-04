@@ -16,10 +16,10 @@
                 <GradientStop Color="#FF8C0000" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Button x:Name="start" Content="START" HorizontalAlignment="Left" Height="40" Margin="155,180,0,0" VerticalAlignment="Top" Width="110" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Script" FontSize="24" Click="start_Click"/>
-        <Button x:Name="highScore" Content="HIGH SCORES" HorizontalAlignment="Center" Height="50" Margin="0,220,0,0" VerticalAlignment="Top" Width="200" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Print" FontSize="24" Click="highScore_Click"/>
+        <Button x:Name="start" Content="START" HorizontalAlignment="Center" Height="40" Margin="0,427,0,0" VerticalAlignment="Top" Width="110" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Script" FontSize="24" Click="start_Click"/>
+        <Button x:Name="highScore" Content="HIGH SCORES" HorizontalAlignment="Center" Height="50" Margin="0,472,0,0" VerticalAlignment="Top" Width="200" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Print" FontSize="24" Click="highScore_Click"/>
         <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
-        <Image x:Name="Tetris_Name" HorizontalAlignment="Left" Height="187" Margin="107,0,0,0" VerticalAlignment="Top" Width="211" Source="/Assets/LargeTile.png"></Image>
+        <Image x:Name="Tetris_Name" HorizontalAlignment="Left" Height="409" Margin="146,-37,0,0" VerticalAlignment="Top" Width="411" Source="/Assets/LargeTile.png"></Image>
 
     </Grid>
 </Page>
