@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -12,8 +13,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using System.Diagnostics;
+using Newtonsoft.Json;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+
 
 namespace TetrisUWP
 {
@@ -22,9 +25,18 @@ namespace TetrisUWP
     /// </summary>
     public sealed partial class Start : Page
     {
+        public Dictionary<string, string> highscore_data = new Dictionary<string,string>();
         public Start()
         {
             this.InitializeComponent();
+            get_highscores();
+        }
+        private void get_highscores()
+        {
+            highscore_data.Add("Hello","You");
+            string json = JsonConvert.SerializeObject(highscore_data);
+            Debug.Write(json);
+
         }
 
         private void start_Click(object sender, RoutedEventArgs e)
