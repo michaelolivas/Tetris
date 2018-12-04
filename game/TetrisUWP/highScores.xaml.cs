@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -30,6 +31,9 @@ namespace TetrisUWP
 
         public TextBlock[] name_block = new TextBlock[NUM_OF_USERS];
         public TextBlock[] score_block = new TextBlock[NUM_OF_USERS];
+        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        Windows.Storage.StorageFile scoresFile;
+
 
         public highScores()
         {
@@ -50,12 +54,46 @@ namespace TetrisUWP
                 name_block[i].Text = users[i].Keys.ElementAt(0);
                 score_block[i].Text = users[i].Values.ElementAt(0);
             }
+            write_highscores();
         }
-        private Dictionary<string,string>[] get_highscores()
+        private Dictionary<string,string>[] write_highscores()
         {
             string json = JsonConvert.SerializeObject(users);
+            string path = @"C:\Users\rigom\source\repos\Tetriss\game\TetrisUWP\";
+            //await saveToTxt(path, json);
+            save_scores();
+            read_scores();
             return users;
 
+        }
+        private async void save_scores()
+        {
+            string json = JsonConvert.SerializeObject(users);
+            scoresFile = await storageFolder.CreateFileAsync("user_scores.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+
+            //Write data to the file
+            await Windows.Storage.FileIO.WriteTextAsync(scoresFile, json);
+
+
+        }
+        private async void read_scores()
+        {
+            //read file
+            string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
+            Debug.Write(savedTickets);
+        }
+        public async Task<Dictionary<string,string>[]> saveToTxt(string path,string json)
+        {
+            string directory = @"C:\Users\rigom\source\repos\Tetriss\game\TetrisUWP\" + "Scores" + ".txt";
+            await Task.Run(() =>
+            {
+                Task.Yield();
+                using (var file = File.Create(directory))
+                {
+                    File.WriteAllText(path, json);
+                }
+            });
+            return null;
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
