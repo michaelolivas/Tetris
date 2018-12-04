@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Newtonsoft.Json;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,6 +32,16 @@ namespace TetrisUWP
         private void back_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Start)); //open the start window again
+        }
+
+        private void TextBlock_SelectionChanged()
+        {
+
+        }
+
+        private void TextBlock_SelectionChanged_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
