@@ -73,15 +73,19 @@ namespace TetrisUWP
 
             /////Leo's Test 
             Game_Grid Field = new Game_Grid();
+            
 
-
-            int[,] Line = new int[1, 4];
-            for (int i = 0; i < 1; i++)
+            int[,] Line = new int[4, 4];
+            for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
+                    if (i == 1)
+                    {
                         Line[i, j] = 1;
-
+                    }
+                    else
+                        Line[i, j] = 0;
                     Debug.Write($"{Line[i, j]}");
                 }
                 Debug.WriteLine("");
@@ -93,7 +97,7 @@ namespace TetrisUWP
             }*/
             Field.Print_Grid();
             Debug.WriteLine("");
-            Field.Falling_Block(Line, 1, 4);
+            Field.Falling_Block(Line, 4, 4);
         }
 
         /*protected void OnPaint(PaintEventArgs e)
