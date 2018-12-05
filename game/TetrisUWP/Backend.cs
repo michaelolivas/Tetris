@@ -5,7 +5,7 @@ namespace TetrisUWP
 {
     public class Game_Grid
     {
-        private int[,] field = new int[18, 10];
+        public int[,] field = new int[18, 10];
 
 
         public Game_Grid()
@@ -116,7 +116,7 @@ namespace TetrisUWP
         }
 
         //Prints out the grid in the console.
-        public void Print_Grid()
+        public int[,] Print_Grid()
         {
             for (int i = 0; i < 18; i++)
             {
@@ -126,6 +126,7 @@ namespace TetrisUWP
                 }
                 Debug.WriteLine("");
             }
+            return field;
         }
 
 

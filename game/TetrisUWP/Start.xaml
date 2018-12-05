@@ -13,7 +13,7 @@
         <Button x:Name="start" Content="START" HorizontalAlignment="Left" Height="40" Margin="300,180,0,0" VerticalAlignment="Top" Width="110" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Script" FontSize="24" Click="start_Click"/>
         <Button x:Name="highScore" Content="HIGH SCORES" HorizontalAlignment="Center" Height="50" Margin="0,220,0,0" VerticalAlignment="Top" Width="200" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Print" FontSize="24" Click="highScore_Click"/>
         <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
-        <Image x:Name="Tetris_Name" HorizontalAlignment="Left" Height="187" Margin="262,-7,0,0" VerticalAlignment="Top" Width="211" Source="/Assets/LargeTile.png"></Image>
+        <Image x:Name="Tetris_Name" HorizontalAlignment="Left" Height="200" Margin="262,-10,0,0" VerticalAlignment="Top" Width="200" Source="/Assets/LargeTile.png"></Image>
 
     </Grid>
 </Page>
