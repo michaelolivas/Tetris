@@ -27,6 +27,7 @@ namespace TetrisUWP
     {
         public Grid bar;
         public Grid block;
+        public Grid sLine;
         public TransformGroup myTransformGroup;
         public Rectangle one;
         public MainPage()
@@ -41,7 +42,7 @@ namespace TetrisUWP
             one.Width = 20;
 
             //GridOne.Children.Add(one);
-            
+            /*
             bar = create_z();
             GameWin.Children.Add(bar);
             bar.Margin = new Thickness(0, 0, -50, 0);
@@ -49,7 +50,7 @@ namespace TetrisUWP
             block = create_square();
             GameWin.Children.Add(block);
             block.Margin = new Thickness(0, 0, -200, 0);
-            
+            */
 
 
             /////////////
@@ -221,5 +222,50 @@ namespace TetrisUWP
             this.Frame.Navigate(typeof(pauseMenu)); //opens pause menu page
         }
 
+        private async void newGame_Click(object sender, RoutedEventArgs e)
+        {
+            Pause.Visibility = Visibility.Visible;
+            newGame.Visibility = Visibility.Collapsed;
+            /*
+            Game_Grid Field = new Game_Grid();
+            Field.Print_Grid();
+
+            int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
+            Field.Falling_Block(Line, 4, 1);
+            */
+            /*
+            bar = create_z();
+            GameWin.Children.Add(bar);
+            bar.Margin = new Thickness(0, 0, -50, 0);
+            
+            block = create_square();
+            GameWin.Children.Add(block);
+            block.Margin = new Thickness(0, 0, -200, 0);
+            */
+
+            bar = create_z();
+            GameWin.Children.Add(bar);
+            for (int x = 0; x >= -800; x--)
+            {/*
+                Game_Grid Field = new Game_Grid();
+                Field.Print_Grid();
+              
+                int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
+                sLine = create_bar();
+                GameWin.Children.Add(sLine);
+
+                await System.Threading.Tasks.Task.Delay(1000);
+                
+                Field.Falling_Block(Line, 4, 1);
+                */
+                
+                bar.Margin = new Thickness(0, 0, -50, x);
+                bar.Visibility = Visibility.Visible;
+                await System.Threading.Tasks.Task.Delay(1000);
+                x += -49;
+                
+            }
+        }
     }
+
 }
