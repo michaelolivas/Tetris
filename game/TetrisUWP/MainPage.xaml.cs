@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -68,12 +69,9 @@ namespace TetrisUWP
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
             myTransformGroup.Children.Add(mySkew);
-
-
-
-            /////Leo's Test 
+            
+            
             Game_Grid Field = new Game_Grid();
-
 
             int[,] Line = new int[1, 4];
             for (int i = 0; i < 1; i++)

@@ -7,10 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Height="450" Width="400">
-    <Grid x:Name="highScores1" Background="#FFFF00EE">
+    Height="700" Width="700">
+    <Grid x:Name="highScores1_Copy" Background="#FF7C7C7C" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="37*"/>
+        </Grid.ColumnDefinitions>
         <TextBlock HorizontalAlignment="Left" Height="108" Margin="0,-12,0,0" TextWrapping="Wrap" Text="HIGH" VerticalAlignment="Top" Width="203" FontFamily="Segoe Print" FontSize="72" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-        <TextBlock HorizontalAlignment="Left" Height="70" Margin="152,68,0,0" TextWrapping="Wrap" Text="SCORES" VerticalAlignment="Top" Width="203" FontSize="48" FontFamily="Segoe Print" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-        <Button x:Name="back" Content="BACK" HorizontalAlignment="Left" Height="52" Margin="309,0,0,0" VerticalAlignment="Top" Width="76" FontFamily="Segoe Print" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="back_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="70" Margin="152,68,0,0" TextWrapping="Wrap" Text="SCORES" VerticalAlignment="Top" Width="203" FontSize="48" FontFamily="Segoe Print" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
+        <Button x:Name="back1" Content="BACK" HorizontalAlignment="Left" Height="52" Margin="93.783,0,0,0" VerticalAlignment="Top" Width="76" FontFamily="Segoe Print" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="back_Click" FocusVisualSecondaryBrush="White" Grid.Column="1"/>
+        <TextBlock Name="User0" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="129,163,0,0" SelectionChanged="TextBlock_SelectionChanged_1"/>
+        <TextBlock Name="Score0" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="16,163,0,0" Grid.Column="1"/>
+        <TextBlock Name ="User1" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="129,205,0,0"/>
+        <TextBlock Name="Score1" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="11,209,0,0" Grid.Column="1"/>
+        <TextBlock Name="User2" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="129,252,0,0"/>
+        <TextBlock Name="Score2" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="11,252,0,0" Grid.Column="1"/>
+        <TextBlock Name="User3" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="129,290,0,0"/>
+        <TextBlock Name="Score3" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="11,290,0,0" Grid.Column="1"/>
+        <TextBlock Name="User4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="129,339,0,0"/>
+        <TextBlock Name="Score4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="11,339,0,0" Grid.Column="1"/>
     </Grid>
 </Page>
