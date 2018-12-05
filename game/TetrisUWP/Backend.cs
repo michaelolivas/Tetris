@@ -60,16 +60,16 @@ namespace TetrisUWP
             
         }
 
-        public int[,] Rotate_Right(int[,] block, int row, int column)
+        public int[,] Rotate_Left(int[,] block, int row, int column)
         {
             int[,] temp_block = new int[row, column]; //temp block to switch rows and columns
             int i = 0;
             int j = 0;
-            for (int y = column -1; y >= 0; y--)
+            for (int x = column -1; x >= 0; x--)
             {
-                for (int x = 0; x < row; x++)
+                for (int y = 0; y < row; y++)
                 {
-                    temp_block[i, j] = block[x, y]; //copies the content from the original to the new 
+                    temp_block[i, j] = block[y, x]; //copies the content from the original to the new 
                     j++;
                 }
                 j = 0;
@@ -87,16 +87,16 @@ namespace TetrisUWP
             return temp_block;
 
         }
-        public int[,] Rotate_Left(int[,] block, int row, int column)
+        public int[,] Rotate_Right(int[,] block, int row, int column)
         {
             int[,] temp_block = new int[row, column]; //temp block to switch rows and columns
             int i = 0;
             int j = 0;
-            for (int y = 0; y < column; y++)
+            for (int x = 0; x < column; x++)
             {
-                for (int x = 0; x < row; x++)
+                for (int y = row -1 ; y >=0; y--)
                 {
-                    temp_block[i, j] = block[x, y]; //copies the content from the original to the new 
+                    temp_block[i, j] = block[y, x]; //copies the content from the original to the new 
                     j++;
                 }
                 j = 0;
@@ -128,25 +128,17 @@ namespace TetrisUWP
             }
         }
 
+
+        /*
+
+         */
+
         public void Falling_Block(int[,] block, int row, int column)
         {
-            bool rotate = false;
             bool falling = true;
             int middle = 4;
             for (int i = 0; i < 18; i++)
             {
-                if (i == 4)
-                {
-                    rotate = true;
-                }
-                if (rotate)
-                {
-                    block = Rotate_Right(block, row, column);
-                    int temp = row;
-                    row = column;
-                    column = temp;
-                    rotate = false;
-                }
                 //Fisrt Insert in the middle
                 if (column == 1)//straight line only
                 {
@@ -330,12 +322,21 @@ namespace TetrisUWP
                         falling = false;
                     }
                 }
+                /*
+                   if(rotate){
+                        block = Rotate(block, row, column);
+                        int temp = row;
+                        row = column;
+                        column = row;
+                   }
+               */
                 Print_Grid();
                 Debug.WriteLine("");
                 if (!falling)
                     break;
             }
-            Check_Line();
         }
     }
 }
+
+

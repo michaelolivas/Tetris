@@ -73,7 +73,7 @@ namespace TetrisUWP
 
             /////Leo's Test 
             Game_Grid Field = new Game_Grid();
-            //Field.Print_Grid();
+            
 
             int[,] Line = new int[4, 4];
             for (int i = 0; i < 4; i++)
@@ -91,10 +91,13 @@ namespace TetrisUWP
                 Debug.WriteLine("");
             }
             Debug.WriteLine("");
-            for (int i = 0; i < 4; i++)
+            /*for (int i = 0; i < 4; i++)
             {
                 Line = Field.Rotate_Right(Line, 4, 4);
-            }
+            }*/
+            Field.Print_Grid();
+            Debug.WriteLine("");
+            Field.Falling_Block(Line, 4, 4);
         }
 
         /*protected void OnPaint(PaintEventArgs e)
