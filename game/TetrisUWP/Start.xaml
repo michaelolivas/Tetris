@@ -9,6 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Height="700" Width="700">
 
+
     <Grid x:Name="startmenu" Background="#FF007ACC">
         <Button x:Name="start" Content="START" HorizontalAlignment="Left" Height="40" Margin="300,180,0,0" VerticalAlignment="Top" Width="110" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Script" FontSize="24" Click="start_Click"/>
         <Button x:Name="highScore" Content="HIGH SCORES" HorizontalAlignment="Center" Height="50" Margin="0,220,0,0" VerticalAlignment="Top" Width="200" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Segoe Print" FontSize="24" Click="highScore_Click"/>
