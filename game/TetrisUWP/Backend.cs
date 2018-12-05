@@ -15,9 +15,6 @@ namespace TetrisUWP
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if (j < 9)
-                        field[i, j] = 1;
-                    if( j == 9)
                         field[i, j] = 0;
                 }
             }
@@ -63,17 +60,59 @@ namespace TetrisUWP
             
         }
 
-        public int[,] Rotate(int[,] block, int row, int column)
+        public int[,] Rotate_Right(int[,] block, int row, int column)
         {
-            int[,] temp_block = new int[column, row]; //temp block to switch rows and columns
-            for (int i = 0; i < row; i++)
+            int[,] temp_block = new int[row, column]; //temp block to switch rows and columns
+            int i = 0;
+            int j = 0;
+            for (int y = column -1; y >= 0; y--)
             {
-                for (int j = 0; j < column; j++)
+                for (int x = 0; x < row; x++)
                 {
-                    temp_block[j, i] = block[i, j]; //copies the content from the original to the new 
+                    temp_block[i, j] = block[x, y]; //copies the content from the original to the new 
+                    j++;
                 }
+                j = 0;
+                i++;
             }
+            for(i = 0; i< row; i++)
+            {
+                for(j = 0; j<column; j++)
+                {
+                    Debug.Write($"{temp_block[i, j]}");
+                }
+                Debug.WriteLine("");
+            }
+            Debug.WriteLine("");
             return temp_block;
+
+        }
+        public int[,] Rotate_Left(int[,] block, int row, int column)
+        {
+            int[,] temp_block = new int[row, column]; //temp block to switch rows and columns
+            int i = 0;
+            int j = 0;
+            for (int y = 0; y < column; y++)
+            {
+                for (int x = 0; x < row; x++)
+                {
+                    temp_block[i, j] = block[x, y]; //copies the content from the original to the new 
+                    j++;
+                }
+                j = 0;
+                i++;
+            }
+            for (i = 0; i < row; i++)
+            {
+                for (j = 0; j < column; j++)
+                {
+                    Debug.Write($"{temp_block[i, j]}");
+                }
+                Debug.WriteLine("");
+            }
+            Debug.WriteLine("");
+            return temp_block;
+
         }
 
         //Prints out the grid in the console.
@@ -91,10 +130,23 @@ namespace TetrisUWP
 
         public void Falling_Block(int[,] block, int row, int column)
         {
+            bool rotate = false;
             bool falling = true;
-            int middle = 9;
+            int middle = 4;
             for (int i = 0; i < 18; i++)
             {
+                if (i == 4)
+                {
+                    rotate = true;
+                }
+                if (rotate)
+                {
+                    block = Rotate_Right(block, row, column);
+                    int temp = row;
+                    row = column;
+                    column = temp;
+                    rotate = false;
+                }
                 //Fisrt Insert in the middle
                 if (column == 1)//straight line only
                 {
@@ -278,14 +330,6 @@ namespace TetrisUWP
                         falling = false;
                     }
                 }
-                /*
-                   if(rotate){
-                        block = Rotate(block, row, column);
-                        int temp = row;
-                        row = column;
-                        column = row;
-                   }
-               */
                 Print_Grid();
                 Debug.WriteLine("");
                 if (!falling)

@@ -71,12 +71,30 @@ namespace TetrisUWP
 
 
 
-            /////
+            /////Leo's Test 
             Game_Grid Field = new Game_Grid();
-            Field.Print_Grid();
+            //Field.Print_Grid();
 
-            int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
-            Field.Falling_Block(Line, 4, 1);
+            int[,] Line = new int[4, 4];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (i == 1)
+                    {
+                        Line[i, j] = 1;
+                    }
+                    else
+                        Line[i, j] = 0;
+                    Debug.Write($"{Line[i, j]}");
+                }
+                Debug.WriteLine("");
+            }
+            Debug.WriteLine("");
+            for (int i = 0; i < 4; i++)
+            {
+                Line = Field.Rotate_Right(Line, 4, 4);
+            }
         }
 
         /*protected void OnPaint(PaintEventArgs e)
