@@ -225,6 +225,7 @@ namespace TetrisUWP
             Resume.Visibility = Visibility.Visible;
             Pause.Visibility = Visibility.Collapsed;
             newGame.Visibility = Visibility.Collapsed;
+            Quit.Visibility = Visibility.Visible;
             pauseStatus = true;
             resumeStatus = false;
             
@@ -235,6 +236,7 @@ namespace TetrisUWP
             Pause.Visibility = Visibility.Visible;
             newGame.Visibility = Visibility.Collapsed;
             Resume.Visibility = Visibility.Collapsed;
+            Quit.Visibility = Visibility.Collapsed;
             /*
             Game_Grid Field = new Game_Grid();
             Field.Print_Grid();
@@ -251,7 +253,7 @@ namespace TetrisUWP
             GameWin.Children.Add(block);
             block.Margin = new Thickness(0, 0, -200, 0);
             */
-            
+
             bar = create_z();
             GameWin.Children.Add(bar);
             /*
@@ -309,8 +311,20 @@ namespace TetrisUWP
             Pause.Visibility = Visibility.Visible;
             newGame.Visibility = Visibility.Collapsed;
             Resume.Visibility = Visibility.Collapsed;
+            Quit.Visibility = Visibility.Collapsed;
             pauseStatus = false;
             resumeStatus = true;
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Pause.Visibility = Visibility.Visible;
+            Quit.Visibility = Visibility.Visible;
+            newGame.Visibility = Visibility.Collapsed;
+            Resume.Visibility = Visibility.Collapsed;
+            pauseStatus = false;
+            resumeStatus = true;
+            Application.Current.Exit(); //closes the whole app
         }
     }
 
