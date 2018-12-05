@@ -15,7 +15,6 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using System.Diagnostics;
 using Newtonsoft.Json;
-using Windows.UI.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -44,24 +43,63 @@ namespace TetrisUWP
 
             bar = create_z();
             GameWin.Children.Add(bar);
-            bar.Margin = new Thickness(0, 0, -100, -100);
+            bar.Margin = new Thickness(0, 0, 0, 0);
 
 
-            /////
+            /////////////
+            ScaleTransform myScaleTransform = new ScaleTransform();
+            myScaleTransform.ScaleY = 1;
+            myScaleTransform.ScaleX = 1;
+
+            RotateTransform myRotateTransform = new RotateTransform();
+            myRotateTransform.Angle = 0;
+
+            TranslateTransform myTranslate = new TranslateTransform();
+            myTranslate.X = 25;
+            myTranslate.Y = -25;
+
+            SkewTransform mySkew = new SkewTransform();
+            mySkew.AngleX = 0;
+            mySkew.AngleY = 0;
+
+            // Create a TransformGroup to contain the transforms 
+            // and add the transforms to it. 
+            myTransformGroup = new TransformGroup();
+            myTransformGroup.Children.Add(myScaleTransform);
+            myTransformGroup.Children.Add(myRotateTransform);
+            myTransformGroup.Children.Add(myTranslate);
+            myTransformGroup.Children.Add(mySkew);
+            
             
             Game_Grid Field = new Game_Grid();
-            Field.Print_Grid();
 
-            int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
-            Field.Falling_Block(Line, 4, 1);
+            int[,] Line = new int[1, 4];
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                        Line[i, j] = 1;
+
+                    Debug.Write($"{Line[i, j]}");
+                }
+                Debug.WriteLine("");
+            }
+            Debug.WriteLine("");
+            /*for (int i = 0; i < 4; i++)
+            {
+                Line = Field.Rotate_Right(Line, 4, 4);
+            }*/
+            Field.Print_Grid();
+            Debug.WriteLine("");
+            Field.Falling_Block(Line, 1, 4);
         }
 
         /*protected void OnPaint(PaintEventArgs e)
         {
             e.Graphics.FillRectangle(Brushes.DeepSkyBlue, one);
             //Generates the shape            
-        }
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        }*/
+        /*private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {
