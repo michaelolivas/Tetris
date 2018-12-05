@@ -9,8 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     MaxWidth="700" MaxHeight="700" MinWidth="700" MinHeight="700" Height="700" Width="700">
 
-    <Grid MaxWidth="600" MaxHeight="700" Name="GridOne" Margin="0,10,-5,0.5" Background="#FFFFF300" >
-        <Grid x:Name="GameWin" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="250" Background="#FF042AD6" Margin="25,100,0,0" MaxWidth="250" MaxHeight="450">
+    <Grid MaxWidth="700" MaxHeight="700" Name="GridOne" Margin="0,10,-5,0.5" Background="#FFFFF300" >
+        <Grid x:Name="GameWin" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="250" Background="#FF007ACC" Margin="25,100,0,0" MaxWidth="250" MaxHeight="450" BorderBrush="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="25"/>
