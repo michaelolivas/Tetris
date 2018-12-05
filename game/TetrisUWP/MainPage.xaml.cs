@@ -30,6 +30,8 @@ namespace TetrisUWP
         public Grid sLine;
         public TransformGroup myTransformGroup;
         public Rectangle one;
+        bool pauseStatus;
+        bool resumeStatus;
         public MainPage()
         {
 
@@ -219,13 +221,20 @@ namespace TetrisUWP
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(pauseMenu)); //opens pause menu page
+            //this.Frame.Navigate(typeof(pauseMenu)); //opens pause menu page
+            Resume.Visibility = Visibility.Visible;
+            Pause.Visibility = Visibility.Collapsed;
+            newGame.Visibility = Visibility.Collapsed;
+            pauseStatus = true;
+            resumeStatus = false;
+            
         }
 
         private async void newGame_Click(object sender, RoutedEventArgs e)
         {
             Pause.Visibility = Visibility.Visible;
             newGame.Visibility = Visibility.Collapsed;
+            Resume.Visibility = Visibility.Collapsed;
             /*
             Game_Grid Field = new Game_Grid();
             Field.Print_Grid();
@@ -242,10 +251,16 @@ namespace TetrisUWP
             GameWin.Children.Add(block);
             block.Margin = new Thickness(0, 0, -200, 0);
             */
-
+            
             bar = create_z();
             GameWin.Children.Add(bar);
-            for (int x = 0; x >= -800; x--)
+            /*
+            block = create_square();
+            GameWin.Children.Add(block);
+            */
+            int x = 0;
+            
+            for (x = 0; x >= -800; x--)
             {/*
                 Game_Grid Field = new Game_Grid();
                 Field.Print_Grid();
@@ -258,13 +273,44 @@ namespace TetrisUWP
                 
                 Field.Falling_Block(Line, 4, 1);
                 */
-                
+
                 bar.Margin = new Thickness(0, 0, -50, x);
                 bar.Visibility = Visibility.Visible;
                 await System.Threading.Tasks.Task.Delay(1000);
                 x += -49;
-                
+                while (pauseStatus == true)
+                {
+                    int y = 1;
+                    await System.Threading.Tasks.Task.Delay(y);
+                    y++;
+                    if (resumeStatus == true)
+                    {
+                        break;
+                    }
+                }
             }
+            bool barStatus = true;
+            if (barStatus == true)
+            {
+                block = create_square();
+                GameWin.Children.Add(block);
+                for (int i = 0; i >= -800; i--)
+                {
+                    block.Margin = new Thickness(0, 0, -50, i);
+                    bar.Visibility = Visibility.Visible;
+                    await System.Threading.Tasks.Task.Delay(1000);
+                    i += -49;
+                }
+            }
+        }
+
+        private void Resume_Click(object sender, RoutedEventArgs e)
+        {
+            Pause.Visibility = Visibility.Visible;
+            newGame.Visibility = Visibility.Collapsed;
+            Resume.Visibility = Visibility.Collapsed;
+            pauseStatus = false;
+            resumeStatus = true;
         }
     }
 
