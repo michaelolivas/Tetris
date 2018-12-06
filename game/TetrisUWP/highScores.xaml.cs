@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 
+
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TetrisUWP
@@ -51,7 +52,8 @@ namespace TetrisUWP
             for (int i = 0; i < NUM_OF_USERS; i++)
             {
                 users[i].Add("Mike", "2000");
-                //add_score(0, "Rigo", "100");
+                remove_score(0);
+                add_score(0, "Rigo", "100");
                 name_block[i].Text = users[i].Keys.ElementAt(0);
                 score_block[i].Text = users[i].Values.ElementAt(0);
             }
@@ -61,12 +63,6 @@ namespace TetrisUWP
         }
         private void add_score(int index,string name, string score)
         {
-            for(int i = 0; i <NUM_OF_USERS; i++)
-            {
-
-            }
-
-            remove_score(index);
             users[index].Add(name, score);
         }
         private void remove_score(int index)
@@ -76,7 +72,7 @@ namespace TetrisUWP
         private async void save_scores()
         {
             string json = JsonConvert.SerializeObject(users);
-            scoresFile = await storageFolder.CreateFileAsync("user_scores.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            scoresFile = await storageFolder.CreateFileAsync("user_scores.json", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             //Write data to the file
             await Windows.Storage.FileIO.WriteTextAsync(scoresFile, json);
         }
@@ -85,6 +81,19 @@ namespace TetrisUWP
             //read file
             string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
             Debug.Write(savedTickets);
+        }
+        public async Task<Dictionary<string,string>[]> saveToTxt(string path,string json)
+        {
+            string directory = @"C:\Users\rigom\source\repos\Tetriss\game\TetrisUWP\" + "Scores" + ".txt";
+            await Task.Run(() =>
+            {
+                Task.Yield();
+                using (var file = File.Create(directory))
+                {
+                    File.WriteAllText(path, json);
+                }
+            });
+            return null;
         }
 
         private void back_Click(object sender, RoutedEventArgs e)
