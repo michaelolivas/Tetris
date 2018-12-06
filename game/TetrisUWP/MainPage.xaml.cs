@@ -76,6 +76,7 @@ namespace TetrisUWP
             
 
             int[,] Line = new int[4, 4];
+            int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -97,7 +98,7 @@ namespace TetrisUWP
             }*/
             Field.Print_Grid();
             Debug.WriteLine("");
-            Field.Falling_Block(Line, 4, 4);
+            Field.Falling_Block(Box, 2, 2);
         }
 
         /*protected void OnPaint(PaintEventArgs e)

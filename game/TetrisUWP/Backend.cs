@@ -137,6 +137,7 @@ namespace TetrisUWP
         {
             bool rotate = false;
             bool falling = true;
+            bool overflow = false;
             int middle = 4;
             int walker;
             int row_counter = 0;
@@ -146,8 +147,7 @@ namespace TetrisUWP
             for (int i = 0; i < 18; i++)
             {
                 //Fisrt Insert in the middle
-                if (column == 4)//straight line only
-                {
+
                     if (i == 0) //first block ony 
                     {
                         walker = 0;
@@ -172,24 +172,16 @@ namespace TetrisUWP
                     }
                     if (i > 0)//inseterts each block one by one.
                     {
-                        row_counter = (i < row) ? i : row;
-                        for (int y = 0; y < row_counter; y++)
-                        {
-                            walker = 0;
-                            for (int x = 0; x < column; x++)
-                            {
-                                walker++;
-                            }
-                        }
+                        row_counter = (i < row) ? i : row-1;
                         if (falling)
                         {
-                            for (int y = 0; y < row_counter; y++)
+                            for (int y = 0; y < row_counter+1; y++)
                             {
                                 walker = 0;
                                 for (int x = 0; x < column; x++)
                                 {
                                     field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
-                                    if (i > row)
+                                    if (i >=row)
                                     {
                                         field[i - row, middle - 1 + walker] = 0;
                                     }
@@ -202,36 +194,49 @@ namespace TetrisUWP
 
                     if (i == 17)
                     {
-
-                        for (int k = row - 1; k >= 0; k--)
-                        {
+                        do {
                             counter = 0;
                             for (int l = 0; l < column; l++)
                             {
-                                if (block[k, l] == 0)
+                                if (block[row - 1, l] == 0)
                                 {
                                     counter++;
+                                    if (counter == column)
+                                    {
+                                        overflow = true;
+                                        row--;
+                                        
+                                        break;
+                                    }
                                 }
-                                if (block[row - 1 - row_remainder, l] == 1)
+                                if (block[row - 1, l] == 1)
                                 {
+                                    overflow = false;
                                     break;
                                 }
                             }
-
-                            if (counter == column)
+                            for (int y = 0; y < row; y++)
                             {
-                                i--;
+                                walker = 0;
+                                for (int x = 0; x < column; x++)
+                                {
+                                    field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+                                    if (i >= row)
+                                    {
+                                        field[i - row, middle - 1 + walker] = 0;
+                                    }
+                                    walker++;
+                                }
                             }
-                        }
-                        row--;
-                        row_remainder++;
+                            row_remainder++;
+                        } while (overflow) ;
                     }
 
                     Print_Grid();
                     Debug.WriteLine("");
                     //if (!falling)
                     // break;
-                }
+                
                 Check_Line();
             }
         }
