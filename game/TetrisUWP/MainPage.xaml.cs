@@ -14,6 +14,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using Windows.UI.Core;
+using System.Windows.Input;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,8 +29,12 @@ namespace TetrisUWP
     public sealed partial class MainPage : Page
     {
         public Grid bar;
+        public Grid block;
+        public Grid sLine;
         public TransformGroup myTransformGroup;
         public Rectangle one;
+        bool pauseStatus;
+        bool resumeStatus;
         public MainPage()
         {
 
@@ -39,54 +47,26 @@ namespace TetrisUWP
             one.Width = 20;
 
             //GridOne.Children.Add(one);
-
+            /*
             bar = create_z();
             GameWin.Children.Add(bar);
-            bar.Margin = new Thickness(0, 0, 0, 0);
-
-
-            /////////////
-            ScaleTransform myScaleTransform = new ScaleTransform();
-            myScaleTransform.ScaleY = 1;
-            myScaleTransform.ScaleX = 1;
-
-            RotateTransform myRotateTransform = new RotateTransform();
-            myRotateTransform.Angle = 0;
-
-            TranslateTransform myTranslate = new TranslateTransform();
-            myTranslate.X = 25;
-            myTranslate.Y = -25;
-
-            SkewTransform mySkew = new SkewTransform();
-            mySkew.AngleX = 0;
-            mySkew.AngleY = 0;
-
-            // Create a TransformGroup to contain the transforms 
-            // and add the transforms to it. 
-            myTransformGroup = new TransformGroup();
-            myTransformGroup.Children.Add(myScaleTransform);
-            myTransformGroup.Children.Add(myRotateTransform);
-            myTransformGroup.Children.Add(myTranslate);
-            myTransformGroup.Children.Add(mySkew);
-
-
-
-            /////Leo's Test 
-            Game_Grid Field = new Game_Grid();
+            bar.Margin = new Thickness(0, 0, -50, 0);
             
+            block = create_square();
+            GameWin.Children.Add(block);
+            block.Margin = new Thickness(0, 0, -200, 0);
+            */
+            
+            
+            Game_Grid Field = new Game_Grid();
 
-            int[,] Line = new int[4, 4];
-            int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
-            for (int i = 0; i < 4; i++)
+            int[,] Line = new int[1, 4];
+            for (int i = 0; i < 1; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (i == 1)
-                    {
                         Line[i, j] = 1;
-                    }
-                    else
-                        Line[i, j] = 0;
+
                     Debug.Write($"{Line[i, j]}");
                 }
                 Debug.WriteLine("");
@@ -98,7 +78,7 @@ namespace TetrisUWP
             }*/
             Field.Print_Grid();
             Debug.WriteLine("");
-            Field.Falling_Block(Box, 2, 2);
+            Field.Falling_Block(Line, 1, 4);
         }
 
         /*protected void OnPaint(PaintEventArgs e)
@@ -106,12 +86,12 @@ namespace TetrisUWP
             e.Graphics.FillRectangle(Brushes.DeepSkyBlue, one);
             //Generates the shape            
         }*/
+
         /*private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {
                 Debug.WriteLine("You pressed Space");
-                bar.RenderTransform = myTransformGroup;
 
             }
         }*/
@@ -162,27 +142,28 @@ namespace TetrisUWP
             one.Width = 25;
             one.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+            one.Margin = new Thickness(0, 0, 0, 0);
 
             Rectangle two = new Rectangle();
             two.Height = 25;
             two.Width = 25;
             two.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            two.Margin = new Thickness(0, -50, 0, 0);
+            two.Margin = new Thickness(0, 0, -50, 0);
 
             Rectangle three = new Rectangle();
             three.Height = 25;
             three.Width = 25;
             three.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            three.Margin = new Thickness(0, -50, 50, 0);
+            three.Margin = new Thickness(0, 0, -50, -50);
 
             Rectangle four = new Rectangle();
             four.Height = 25;
             four.Width = 25;
             four.Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-            four.Margin = new Thickness(0, 0, 50, 0);
+            four.Margin = new Thickness(0, 0, 0, -50);
 
             square.Children.Add(one);
             square.Children.Add(two);
@@ -229,15 +210,113 @@ namespace TetrisUWP
             return bar;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(pauseMenu)); //opens pause menu page
+            //this.Frame.Navigate(typeof(pauseMenu)); //opens pause menu page
+            Resume.Visibility = Visibility.Visible;
+            Pause.Visibility = Visibility.Collapsed;
+            newGame.Visibility = Visibility.Collapsed;
+            Quit.Visibility = Visibility.Visible;
+            pauseStatus = true;
+            resumeStatus = false;
+            
         }
 
+        private async void newGame_Click(object sender, RoutedEventArgs e)
+        {
+            Pause.Visibility = Visibility.Visible;
+            newGame.Visibility = Visibility.Collapsed;
+            Resume.Visibility = Visibility.Collapsed;
+            Quit.Visibility = Visibility.Collapsed;
+            /*
+            Game_Grid Field = new Game_Grid();
+            Field.Print_Grid();
+
+            int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
+            Field.Falling_Block(Line, 4, 1);
+            */
+            /*
+            bar = create_z();
+            GameWin.Children.Add(bar);
+            bar.Margin = new Thickness(0, 0, -50, 0);
+            
+            block = create_square();
+            GameWin.Children.Add(block);
+            block.Margin = new Thickness(0, 0, -200, 0);
+            */
+
+            bar = create_z();
+            GameWin.Children.Add(bar);
+            /*
+            block = create_square();
+            GameWin.Children.Add(block);
+            */
+            int x = 0;
+            
+            for (x = 0; x >= -800; x--)
+            {/*
+                Game_Grid Field = new Game_Grid();
+                Field.Print_Grid();
+              
+                int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
+                sLine = create_bar();
+                GameWin.Children.Add(sLine);
+
+                await System.Threading.Tasks.Task.Delay(1000);
+                
+                Field.Falling_Block(Line, 4, 1);
+                */
+
+                bar.Margin = new Thickness(0, 0, -50, x);
+                bar.Visibility = Visibility.Visible;
+                await System.Threading.Tasks.Task.Delay(1000);
+                x += -49;
+                while (pauseStatus == true)
+                {
+                    int y = 1;
+                    await System.Threading.Tasks.Task.Delay(y);
+                    y++;
+                    if (resumeStatus == true)
+                    {
+                        break;
+                    }
+                }
+            }
+            bool barStatus = true;
+            if (barStatus == true)
+            {
+                block = create_square();
+                GameWin.Children.Add(block);
+                for (int i = 0; i >= -800; i--)
+                {
+                    block.Margin = new Thickness(0, 0, -50, i);
+                    bar.Visibility = Visibility.Visible;
+                    await System.Threading.Tasks.Task.Delay(1000);
+                    i += -49;
+                }
+            }
+        }
+
+        private void Resume_Click(object sender, RoutedEventArgs e)
+        {
+            Pause.Visibility = Visibility.Visible;
+            newGame.Visibility = Visibility.Collapsed;
+            Resume.Visibility = Visibility.Collapsed;
+            Quit.Visibility = Visibility.Collapsed;
+            pauseStatus = false;
+            resumeStatus = true;
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Pause.Visibility = Visibility.Visible;
+            Quit.Visibility = Visibility.Visible;
+            newGame.Visibility = Visibility.Collapsed;
+            Resume.Visibility = Visibility.Collapsed;
+            pauseStatus = false;
+            resumeStatus = true;
+            Application.Current.Exit(); //closes the whole app
+        }
     }
+
 }

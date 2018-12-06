@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 
+
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TetrisUWP
@@ -51,8 +52,8 @@ namespace TetrisUWP
             for (int i = 0; i < NUM_OF_USERS; i++)
             {
                 users[i].Add("Mike", "2000");
-                //remove_score(0);
-                //add_score(0, "Rigo", "100");
+                remove_score(0);
+                add_score(0, "Rigo", "100");
                 name_block[i].Text = users[i].Keys.ElementAt(0);
                 score_block[i].Text = users[i].Values.ElementAt(0);
             }
@@ -71,7 +72,7 @@ namespace TetrisUWP
         private async void save_scores()
         {
             string json = JsonConvert.SerializeObject(users);
-            scoresFile = await storageFolder.CreateFileAsync("user_scores.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            scoresFile = await storageFolder.CreateFileAsync("user_scores.json", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             //Write data to the file
             await Windows.Storage.FileIO.WriteTextAsync(scoresFile, json);
         }
