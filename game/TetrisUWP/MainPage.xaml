@@ -45,7 +45,7 @@
             </Grid.ColumnDefinitions>
         </Grid>
 
-        <Button x:Name="Pause" Content="Pause" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="181" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Button x:Name="Pause" Content="Pause" HorizontalAlignment="Left" Height="69" Margin="366,558,0,0" VerticalAlignment="Top" Width="181" Click="Pause_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="Collapsed"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Next Block" VerticalAlignment="Top" Margin="350,205,0,0" Height="70" Width="274" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
