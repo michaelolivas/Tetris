@@ -37,7 +37,6 @@ namespace TetrisUWP
         bool resumeStatus;
         public MainPage()
         {
-
             //Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
             //startWindow.Show();
             InitializeComponent();
@@ -56,7 +55,7 @@ namespace TetrisUWP
             GameWin.Children.Add(block);
             block.Margin = new Thickness(0, 0, -200, 0);
             */
-            
+            /*
             
             Game_Grid Field = new Game_Grid();
 
@@ -68,20 +67,14 @@ namespace TetrisUWP
             /*for (int i = 0; i < 4; i++)
             {
                 Line = Field.Rotate_Right(Line, 4, 4);
-            }*/
+            }
             Field.Print_Grid();
             Debug.WriteLine("");
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
+            */
         }
-
-        /*protected void OnPaint(PaintEventArgs e)
-        {
-            e.Graphics.FillRectangle(Brushes.DeepSkyBlue, one);
-            //Generates the shape            
-        }*/
-
         /*private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
@@ -223,6 +216,27 @@ namespace TetrisUWP
             newGame.Visibility = Visibility.Collapsed;
             Resume.Visibility = Visibility.Collapsed;
             Quit.Visibility = Visibility.Collapsed;
+
+            //
+            Game_Grid Field = new Game_Grid();
+
+            int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
+            int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
+            int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
+
+            Debug.WriteLine("");
+            for (int i = 0; i < 4; i++)
+            {
+                Line = Field.Rotate_Right(Line, 4, 4);
+            }
+            Field.Print_Grid();
+            Debug.WriteLine("");
+            Field.Falling_Block(Line, 4, 4);
+            Field.Falling_Block(Box, 2, 2);
+            Field.Falling_Block(L, 3, 3);
+
+            //
+
             /*
             Game_Grid Field = new Game_Grid();
             Field.Print_Grid();
