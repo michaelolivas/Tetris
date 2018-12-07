@@ -197,7 +197,6 @@ namespace game
 
             return bar;
         }
-
         private void Button_Click(object sender, RoutedEventArgs e) //high score
         {
 
