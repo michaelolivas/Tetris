@@ -27,7 +27,7 @@ namespace TetrisUWP
     /// </summary>
     public sealed partial class highScores : Page
     {
-        public Dictionary<string, ulong>[] users = { new Dictionary<string, ulong>(), new Dictionary<string, ulong>(), new Dictionary<string, ulong>(), new Dictionary<string, ulong>(), new Dictionary<string, ulong>() };
+        public Dictionary<string, string>[] users = { new Dictionary<string, string>(), new Dictionary<string, string>(), new Dictionary<string, string>(), new Dictionary<string, string>(), new Dictionary<string, string>() };
         public const int NUM_OF_USERS = 5;
 
         public TextBlock[] name_block = new TextBlock[NUM_OF_USERS];
@@ -51,14 +51,16 @@ namespace TetrisUWP
             score_block[4] = Score4;
             for (int i = 0; i < NUM_OF_USERS; i++)
             {
-                users[i].Add("Mike", 2000);
-                name_block[i].Text = users[i].Keys.ElementAt(0).ToString();
-                score_block[i].Text = users[i].Values.ElementAt(0).ToString();
+                users[i].Add("Player", "1000");
+                name_block[i].Text = users[i].Keys.ElementAt(0);//.ToString();
+                score_block[i].Text = users[i].Values.ElementAt(0);//.ToString();
             }
 
-            compare_score("Jorome", 2001);
-            compare_score("dylan", 2002);
-            update_UI();
+            compare_score("rigo", "4500");
+            compare_score("bert", "5000");
+            compare_score("leo", "4000");
+            compare_score("Jorome", "1001");
+
             save_scores();
             read_scores();
         }
@@ -72,43 +74,94 @@ namespace TetrisUWP
             }
       }
         //works, still need to work on conditions
-        private void compare_score(string name, ulong score)
+        private void compare_score(string name, string score)
         {
-            if (score > Convert.ToUInt64(score_block[0].Text))
+            string namehold = "x";
+            string scorehold = "0";
+
+            if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[0].Text))
             {
+                int i = 0;
+                while (i != 4)
+                {
+                    namehold = name_block[i].Text;
+                    scorehold = score_block[i].Text;
+
+                    //remove_score(0);
+                    //add_score(0, name, score);
+
+                    remove_score(i + 1);
+                    add_score((i + 1), namehold, scorehold);
+
+                    update_UI();
+                    i++;
+                }
                 remove_score(0);
                 add_score(0, name, score);
                 update_UI();
             }
-
-            else if (score > Convert.ToUInt64(score_block[1].Text))
+            else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[1].Text))
             {
+                int i = 1;
+                while (i != 4)
+                {
+                    namehold = name_block[i].Text;
+                    scorehold = score_block[i].Text;
+
+                    remove_score(i + 1);
+                    add_score((i + 1), namehold, scorehold);
+
+                    update_UI();
+                    i++;
+                }
                 remove_score(1);
                 add_score(1, name, score);
                 update_UI();
             }
-                 else if (score > Convert.ToUInt64(score_block[2].Text))
+            else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[2].Text))
             {
-                remove_score(2);
-                add_score(2, name, score);
-                update_UI();
+                int i = 2;
+                while (i != 4)
+                {
+                    namehold = name_block[i].Text;
+                    scorehold = score_block[i].Text;
+
+                    remove_score(2);
+                    add_score(2, name, score);
+
+                    remove_score(i + 1);
+                    add_score((i + 1), namehold, scorehold);
+
+                    update_UI();
+                    i++;
+                }
             }
-            else if (score > Convert.ToUInt64(score_block[3].Text))
+            else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[3].Text))
             {
-                remove_score(3);
-                add_score(3, name, score);
-                update_UI();
+                int i = 3;
+                while (i != 4)
+                {
+                    namehold = name_block[i].Text;
+                    scorehold = score_block[i].Text;
+
+                    remove_score(3);
+                    add_score(3, name, score);
+
+                    remove_score(i + 1);
+                    add_score((i + 1), namehold, scorehold);
+
+                    update_UI();
+                    i++;
+                }
             }
-            else if (score > Convert.ToUInt64(score_block[4].Text))
+            else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[4].Text))
             {
                 remove_score(4);
                 add_score(4, name, score);
                 update_UI();
             }
-            
-
         }
-        private void add_score(int index,string name, ulong score)
+        private void add_score(int index,string name, string score)
         {
             users[index].Add(name, score);
         }
