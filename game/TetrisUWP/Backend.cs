@@ -6,6 +6,7 @@ namespace TetrisUWP
     public class Game_Grid
     {
         public int[,] field = new int[18, 10];
+        public int[,] currBlock;
 
         public Game_Grid()
         {
@@ -140,8 +141,6 @@ namespace TetrisUWP
                 }
                 walker++;
             }
-
-
             return false;
         }
 

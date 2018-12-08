@@ -37,7 +37,7 @@ namespace TetrisUWP
         public Rectangle one;
         bool pauseStatus;
         bool resumeStatus;
-        private bool pageFocus = false;
+        //private bool pageFocus = false;
 
         public MainPage()
         {
@@ -50,8 +50,6 @@ namespace TetrisUWP
             one.Height = 20;
             one.Width = 20;
 
-            
-            
             //GridOne.Children.Add(one);
             /*
             bar = create_z();
@@ -78,7 +76,7 @@ namespace TetrisUWP
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
         }
-        private void PageLostFocus(object sender, RoutedEventArgs e)
+        /*private void PageLostFocus(object sender, RoutedEventArgs e)
         {
             game_page.Focus(FocusState.Programmatic);
         }
@@ -86,7 +84,7 @@ namespace TetrisUWP
         {
             if(e.Key == Windows.System.VirtualKey.L)
                 Debug.WriteLine("Pressed L");
-        }
+        }*/
         Grid create_z()
         {
             Grid z = new Grid();
@@ -124,7 +122,6 @@ namespace TetrisUWP
             z.Children.Add(four);
             return z;
         }
-
         Grid create_square()
         {
             Grid square = new Grid();
@@ -222,9 +219,9 @@ namespace TetrisUWP
             Quit.Visibility = Visibility.Collapsed;
 
 
-
             Task t = new Task(start_game);
             t.Start();
+            
 
             bar = create_z();
             GameWin.Children.Add(bar);
@@ -235,12 +232,12 @@ namespace TetrisUWP
 
                 bar.Margin = new Thickness(0, 0, -50, x);
                 bar.Visibility = Visibility.Visible;
-                await System.Threading.Tasks.Task.Delay(1000);
+                await Task.Delay(1000);
                 x += -49;
                 while (pauseStatus == true)
                 {
                     int y = 1;
-                    await System.Threading.Tasks.Task.Delay(y);
+                    await Task.Delay(y);
                     y++;
                     if (resumeStatus == true)
                     {
@@ -257,7 +254,7 @@ namespace TetrisUWP
                 {
                     block.Margin = new Thickness(0, 0, -50, i);
                     bar.Visibility = Visibility.Visible;
-                    await System.Threading.Tasks.Task.Delay(1000);
+                    await Task.Delay(1000);
                     i += -49;
                 }
             }
