@@ -130,12 +130,47 @@ namespace TetrisUWP
         }
 
 
-        /*
+        public bool collision(int[,] block, int row, int column, int row_counter, int i, int middle)
+        {
+            int walker = 0;
+            for (int x = 0; x < column; x++)
+            {
+                if (field[i, middle - 1 + walker] == 1 && block[row - 1, x] == 1)
+                {
+                    return true;
+                }
+                walker++;
+            }
 
-         */
 
+            return false;
+        }
+
+        public void combining(int[,] block, int row, int column, int row_counter, int i, int middle)
+        {
+            int walker = 0;
+            for (int x = 0; x < column; x++)
+            {
+                block[row - 1, x] = field[i, middle - 1 + walker];
+                walker++;
+            }
+        }
+
+        public int [,]original_block(int[,] block, int row, int column)
+        {
+            int[,] test_block = new int[row, column];
+            for(int i=0; i<row; i++)
+            {
+                for(int j=0; j<column; j++)
+                {
+                    test_block[i, j] = block[i, j];
+                }
+            }
+            return test_block;
+        }
         public void Falling_Block(int[,] block, int row, int column)
         {
+            int[,] test_block = original_block(block, row, column);
             bool rotate = false;
             bool falling = true;
             bool overflow = false;
@@ -151,22 +186,20 @@ namespace TetrisUWP
 
                     if (i == 0) //first block ony 
                     {
-                        walker = 0;
-                        for (int x = 0; x < column; x++)
+                        if (collision(block, row, column, row_counter, i, middle))
                         {
-                            if (field[i, middle - 1 + walker] == 1 && block[row - 1, x] == 1)
-                            {
-                                falling = false;
-                                break;
-                            }
-                            walker++;
+                            falling = false;
+                            break;
                         }
                         if (falling)
                         {
                             walker = 0;
                             for (int x = 0; x < column; x++)
                             {
-                                field[i, middle - 1 + walker] = block[row - 1, x];
+                                if (field[i, middle - 1 + walker] == 0 && block[row - 1, x] == 1)
+                                    field[i, middle - 1 + walker] = block[row - 1, x];
+                                if (field[i, middle - 1 + walker] == 1 && block[row - 1, x] == 0)
+                                    block[row - 1, x] = 1;
                                 walker++;
                             }
                         }
@@ -174,6 +207,11 @@ namespace TetrisUWP
                     if (i > 0)//inseterts each block one by one.
                     {
                         row_counter = (i < row) ? i : row-1;
+                        if (collision(block, row, column, row_counter, i, middle))
+                        {
+                            falling = false;
+                            break;
+                        }
                         if (falling)
                         {
                             for (int y = 0; y < row_counter+1; y++)
@@ -181,11 +219,18 @@ namespace TetrisUWP
                                 walker = 0;
                                 for (int x = 0; x < column; x++)
                                 {
-                                    field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+                                    if(field[i-y, middle -1 + walker]==0 && block[row - 1 - y, x]==1)
+                                        field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+                                    if (field[i - y, middle - 1 + walker] == 1 && block[row - 1 - y, x] == 0)
+                                        block[row - 1 - y, x] = 1;
                                     if (i >=row)
                                     {
-                                        field[i - row, middle - 1 + walker] = 0;
+                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                                            field[i - row, middle - 1 + walker] = 1;
+                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 1)
+                                            field[i - row, middle - 1 + walker] = 0;
                                     }
+
                                     walker++;
                                 }
                             }
@@ -224,7 +269,10 @@ namespace TetrisUWP
                                     field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
                                     if (i >= row)
                                     {
-                                        field[i - row, middle - 1 + walker] = 0;
+                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                                            field[i - row, middle - 1 + walker] = 1;
+                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 1)
+                                            field[i - row, middle - 1 + walker] = 0;
                                     }
                                     walker++;
                                 }
@@ -233,13 +281,19 @@ namespace TetrisUWP
                         } while (overflow) ;
                     }
 
-                    Print_Grid();
-                    Debug.WriteLine("");
-                    //if (!falling)
-                    // break;
-                
-                Check_Line();
+                Print_Grid();
+                Debug.WriteLine("");
+                for (int a = 0; a < row; a++)
+                {
+                    for (int b = 0; b < column; b++)
+                    {
+                        block[a, b] = test_block[a, b];
+                    }
+                }
+                if (!falling)
+                    break;
             }
+            Check_Line();
         }
     }
 }
