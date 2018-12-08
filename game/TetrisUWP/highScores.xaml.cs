@@ -58,67 +58,57 @@ namespace TetrisUWP
 
             compare_score("rigo", "4500");
             compare_score("bert", "5000");
-            compare_score("leo", "4000");
-            compare_score("Jorome", "1001");
+            compare_score("leo", "3000");
+            compare_score("midtest", "4700");
 
             save_scores();
             read_scores();
         }
 
-      private void update_UI()
-      {
+        private void update_UI()
+        {
             for (int i = 0; i < NUM_OF_USERS; i++)
             {
                 name_block[i].Text = users[i].Keys.ElementAt(0);
                 score_block[i].Text = users[i].Values.ElementAt(0).ToString();
             }
-      }
-        //works, still need to work on conditions
+        }
         private void compare_score(string name, string score)
         {
-            string namehold1 = "x";
-            string scorehold1 = "0";
-            string namehold2 = "x";
-            string scorehold2 = "0";
-
             if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[0].Text))
             {
-                int i = 1;
-                while (i != 3)
+                int i = 0;
+                while (i != 4)
                 {
-
-                    namehold1 = name_block[i+1].Text;
-                    scorehold1 = score_block[i+1].Text;
+                    //y = x(initial)
                     remove_score(i + 1);
+                    add_score(i + 1, name_block[0].Text, score_block[0].Text);
+                    //x = z;
+                    remove_score(0);
+                    add_score(0, name_block[i + 1].Text, score_block[i + 1].Text);
 
-                    /*
-                    namehold2 = name_block[i+1].Text;
-                    scorehold2 = score_block[i+1].Text;
-                    */
-
-                    remove_score(i + 1);
-                    add_score((i + 1), namehold1, scorehold1);
-
-                    update_UI();
                     i++;
+                    update_UI();
                 }
                 remove_score(0);
                 add_score(0, name, score);
                 update_UI();
             }
+
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[1].Text))
             {
                 int i = 1;
                 while (i != 4)
                 {
-                    namehold = name_block[i].Text;
-                    scorehold = score_block[i].Text;
-
+                    //y = x
                     remove_score(i + 1);
-                    add_score((i + 1), namehold, scorehold);
+                    add_score(i + 1, name_block[1].Text, score_block[1].Text);
+                    //x = z;
+                    remove_score(1);
+                    add_score(1, name_block[i + 1].Text, score_block[i + 1].Text);
 
-                    update_UI();
                     i++;
+                    update_UI();
                 }
                 remove_score(1);
                 add_score(1, name, score);
@@ -129,36 +119,27 @@ namespace TetrisUWP
                 int i = 2;
                 while (i != 4)
                 {
-                    namehold = name_block[i].Text;
-                    scorehold = score_block[i].Text;
-
-                    remove_score(2);
-                    add_score(2, name, score);
-
+                    //y = x
                     remove_score(i + 1);
-                    add_score((i + 1), namehold, scorehold);
+                    add_score(i + 1, name_block[2].Text, score_block[2].Text);
+                    //x = z;
+                    remove_score(2);
+                    add_score(2, name_block[i + 1].Text, score_block[i + 1].Text);
 
-                    update_UI();
                     i++;
+                    update_UI();
                 }
+                remove_score(2);
+                add_score(2, name, score);
+                update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[3].Text))
             {
-                int i = 3;
-                while (i != 4)
-                {
-                    namehold = name_block[i].Text;
-                    scorehold = score_block[i].Text;
-
-                    remove_score(3);
-                    add_score(3, name, score);
-
-                    remove_score(i + 1);
-                    add_score((i + 1), namehold, scorehold);
-
-                    update_UI();
-                    i++;
-                }
+               remove_score(4);
+               add_score(4,name_block[3].Text,score_block[3].Text);
+               remove_score(3);
+               add_score(3, name, score);
+               update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[4].Text))
             {
@@ -167,7 +148,8 @@ namespace TetrisUWP
                 update_UI();
             }
         }
-        private void add_score(int index,string name, string score)
+
+        private void add_score(int index, string name, string score)
         {
             users[index].Add(name, score);
         }
@@ -188,7 +170,7 @@ namespace TetrisUWP
             string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
             Debug.Write(savedTickets);
         }
-        public async Task<Dictionary<string,string>[]> saveToTxt(string path,string json)
+        public async Task<Dictionary<string, string>[]> saveToTxt(string path, string json)
         {
             string directory = @"C:\Users\rigom\source\repos\Tetriss\game\TetrisUWP\" + "Scores" + ".txt";
             await Task.Run(() =>
@@ -218,3 +200,4 @@ namespace TetrisUWP
         }
     }
 }
+
