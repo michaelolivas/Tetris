@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -35,6 +37,8 @@ namespace TetrisUWP
         public Rectangle one;
         bool pauseStatus;
         bool resumeStatus;
+        private bool pageFocus = false;
+
         public MainPage()
         {
             //Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
@@ -46,6 +50,8 @@ namespace TetrisUWP
             one.Height = 20;
             one.Width = 20;
 
+            
+            
             //GridOne.Children.Add(one);
             /*
             bar = create_z();
@@ -56,8 +62,9 @@ namespace TetrisUWP
             GameWin.Children.Add(block);
             block.Margin = new Thickness(0, 0, -200, 0);
             */
-            /*
-            
+        }
+        private void start_game()
+        {
             Game_Grid Field = new Game_Grid();
 
             int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
@@ -65,21 +72,20 @@ namespace TetrisUWP
             int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
 
             Debug.WriteLine("");
-            /*for (int i = 0; i < 4; i++)
-            {
-                Line = Field.Rotate_Right(Line, 4, 4);
-            }
             Field.Print_Grid();
             Debug.WriteLine("");
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
-            */
+        }
+        private void PageLostFocus(object sender, RoutedEventArgs e)
+        {
+            game_page.Focus(FocusState.Programmatic);
         }
         void KeyDowns(object sender, KeyRoutedEventArgs e)
         {
             if(e.Key == Windows.System.VirtualKey.L)
-                Debug.WriteLine("Help");
+                Debug.WriteLine("Pressed L");
         }
         Grid create_z()
         {
@@ -215,64 +221,17 @@ namespace TetrisUWP
             Resume.Visibility = Visibility.Collapsed;
             Quit.Visibility = Visibility.Collapsed;
 
-            //
-            Game_Grid Field = new Game_Grid();
-
-            int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
-            int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
-            int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
-
-            Debug.WriteLine("");
-            /*for (int i = 0; i < 4; i++)
-            {
-                Line = Field.Rotate_Right(Line, 4, 4);
-                Debug.WriteLine("YES");
-            }*/
-            Field.Print_Grid();
-            Debug.WriteLine("");
-            Field.Falling_Block(Line, 4, 4);
-            Field.Falling_Block(Box, 2, 2);
-            Field.Falling_Block(L, 3, 3);
 
 
-            /*
-            Game_Grid Field = new Game_Grid();
-            Field.Print_Grid();
-
-            int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
-            Field.Falling_Block(Line, 4, 1);
-            */
-            /*
-            bar = create_z();
-            GameWin.Children.Add(bar);
-            bar.Margin = new Thickness(0, 0, -50, 0);
-            
-            block = create_square();
-            GameWin.Children.Add(block);
-            block.Margin = new Thickness(0, 0, -200, 0);
-            */
+            Task t = new Task(start_game);
+            t.Start();
 
             bar = create_z();
             GameWin.Children.Add(bar);
-            /*
-            block = create_square();
-            GameWin.Children.Add(block);
-            */
             int x = 0;
             
             for (x = 0; x >= -800; x--)
-            {/*
-                Game_Grid Field = new Game_Grid();
-                Field.Print_Grid();
-              
-                int[,] Line = new int[4, 1] { { 1 }, { 1 }, { 1 }, { 1 } };
-                sLine = create_bar();
-                GameWin.Children.Add(sLine);
-
-                await System.Threading.Tasks.Task.Delay(1000);
-                
-                Field.Falling_Block(Line, 4, 1);
-                */
+            {
 
                 bar.Margin = new Thickness(0, 0, -50, x);
                 bar.Visibility = Visibility.Visible;

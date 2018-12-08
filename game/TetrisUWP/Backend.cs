@@ -7,7 +7,6 @@ namespace TetrisUWP
     {
         public int[,] field = new int[18, 10];
 
-
         public Game_Grid()
         {
             //initialize the grid with 0s

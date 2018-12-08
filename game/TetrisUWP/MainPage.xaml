@@ -8,6 +8,7 @@
     mc:Ignorable="d"
     Name="game_page"
     KeyDown="KeyDowns"
+    LostFocus="PageLostFocus"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     MaxWidth="700" MaxHeight="700" MinWidth="700" MinHeight="700" Height="700" Width="700" Visibility="Visible" IsEnabled="True" IsTabStop="True" >
 
