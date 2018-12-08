@@ -55,11 +55,12 @@ namespace TetrisUWP
                 name_block[i].Text = users[i].Keys.ElementAt(0);//.ToString();
                 score_block[i].Text = users[i].Values.ElementAt(0);//.ToString();
             }
-
+            compare_score("test2", "3500");
             compare_score("rigo", "4500");
             compare_score("bert", "5000");
             compare_score("leo", "3000");
             compare_score("midtest", "4700");
+            compare_score("test3", "4999");
 
             save_scores();
             read_scores();
@@ -76,7 +77,11 @@ namespace TetrisUWP
         private void compare_score(string name, string score)
         {
             if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[0].Text))
-            {
+            { 
+                /*if((Convert.ToUInt64(score) == Convert.ToUInt64(score_block[0].Text)))
+                {
+
+                }*/
                 int i = 0;
                 while (i != 4)
                 {
