@@ -40,6 +40,7 @@ namespace TetrisUWP
             //Start startWindow = new Start(); //pauseMenu is the name of the pauseMenu.xaml file
             //startWindow.Show();
             InitializeComponent();
+            game_page.Focus(FocusState.Programmatic);
 
             one = new Rectangle();
             one.Height = 20;
@@ -75,14 +76,11 @@ namespace TetrisUWP
             Field.Falling_Block(L, 3, 3);
             */
         }
-        /*private void Window_KeyDown(object sender, KeyEventArgs e)
+        void KeyDowns(object sender, KeyRoutedEventArgs e)
         {
-            if (e.Key == Key.Space)
-            {
-                Debug.WriteLine("You pressed Space");
-
-            }
-        }*/
+            if(e.Key == Windows.System.VirtualKey.L)
+                Debug.WriteLine("Help");
+        }
         Grid create_z()
         {
             Grid z = new Grid();
@@ -225,17 +223,17 @@ namespace TetrisUWP
             int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
 
             Debug.WriteLine("");
-            for (int i = 0; i < 4; i++)
+            /*for (int i = 0; i < 4; i++)
             {
                 Line = Field.Rotate_Right(Line, 4, 4);
-            }
+                Debug.WriteLine("YES");
+            }*/
             Field.Print_Grid();
             Debug.WriteLine("");
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
 
-            //
 
             /*
             Game_Grid Field = new Game_Grid();
