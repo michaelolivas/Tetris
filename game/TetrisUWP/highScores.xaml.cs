@@ -76,22 +76,28 @@ namespace TetrisUWP
         //works, still need to work on conditions
         private void compare_score(string name, string score)
         {
-            string namehold = "x";
-            string scorehold = "0";
+            string namehold1 = "x";
+            string scorehold1 = "0";
+            string namehold2 = "x";
+            string scorehold2 = "0";
 
             if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[0].Text))
             {
-                int i = 0;
-                while (i != 4)
+                int i = 1;
+                while (i != 3)
                 {
-                    namehold = name_block[i].Text;
-                    scorehold = score_block[i].Text;
 
-                    //remove_score(0);
-                    //add_score(0, name, score);
+                    namehold1 = name_block[i+1].Text;
+                    scorehold1 = score_block[i+1].Text;
+                    remove_score(i + 1);
+
+                    /*
+                    namehold2 = name_block[i+1].Text;
+                    scorehold2 = score_block[i+1].Text;
+                    */
 
                     remove_score(i + 1);
-                    add_score((i + 1), namehold, scorehold);
+                    add_score((i + 1), namehold1, scorehold1);
 
                     update_UI();
                     i++;
