@@ -78,10 +78,6 @@ namespace TetrisUWP
         {
             if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[0].Text))
             { 
-                /*if((Convert.ToUInt64(score) == Convert.ToUInt64(score_block[0].Text)))
-                {
-
-                }*/
                 int i = 0;
                 while (i != 4)
                 {
