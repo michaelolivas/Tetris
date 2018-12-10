@@ -146,7 +146,7 @@ namespace TetrisUWP
             return false;
         }
 
-        public int [,] Soild_Field()
+        public int [,] Solid_Field()
         {
             int[,] modified_field = new int[18, 10];
             for(int i =0; i<18; i++)
@@ -174,7 +174,7 @@ namespace TetrisUWP
         public void Falling_Block(int[,] block, int row, int column)
         {
             int[,] test_block = original_block(block, row, column);
-            int[,] modified_field = Soild_Field();
+            int[,] modified_field = Solid_Field();
             bool rotate = false;
             bool falling = true;
             bool overflow = false;
