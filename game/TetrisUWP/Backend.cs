@@ -144,14 +144,17 @@ namespace TetrisUWP
             return false;
         }
 
-        public void combining(int[,] block, int row, int column, int row_counter, int i, int middle)
+        public int [,] Soild_Field()
         {
-            int walker = 0;
-            for (int x = 0; x < column; x++)
+            int[,] modified_field = new int[18, 10];
+            for(int i =0; i<18; i++)
             {
-                block[row - 1, x] = field[i, middle - 1 + walker];
-                walker++;
+                for(int j= 0; j<10; j++)
+                {
+                    modified_field[i, j] = field[i, j];
+                }
             }
+            return modified_field;
         }
 
         public int [,]original_block(int[,] block, int row, int column)
@@ -169,115 +172,132 @@ namespace TetrisUWP
         public void Falling_Block(int[,] block, int row, int column)
         {
             int[,] test_block = original_block(block, row, column);
+            int[,] modified_field = Soild_Field();
             bool rotate = false;
             bool falling = true;
             bool overflow = false;
             int middle = 4;
             int walker;
             int row_counter = 0;
-            int row_remainder = 0;
+            int row_remainder = row;
             int counter = 0;
 
             for (int i = 0; i < 18; i++)
             {
                 //Fisrt Insert in the middle
-
-                    if (i == 0) //first block ony 
+                if (i == 0) //first block ony 
+                {
+                    if (collision(block, row, column, row_counter, i, middle))
                     {
-                        if (collision(block, row, column, row_counter, i, middle))
+                        falling = false;
+                        break;
+                    }
+                    if (falling)
+                    {
+                        walker = 0;
+                        for (int x = 0; x < column; x++)
                         {
-                            falling = false;
-                            break;
+                            if (modified_field[i, middle - 1 + walker] == 0 && block[row - 1, x] == 1)
+                            {
+                                field[i, middle - 1 + walker] = block[row - 1, x];
+                            }
+                            if (modified_field[i, middle - 1 + walker] == 0 && block[row - 1, x] == 0)
+                            {
+                                field[i, middle - 1 + walker] = 0;
+                            }
+                            walker++;
                         }
-                        if (falling)
+                    }
+                }
+                if (i > 0)//inseterts each block one by one.
+                {
+                    row_counter = (i < row) ? i : row-1;
+                    if (collision(block, row, column, row_counter, i, middle))
+                    {
+                        falling = false;
+                        break;
+                    }
+                    if (falling)
+                    {
+                        for (int y = 0; y < row_counter+1; y++)
                         {
                             walker = 0;
                             for (int x = 0; x < column; x++)
                             {
-                                if (field[i, middle - 1 + walker] == 0 && block[row - 1, x] == 1)
-                                    field[i, middle - 1 + walker] = block[row - 1, x];
-                                if (field[i, middle - 1 + walker] == 1 && block[row - 1, x] == 0)
-                                    block[row - 1, x] = 1;
+                                if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 1)
+                                {
+                                    field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+                                }
+                                if (modified_field[i - y, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                                {
+                                    block[row - 1 - y, x] = 1;
+                                }
+                                if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 0)
+                                {
+                                    field[i - y, middle - 1 + walker] = 0;
+                                }
+                                if (i >=row && y == row_counter)
+                                {
+                                        field[i - row, middle - 1 + walker] = 0;
+                                }
                                 walker++;
                             }
                         }
                     }
-                    if (i > 0)//inseterts each block one by one.
+
+                }
+                if (i == 17)
+                {
+                    Print_Grid();
+                    Debug.WriteLine("");
+                    do
                     {
-                        row_counter = (i < row) ? i : row-1;
-                        if (collision(block, row, column, row_counter, i, middle))
+                        counter = 0;
+                        for (int l = 0; l < column; l++)
                         {
-                            falling = false;
-                            break;
-                        }
-                        if (falling)
-                        {
-                            for (int y = 0; y < row_counter+1; y++)
+                            if (block[row_remainder - 1, l] == 0)
                             {
-                                walker = 0;
-                                for (int x = 0; x < column; x++)
+                                counter++;
+                                if (counter == column)
                                 {
-                                    if(field[i-y, middle -1 + walker]==0 && block[row - 1 - y, x]==1)
-                                        field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
-                                    if (field[i - y, middle - 1 + walker] == 1 && block[row - 1 - y, x] == 0)
-                                        block[row - 1 - y, x] = 1;
-                                    if (i >=row)
-                                    {
-                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
-                                            field[i - row, middle - 1 + walker] = 1;
-                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 1)
-                                            field[i - row, middle - 1 + walker] = 0;
-                                    }
-
-                                    walker++;
-                                }
-                            }
-                        }
-
-                    }
-
-                    if (i == 17)
-                    {
-                        do {
-                            counter = 0;
-                            for (int l = 0; l < column; l++)
-                            {
-                                if (block[row - 1, l] == 0)
-                                {
-                                    counter++;
-                                    if (counter == column)
-                                    {
-                                        overflow = true;
-                                        row--;
-                                        
-                                        break;
-                                    }
-                                }
-                                if (block[row - 1, l] == 1)
-                                {
-                                    overflow = false;
+                                    overflow = true;
+                                    row_remainder--;
                                     break;
                                 }
                             }
-                            for (int y = 0; y < row; y++)
+                            if (block[row_remainder - 1, l] == 1)
                             {
-                                walker = 0;
-                                for (int x = 0; x < column; x++)
-                                {
-                                    field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
-                                    if (i >= row)
-                                    {
-                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
-                                            field[i - row, middle - 1 + walker] = 1;
-                                        if (field[i - row, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 1)
-                                            field[i - row, middle - 1 + walker] = 0;
-                                    }
-                                    walker++;
-                                }
+                                overflow = false;
+                                break;
                             }
-                            row_remainder++;
-                        } while (overflow) ;
-                    }
+                        }
+                        for (int y = 0; y < row_remainder; y++)
+                        {
+                            walker = 0;
+                            for (int x = 0; x < column; x++)
+                            {
+                                field[i - y, middle - 1 + walker] = block[row_remainder - 1 - y, x];
+                                if (i >= row_remainder)
+                                {
+                                    if (modified_field[i - row_remainder, middle - 1 + walker] == 1 && test_block[row_remainder - 1 - y, x] == 0)
+                                    {
+                                        field[i - row_remainder, middle - 1 + walker] = 1;
+                                    }
+                                    if (modified_field[i - row_remainder, middle - 1 + walker] == 0 && test_block[row_remainder - 1 - y, x] == 0)
+                                    {
+                                        field[i - row_remainder, middle - 1 + walker] = 0;
+                                    }
+                                }
+                                walker++;
+                            }
+                        }
+                        if (overflow)
+                        {
+                            Print_Grid();
+                            Debug.WriteLine("");
+                        }
+                    } while (overflow) ;
+                }
 
                 Print_Grid();
                 Debug.WriteLine("");
