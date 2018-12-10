@@ -30,10 +30,11 @@ namespace TetrisUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
+        Rectangle[,] uiField;
         public Grid bar;
         public Grid block;
         public Grid sLine;
-        public TransformGroup myTransformGroup;
         public Rectangle one;
         bool pauseStatus;
         bool resumeStatus;
@@ -45,6 +46,23 @@ namespace TetrisUWP
             //startWindow.Show();
             InitializeComponent();
             game_page.Focus(FocusState.Programmatic);
+
+            uiField = new Rectangle[18,10];
+            for(int i = 0; i < 18; i++)
+            {
+                for(int j = 0; j < 10; j++)
+                {
+                    uiField[i, j] = new Rectangle();
+                    uiField[i, j].Height = 25;
+                    uiField[i, j].Width = 25;
+                    uiField[i, j].Fill = emptyBlockColor;
+                    uiField[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                     uiField[i,j].Margin = new Thickness(0, 0, -50*j, -50*i);
+                    GameWin.Children.Add(uiField[i, j]);
+                }
+            }
+
+
 
             one = new Rectangle();
             one.Height = 20;
@@ -61,20 +79,58 @@ namespace TetrisUWP
             block.Margin = new Thickness(0, 0, -200, 0);
             */
         }
+        public void Check_Line()
+        {
+            for (int i = 17; i >= 0; i--)
+            {
+                int count = 0; //counts to check if the row is full
+                for (int j = 0; j < 10; j++)
+                {
+                    if (uiField[i, j].Fill != emptyBlockColor) //Checks if there is a peice of the object on that spot
+                    {
+                        count++;
+                        if (count == 10) //if there is a peice of the object for that whole row, clear it
+                        {
+                            for (int k = 0; k < 10; k++)
+                            {
+                                for (int z = i; z >= 0; z--)
+                                {
+                                    if (z >= 1)
+                                    {
+                                        uiField[z, k].Fill = uiField[z - 1, k].Fill;
+                                    }
+                                    if (z == 0)
+                                    {
+                                        uiField[z, k].Fill = emptyBlockColor;
+                                    }
+                                }
+                            }
+                            //We hae to implemement the score function here!
+                            i++;
+                        }
+                    }
+                }
+
+            }
+
+        }
         private void start_game()
         {
             Game_Grid Field = new Game_Grid();
 
-            int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
+            int[,] Line = new int[4, 4] { { 0, 0, 0, 0 }, { 1, 1, 1, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
             int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
             int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
+            int[,] T = new int[3, 3] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
 
             Debug.WriteLine("");
             Field.Print_Grid();
             Debug.WriteLine("");
+            int[,] currField = Field.field;
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
+            Field.Falling_Block(T, 3, 3);
         }
         /*private void PageLostFocus(object sender, RoutedEventArgs e)
         {
@@ -92,27 +148,27 @@ namespace TetrisUWP
             Rectangle one = new Rectangle();
             one.Height = 25;
             one.Width = 25;
-            one.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            one.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
 
             Rectangle two = new Rectangle();
             two.Height = 25;
             two.Width = 25;
-            two.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            two.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             two.Margin = new Thickness(-50, 0, 0, 0);
 
             Rectangle three = new Rectangle();
             three.Height = 25;
             three.Width = 25;
-            three.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            three.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             three.Margin = new Thickness(0, 0, 0, -50);
 
             Rectangle four = new Rectangle();
             four.Height = 25;
             four.Width = 25;
-            four.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            four.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             four.Margin = new Thickness(0, 0, -50, -50);
 
