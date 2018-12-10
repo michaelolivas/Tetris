@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetris", "game\Tetris.csproj", "{D96D7D53-BE0D-48CB-86AF-187FD3966532}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TetrisUWP", "TetrisUWP\TetrisUWP.csproj", "{B191BD42-B88F-46E0-A4ED-B470E0B17F1D}"
 EndProject
 Global
@@ -19,21 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Debug|ARM.Build.0 = Debug|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Debug|x64.Build.0 = Debug|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Debug|x86.Build.0 = Debug|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|ARM.ActiveCfg = Release|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|ARM.Build.0 = Release|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|x64.ActiveCfg = Release|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|x64.Build.0 = Release|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|x86.ActiveCfg = Release|Any CPU
-		{D96D7D53-BE0D-48CB-86AF-187FD3966532}.Release|x86.Build.0 = Release|Any CPU
 		{B191BD42-B88F-46E0-A4ED-B470E0B17F1D}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{B191BD42-B88F-46E0-A4ED-B470E0B17F1D}.Debug|Any CPU.Build.0 = Debug|x86
 		{B191BD42-B88F-46E0-A4ED-B470E0B17F1D}.Debug|Any CPU.Deploy.0 = Debug|x86
