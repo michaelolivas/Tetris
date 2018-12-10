@@ -30,6 +30,8 @@ namespace TetrisUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
+        Rectangle[,] uiField;
         public Grid bar;
         public Grid block;
         public Grid sLine;
@@ -45,7 +47,7 @@ namespace TetrisUWP
             InitializeComponent();
             game_page.Focus(FocusState.Programmatic);
 
-            Rectangle[,] uiField = new Rectangle[18,10];
+            uiField = new Rectangle[18,10];
             for(int i = 0; i < 18; i++)
             {
                 for(int j = 0; j < 10; j++)
@@ -53,7 +55,7 @@ namespace TetrisUWP
                     uiField[i, j] = new Rectangle();
                     uiField[i, j].Height = 25;
                     uiField[i, j].Width = 25;
-                    uiField[i, j].Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255,177,177,173));
+                    uiField[i, j].Fill = emptyBlockColor;
                     uiField[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
                      uiField[i,j].Margin = new Thickness(0, 0, -50*j, -50*i);
                     GameWin.Children.Add(uiField[i, j]);
@@ -77,8 +79,39 @@ namespace TetrisUWP
             block.Margin = new Thickness(0, 0, -200, 0);
             */
         }
-        private void update_UI(int[,] field)
+        public void Check_Line()
         {
+            for (int i = 17; i >= 0; i--)
+            {
+                int count = 0; //counts to check if the row is full
+                for (int j = 0; j < 10; j++)
+                {
+                    if (uiField[i, j].Fill != emptyBlockColor) //Checks if there is a peice of the object on that spot
+                    {
+                        count++;
+                        if (count == 10) //if there is a peice of the object for that whole row, clear it
+                        {
+                            for (int k = 0; k < 10; k++)
+                            {
+                                for (int z = i; z >= 0; z--)
+                                {
+                                    if (z >= 1)
+                                    {
+                                        uiField[z, k].Fill = uiField[z - 1, k].Fill;
+                                    }
+                                    if (z == 0)
+                                    {
+                                        uiField[z, k].Fill = emptyBlockColor;
+                                    }
+                                }
+                            }
+                            //We hae to implemement the score function here!
+                            i++;
+                        }
+                    }
+                }
+
+            }
 
         }
         private void start_game()
