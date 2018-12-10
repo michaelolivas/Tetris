@@ -223,29 +223,43 @@ namespace TetrisUWP
             t.Start();
             
 
-            bar = create_z();
-            GameWin.Children.Add(bar);
+            //bar = create_z();
+            //GameWin.Children.Add(bar);
             int x = 0;
-            
-            for (x = 0; x >= -800; x--)
-            {
-
-                bar.Margin = new Thickness(0, 0, -50, x);
-                bar.Visibility = Visibility.Visible;
-                await Task.Delay(1000);
-                x += -49;
-                while (pauseStatus == true)
+            int d = 0;
+            bool barStatus = true;
+            while (d <= 5) {
+                if (barStatus == true)
                 {
-                    int y = 1;
-                    await Task.Delay(y);
-                    y++;
-                    if (resumeStatus == true)
+                    Grid bar = new Grid();
+                    bar = create_z();
+                    GameWin.Children.Add(bar);
+                    for (int r = -50; r > -300; r--)
                     {
-                        break;
+                        for (x = 50; x >= -800; x--)
+                        {
+                            
+                            bar.Margin = new Thickness(0, 0, r, x);
+                            bar.Visibility = Visibility.Visible;
+                            await Task.Delay(1000 - (100 * d));
+                            x += -49;
+                            while (pauseStatus == true)
+                            {
+                                int y = 1;
+                                await Task.Delay(y);
+                                y++;
+                                if (resumeStatus == true)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        r += -99;
                     }
                 }
+                d++;
             }
-            bool barStatus = true;
+            //bool barStatus = true;
             if (barStatus == true)
             {
                 block = create_square();
