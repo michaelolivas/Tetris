@@ -33,7 +33,6 @@ namespace TetrisUWP
         public Grid bar;
         public Grid block;
         public Grid sLine;
-        public TransformGroup myTransformGroup;
         public Rectangle one;
         bool pauseStatus;
         bool resumeStatus;
@@ -45,6 +44,23 @@ namespace TetrisUWP
             //startWindow.Show();
             InitializeComponent();
             game_page.Focus(FocusState.Programmatic);
+
+            Rectangle[,] uiField = new Rectangle[18,10];
+            for(int i = 0; i < 18; i++)
+            {
+                for(int j = 0; j < 10; j++)
+                {
+                    uiField[i, j] = new Rectangle();
+                    uiField[i, j].Height = 25;
+                    uiField[i, j].Width = 25;
+                    uiField[i, j].Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255,177,177,173));
+                    uiField[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                     uiField[i,j].Margin = new Thickness(0, 0, -50*j, -50*i);
+                    GameWin.Children.Add(uiField[i, j]);
+                }
+            }
+
+
 
             one = new Rectangle();
             one.Height = 20;
@@ -61,6 +77,10 @@ namespace TetrisUWP
             block.Margin = new Thickness(0, 0, -200, 0);
             */
         }
+        private void update_UI(int[,] field)
+        {
+
+        }
         private void start_game()
         {
             Game_Grid Field = new Game_Grid();
@@ -72,6 +92,7 @@ namespace TetrisUWP
             Debug.WriteLine("");
             Field.Print_Grid();
             Debug.WriteLine("");
+            int[,] currField = Field.field;
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
@@ -92,27 +113,27 @@ namespace TetrisUWP
             Rectangle one = new Rectangle();
             one.Height = 25;
             one.Width = 25;
-            one.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            one.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
 
             Rectangle two = new Rectangle();
             two.Height = 25;
             two.Width = 25;
-            two.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            two.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             two.Margin = new Thickness(-50, 0, 0, 0);
 
             Rectangle three = new Rectangle();
             three.Height = 25;
             three.Width = 25;
-            three.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            three.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             three.Margin = new Thickness(0, 0, 0, -50);
 
             Rectangle four = new Rectangle();
             four.Height = 25;
             four.Width = 25;
-            four.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
+            four.Fill = new SolidColorBrush(Windows.UI.Colors.Green);
             four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
             four.Margin = new Thickness(0, 0, -50, -50);
 
