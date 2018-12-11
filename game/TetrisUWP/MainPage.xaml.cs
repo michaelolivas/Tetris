@@ -33,7 +33,6 @@ namespace TetrisUWP
         SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
         Rectangle[,] uiField;
         Rectangle[,] Line;
-        Grid currBlock;
         public Grid bar;
         public Grid block;
         public Grid sLine;
@@ -67,7 +66,6 @@ namespace TetrisUWP
             Line[1, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             Line[2, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             Line[3, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
-
 
 
 
