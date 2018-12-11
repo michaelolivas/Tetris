@@ -39,12 +39,10 @@ namespace TetrisUWP
                                     {
                                         field[z, k] = field[z - 1, k];
                                     }
-
                                     if (z == 0)
                                     {
                                         field[z, k] = 0;
                                     }
-
                                 }
                                 Print_Grid();
                                 Debug.WriteLine("");
@@ -226,6 +224,7 @@ namespace TetrisUWP
                                 if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 1)
                                 {
                                     field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+
                                 }
                                 if (modified_field[i - y, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
                                 {
