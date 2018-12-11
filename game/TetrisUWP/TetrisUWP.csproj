@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Backend.cs" />
+    <Compile Include="gameBlock.cs" />
     <Compile Include="highScores.xaml.cs">
       <DependentUpon>highScores.xaml</DependentUpon>
     </Compile>
@@ -195,6 +196,9 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="System\Windows\Input\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

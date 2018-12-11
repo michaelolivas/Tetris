@@ -65,8 +65,8 @@
             </TextBlock.Foreground>
         </TextBlock>
         <Button x:Name="newGame" Content="NEW GAME" HorizontalAlignment="Left" Margin="300,558,0,0" VerticalAlignment="Top" FontFamily="Comic Sans MS" FontSize="48" Click="newGame_Click" FocusVisualPrimaryBrush="{x:Null}" Foreground="Black" Background="{x:Null}" BorderBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FontWeight="Bold"/>
-        <Button x:Name="Resume" Content="RESUME" HorizontalAlignment="Left" Margin="336,558,0,0" VerticalAlignment="Top" Click="Resume_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" Visibility="Collapsed" FocusVisualPrimaryBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" BorderBrush="{x:Null}"/>
-        <Button x:Name="Quit" Content="QUIT" HorizontalAlignment="Left" Margin="230,582,0,0" VerticalAlignment="Top" Click="Quit_Click" FontFamily="Comic Sans MS" FontSize="18" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" Visibility="Collapsed"/>
+        <Button x:Name="Resume" Content="RESUME" HorizontalAlignment="Left" Margin="336,558,0,0" VerticalAlignment="Top" Click="Resume_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" Visibility="Collapsed" FocusVisualPrimaryBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Button x:Name="Quit" Content="QUIT" HorizontalAlignment="Left" Margin="619,653,0,0" VerticalAlignment="Top" Click="Quit_Click" FontFamily="Comic Sans MS" FontSize="18" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" Visibility="Collapsed"/>
         <Image HorizontalAlignment="Left" Height="200" Margin="224,10,0,0" VerticalAlignment="Top" Width="200" Source="/Assets/LargeTile.png"/>
     </Grid>
 </Page>
