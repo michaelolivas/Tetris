@@ -189,7 +189,7 @@ namespace TetrisUWP
                     {
                         if (modified_field[i, middle - 1 + walker] == 0 && test_block[row - 1, x] == 1)
                         {
-                                field[i, middle - 1 + walker] = block[row - 1, x];
+                            field[i, middle - 1 + walker] = block[row - 1, x];
                         }
                         if (modified_field[i, middle - 1 + walker] == 0 && test_block[row - 1, x] == 0)
                         {
@@ -215,11 +215,11 @@ namespace TetrisUWP
                         {
                             if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 1)
                             {
-                            field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+                                field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
                             }
                             if (modified_field[i - y, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
                             {
-                                block[row - 1 - y, x] = 1;
+                                field[i - y, middle - 1 + walker] = 1;
                             }
                             if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 0)
                             {
@@ -227,10 +227,14 @@ namespace TetrisUWP
                             }
                             if (i >=row && y == row_counter)
                             {
-                                if(modified_field[i - y, middle - 1 + walker] == 0 && (test_block[row - 1 - y, x] == 1 || test_block[row - 1 - y, x] == 0))
+                                if (modified_field[i - y, middle - 1 + walker] == 0 && (test_block[row - 1 - y, x] == 1 || test_block[row - 1 - y, x] == 0))
+                                {
                                     field[i - row, middle - 1 + walker] = 0;
+                                }
                                 if (modified_field[i - y, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                                {
                                     field[i - row, middle - 1 + walker] = 1;
+                                }
                             }
                             walker++;
                         }
@@ -268,7 +272,18 @@ namespace TetrisUWP
                         walker = 0;
                         for (int x = 0; x < column; x++)
                         {
-                            field[i - y, middle - 1 + walker] = block[row_remainder - 1 - y, x];
+                            if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 1)
+                            {
+                                field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+                            }
+                            if (modified_field[i - y, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                            {
+                                field[i - y, middle - 1 + walker] = 1;
+                            }
+                            if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 0)
+                            {
+                                field[i - y, middle - 1 + walker] = 0;
+                            }
                             if (i >= row_remainder)
                             {
                                 if (modified_field[i - row_remainder, middle - 1 + walker] == 1 && test_block[row_remainder - 1 - y, x] == 0)
