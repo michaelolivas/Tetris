@@ -232,6 +232,7 @@ namespace TetrisUWP
                                     uiField[i - row, middle - 1 + walker].Fill = emptyBlockColor;
                                 }
                                 walker++;
+
                             }
                         }
                     }
@@ -447,6 +448,7 @@ namespace TetrisUWP
             Quit.Visibility = Visibility.Visible;
             pauseStatus = true;
             resumeStatus = false;
+            Debug.WriteLine("Paused.");
             
         }
 
@@ -457,6 +459,10 @@ namespace TetrisUWP
             Resume.Visibility = Visibility.Collapsed;
             Quit.Visibility = Visibility.Collapsed;
 
+
+            Falling_Block(Line, 4, 4);
+            Falling_Block(Line, 4, 4);
+            await Task.Delay(10000);
 
             Falling_Block(Line, 4, 4);
             //Falling_Block(Line, 4, 4);
