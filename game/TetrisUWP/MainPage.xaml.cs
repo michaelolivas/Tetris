@@ -32,6 +32,8 @@ namespace TetrisUWP
     {
         SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
         Rectangle[,] uiField;
+        Rectangle[,] Line;
+        Grid currBlock;
         public Grid bar;
         public Grid block;
         public Grid sLine;
@@ -47,6 +49,29 @@ namespace TetrisUWP
             InitializeComponent();
             game_page.Focus(FocusState.Programmatic);
 
+            //init line obj
+            Line = new Rectangle[4, 4];
+            for(int x = 0;x < 4; x++)
+            {
+                for(int y = 0; y < 4; y++)
+                {
+                    Line[x,y] = new Rectangle();
+                    Line[x, y].Height = 25;
+                    Line[x, y].Width = 25;
+                    Line[x, y].Fill = emptyBlockColor;
+                    Line[x, y].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                    Line[x, y].Margin = new Thickness(0, 0, -50 * y, -50 * x);
+                }
+            }
+            Line[0, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            Line[1, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            Line[2, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            Line[3, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+
+
+
+
+            //Initialize Game UI Field
             uiField = new Rectangle[18,10];
             for(int i = 0; i < 18; i++)
             {
@@ -61,23 +86,6 @@ namespace TetrisUWP
                     GameWin.Children.Add(uiField[i, j]);
                 }
             }
-
-
-
-            one = new Rectangle();
-            one.Height = 20;
-            one.Width = 20;
-
-            //GridOne.Children.Add(one);
-            /*
-            bar = create_z();
-            GameWin.Children.Add(bar);
-            bar.Margin = new Thickness(0, 0, -50, 0);
-            
-            block = create_square();
-            GameWin.Children.Add(block);
-            block.Margin = new Thickness(0, 0, -200, 0);
-            */
         }
         public void Check_Line()
         {
@@ -114,9 +122,183 @@ namespace TetrisUWP
             }
 
         }
+        public bool collision(Rectangle[,] block, int row, int column, int row_counter, int i, int middle)
+        {
+            int walker = 0;
+            for (int x = 0; x < column; x++)
+            {
+                if (uiField[i, middle - 1 + walker].Fill != emptyBlockColor && block[row - 1, x].Fill != emptyBlockColor)
+                {
+                    return true;
+                }
+                walker++;
+            }
+            return false;
+        }
+        public Rectangle[,] Solid_Field()
+        {
+            Rectangle[,] modified_field = new Rectangle[18, 10];
+            for (int i = 0; i < 18; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    modified_field[i, j] = uiField[i, j];
+                }
+            }
+            return modified_field;
+        }
+        public Rectangle[,] original_block(Rectangle[,] block, int row, int column)
+        {
+            Rectangle[,] test_block = new Rectangle[row, column];
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    test_block[i, j] = block[i, j];
+                }
+            }
+            return test_block;
+        }
+        public void Falling_Block(Rectangle[,] block, int row, int column)
+        {
+            Rectangle[,] test_block = original_block(block, row, column);
+            Rectangle[,] modified_field = Solid_Field();
+            bool rotate = false;
+            bool falling = true;
+            bool overflow = false;
+            int middle = 4;
+            int walker;
+            int row_counter = 0;
+            int row_remainder = row;
+            int counter = 0;
+            Debug.WriteLine("Here.");
+            for (int i = 0; i < 18; i++)
+            {
+                //Fisrt Insert in the middle
+                if (i == 0) //first block ony 
+                {
+                    if (collision(block, row, column, row_counter, i, middle))
+                    {
+                        falling = false;
+                        break;
+                    }
+                    if (falling)
+                    {
+                        walker = 0;
+                        for (int x = 0; x < column; x++)
+                        {
+                            Debug.WriteLine("Debug");
+                            if (modified_field[i, middle - 1 + walker].Fill == emptyBlockColor && block[row - 1, x].Fill != emptyBlockColor)
+                            {
+                                uiField[i, middle - 1 + walker].Fill = block[row - 1, x].Fill;
+                            }
+                            if (modified_field[i, middle - 1 + walker].Fill == emptyBlockColor && block[row - 1, x].Fill == emptyBlockColor)
+                            {
+                                uiField[i, middle - 1 + walker].Fill = emptyBlockColor;
+                            }
+                            walker++;
+                        }
+                    }
+                }
+                if (i > 0)//inseterts each block one by one.
+                {
+                    row_counter = (i < row) ? i : row - 1;
+                    if (collision(block, row, column, row_counter, i, middle))
+                    {
+                        falling = false;
+                        break;
+                    }
+                    if (falling)
+                    {
+                        for (int y = 0; y < row_counter + 1; y++)
+                        {
+                            walker = 0;
+                            for (int x = 0; x < column; x++)
+                            {
+                                if (modified_field[i - y, middle - 1 + walker].Fill == emptyBlockColor && test_block[row - 1 - y, x].Fill != emptyBlockColor)
+                                {
+                                    uiField[i - y, middle - 1 + walker].Fill = block[row - 1 - y, x].Fill;
+                                }
+                                if (modified_field[i - y, middle - 1 + walker].Fill != emptyBlockColor && test_block[row - 1 - y, x].Fill == emptyBlockColor)
+                                {
+                                    block[row - 1 - y, x].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+                                }
+                                if (modified_field[i - y, middle - 1 + walker].Fill == emptyBlockColor && test_block[row - 1 - y, x].Fill == emptyBlockColor)
+                                {
+                                    uiField[i - y, middle - 1 + walker].Fill = emptyBlockColor;
+                                }
+                                if (i >= row && y == row_counter)
+                                {
+                                    uiField[i - row, middle - 1 + walker].Fill = emptyBlockColor;
+                                }
+                                walker++;
+
+                            }
+                        }
+                    }
+
+                }
+                /*if (i == 17)
+                {
+                    do
+                    {
+                        counter = 0;
+                        for (int l = 0; l < column; l++)
+                        {
+                            if (block[row_remainder - 1, l].Fill == emptyBlockColor)
+                            {
+                                counter++;
+                                if (counter == column)
+                                {
+                                    overflow = true;
+                                    row_remainder--;
+                                    break;
+                                }
+                            }
+                            if (block[row_remainder - 1, l].Fill != emptyBlockColor)
+                            {
+                                overflow = false;
+                                break;
+                            }
+                        }
+                        for (int y = 0; y < row_remainder; y++)
+                        {
+                            walker = 0;
+                            for (int x = 0; x < column; x++)
+                            {
+                                uiField[i - y, middle - 1 + walker] = block[row_remainder - 1 - y, x];
+                                if (i >= row_remainder)
+                                {
+                                    if (modified_field[i - row_remainder, middle - 1 + walker].Fill != emptyBlockColor && test_block[row_remainder - 1 - y, x].Fill == emptyBlockColor)
+                                    {
+                                        uiField[i - row_remainder, middle - 1 + walker].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
+                                    }
+                                    if (modified_field[i - row_remainder, middle - 1 + walker].Fill == emptyBlockColor && test_block[row_remainder - 1 - y, x].Fill == emptyBlockColor)
+                                    {
+                                        uiField[i - row_remainder, middle - 1 + walker].Fill = emptyBlockColor;
+                                    }
+                                }
+                                walker++;
+                            }
+                        }
+                    } while (overflow);
+                }
+                */
+                for (int a = 0; a < row; a++)
+                {
+                    for (int b = 0; b < column; b++)
+                    {
+                        block[a, b] = test_block[a, b];
+                    }
+                }
+                if (!falling)
+                    break;
+            }
+            Check_Line();
+        }
         private void start_game()
         {
-            Game_Grid Field = new Game_Grid();
+            /*Game_Grid Field = new Game_Grid();
 
             int[,] Line = new int[4, 4] { { 0, 0, 0, 0 }, { 1, 1, 1, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
             int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
@@ -130,7 +312,7 @@ namespace TetrisUWP
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
-            Field.Falling_Block(T, 3, 3);
+            Field.Falling_Block(T, 3, 3);*/
         }
         /*private void PageLostFocus(object sender, RoutedEventArgs e)
         {
@@ -264,6 +446,7 @@ namespace TetrisUWP
             Quit.Visibility = Visibility.Visible;
             pauseStatus = true;
             resumeStatus = false;
+            Debug.WriteLine("Paused.");
             
         }
 
@@ -275,10 +458,17 @@ namespace TetrisUWP
             Quit.Visibility = Visibility.Collapsed;
 
 
-            Task t = new Task(start_game);
-            t.Start();
-            
+            Falling_Block(Line, 4, 4);
+            Falling_Block(Line, 4, 4);
+            await Task.Delay(10000);
 
+            Falling_Block(Line, 4, 4);
+            //Falling_Block(Line, 4, 4);
+
+            //Task t = new Task(start_game);
+            //t.Start();
+
+            /*
             bar = create_z();
             GameWin.Children.Add(bar);
             int x = 0;
@@ -313,7 +503,7 @@ namespace TetrisUWP
                     await Task.Delay(1000);
                     i += -49;
                 }
-            }
+            }*/
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
