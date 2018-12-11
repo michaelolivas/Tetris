@@ -300,7 +300,7 @@ namespace TetrisUWP
         {
             /*Game_Grid Field = new Game_Grid();
 
-            int[,] Line = new int[4, 4] { { 0, 0, 0, 0 }, { 1, 1, 1, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
+            int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0,0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
             int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
             int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
             int[,] T = new int[3, 3] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
@@ -308,6 +308,72 @@ namespace TetrisUWP
             Debug.WriteLine("");
             Field.Print_Grid();
             Debug.WriteLine("");
+            int row = 4;
+            int column = 4;
+            int[,] test_block = Field.original_block(Line, row, column);
+            int[,] modified_field = Field.Solid_Field();
+            bool rotate = false;
+            bool falling = true;
+            bool overflow = false;
+            int middle = 4;
+            int i = 0;
+            while (i < 18)
+            {
+                Line = Field.original_block(Line, row, column);
+                test_block = Field.original_block(Line, row, column);
+                if (i>5)
+                {
+                    Line = Field.Rotate_Left(Line, test_block, row, column);
+                }
+                falling = Field.Falling_Block(Line, 4, 4, test_block, modified_field, rotate, falling, overflow, middle, i);
+                i++;
+                if (!falling)
+                    break;
+            }
+            Field.Check_Line();
+            falling = true;
+            i = 0;
+            row = 2;
+            column = 2;
+            test_block = Field.original_block(Box, row, column);
+            modified_field = Field.Solid_Field();
+            while (i < 18)
+            {
+                Box = Field.original_block(test_block, row, column);
+                test_block = Field.original_block(Box, row, column);
+                if (i>5)
+                {
+                    Box = Field.Rotate_Left(Box, test_block, row, column);
+                }
+                falling = Field.Falling_Block(Box, 2, 2, test_block, modified_field, rotate, falling, overflow, middle,i);
+                i++;
+                if (!falling)
+                    break;
+            }
+            Field.Check_Line();
+            falling = true;
+            i = 0;
+            row = 3;
+            column = 3;
+            test_block = Field.original_block(L, row, column);
+            modified_field = Field.Solid_Field();
+            while (i < 18)
+            {
+                L = Field.original_block(L, row, column);
+                test_block = Field.original_block(L, row, column);
+                if (i>5)
+                {
+                    L = Field.Rotate_Left(Field.original_block(L, row, column), test_block, row, column);
+                }
+                falling = Field.Falling_Block(L, 3, 3, test_block, modified_field, rotate, falling, overflow, middle, i);
+                i++;
+                if (!falling)
+                    break;
+            }
+            
+            Field.Check_Line();
+            //
+            //Field.Falling_Block(T, 3, 3, test_block, modified_field, rotate, falling, overflow, middle);
             int[,] currField = Field.field;
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
