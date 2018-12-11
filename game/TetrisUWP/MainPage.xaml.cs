@@ -57,7 +57,7 @@ namespace TetrisUWP
                     uiField[i, j].Width = 25;
                     uiField[i, j].Fill = emptyBlockColor;
                     uiField[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                     uiField[i,j].Margin = new Thickness(0, 0, -50*j, -50*i);
+                    uiField[i,j].Margin = new Thickness(0, 0, -50*j, -50*i);
                     GameWin.Children.Add(uiField[i, j]);
                 }
             }
@@ -281,41 +281,42 @@ namespace TetrisUWP
 
             //bar = create_z();
             //GameWin.Children.Add(bar);
+            
             int x = 0;
             int d = 0;
             bool barStatus = true;
-            while (d <= 5) {
-                if (barStatus == true)
+            //while (d <= 5) {
+            //Grid bar = new Grid();
+            //bar = create_z();
+            //GameWin.Children.Add(bar);
+            for (int m = 5; m <= 5; m++)
+            {
+                for (int r = -50; r >= -400; r--)
                 {
-                    Grid bar = new Grid();
                     bar = create_z();
                     GameWin.Children.Add(bar);
-                    for (int r = -50; r > -300; r--)
+
+                    for (x = 0; x >= -800; x--)
                     {
-                        for (x = 50; x >= -800; x--)
+                        bar.Margin = new Thickness(0, 0, r, x);
+                        bar.Visibility = Visibility.Visible;
+                        await Task.Delay(1000 - (100 * m));
+                        x += -49;
+                        while (pauseStatus == true)
                         {
-                            
-                            bar.Margin = new Thickness(0, 0, r, x);
-                            bar.Visibility = Visibility.Visible;
-                            await Task.Delay(1000 - (100 * d));
-                            x += -49;
-                            while (pauseStatus == true)
+                            int y = 1;
+                            await Task.Delay(y);
+                            y++;
+                            if (resumeStatus == true)
                             {
-                                int y = 1;
-                                await Task.Delay(y);
-                                y++;
-                                if (resumeStatus == true)
-                                {
-                                    break;
-                                }
+                                break;
                             }
                         }
-                        r += -99;
                     }
+                    r += -99;
                 }
-                d++;
             }
-            //bool barStatus = true;
+
             if (barStatus == true)
             {
                 block = create_square();
@@ -327,7 +328,19 @@ namespace TetrisUWP
                     await Task.Delay(1000);
                     i += -49;
                 }
+                while (pauseStatus == true)
+                {
+                    int y = 1;
+                    await Task.Delay(y);
+                    y++;
+                    if (resumeStatus == true)
+                    {
+                        break;
+                    }
+                }
+
             }
+            
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
@@ -350,6 +363,7 @@ namespace TetrisUWP
             resumeStatus = true;
             Application.Current.Exit(); //closes the whole app
         }
+
     }
 
 }
