@@ -86,6 +86,7 @@ namespace TetrisUWP
                     GameWin.Children.Add(uiField[i, j]);
                 }
             }
+
         }
         public void Check_Line()
         {
@@ -174,8 +175,8 @@ namespace TetrisUWP
             Debug.WriteLine("Here.");
             for (int i = 0; i < 18; i++)
             {
-                //Fisrt Insert in the middle
-                if (i == 0) //first block ony 
+                //First Insert in the middle
+                if (i == 0) //first block only 
                 {
                     if (collision(block, row, column, row_counter, i, middle))
                     {
@@ -200,7 +201,7 @@ namespace TetrisUWP
                         }
                     }
                 }
-                if (i > 0)//inseterts each block one by one.
+                if (i > 0)//inserts each block one by one.
                 {
                     row_counter = (i < row) ? i : row - 1;
                     if (collision(block, row, column, row_counter, i, middle))
@@ -458,11 +459,15 @@ namespace TetrisUWP
             Quit.Visibility = Visibility.Collapsed;
 
 
-            Falling_Block(Line, 4, 4);
+            /*Falling_Block(Line, 4, 4);
             Falling_Block(Line, 4, 4);
             await Task.Delay(10000);
 
             Falling_Block(Line, 4, 4);
+            */
+            gameBlock t = new gameBlock();
+
+            Falling_Block(t.block,t.x,t.y);
             //Falling_Block(Line, 4, 4);
 
             //Task t = new Task(start_game);
