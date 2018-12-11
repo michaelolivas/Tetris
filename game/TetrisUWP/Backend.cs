@@ -14,9 +14,7 @@ namespace TetrisUWP
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    field[i, j] = 1;
-                    if(j==5)
-                        field[i, j] = 0;
+                    field[i, j] = 0;
                 }
             }
         }
@@ -59,16 +57,15 @@ namespace TetrisUWP
 
         }
 
-        public int[,] Rotate_Left(int[,] block, int row, int column)
+        public int [,] Rotate_Left(int[,] block, int [,] test_block, int row, int column)
         {
-            int[,] temp_block = new int[row, column]; //temp block to switch rows and columns
             int i = 0;
             int j = 0;
             for (int x = column - 1; x >= 0; x--)
             {
                 for (int y = 0; y < row; y++)
                 {
-                    temp_block[i, j] = block[y, x]; //copies the content from the original to the new 
+                    test_block[i, j] = block[y, x]; //copies the content from the original to the new 
                     j++;
                 }
                 j = 0;
@@ -78,13 +75,12 @@ namespace TetrisUWP
             {
                 for (j = 0; j < column; j++)
                 {
-                    Debug.Write($"{temp_block[i, j]}");
+                    Debug.Write($"{test_block[i, j]}");
                 }
                 Debug.WriteLine("");
             }
             Debug.WriteLine("");
-            return temp_block;
-
+            return test_block;
         }
         public int[,] Rotate_Right(int[,] block, int row, int column)
         {
