@@ -532,9 +532,9 @@ namespace TetrisUWP
             Falling_Block(Line, 4, 4);
             */
             gameBlock t = new gameBlock();
+            Falling_Block(Line, 4, 4);
 
             Falling_Block(t.block,t.x,t.y);
-            //Falling_Block(Line, 4, 4);
 
             //Task t = new Task(start_game);
             //t.Start();

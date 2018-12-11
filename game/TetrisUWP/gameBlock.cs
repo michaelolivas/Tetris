@@ -37,7 +37,7 @@ namespace TetrisUWP
                             block[i, j].Width = 25;
                             block[i, j].Fill = emptyBlockColor;
                             block[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                            block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                            //block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                         }
                     }
                     block[0, 1].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
@@ -60,7 +60,7 @@ namespace TetrisUWP
                             block[i, j].Width = 25;
                             block[i, j].Fill = emptyBlockColor;
                             block[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                            block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                           //block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                         }
                     }
                     block[0, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
@@ -83,7 +83,7 @@ namespace TetrisUWP
                             block[i, j].Width = 25;
                             block[i, j].Fill = emptyBlockColor;
                             block[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                            block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                            //block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                         }
                     }
                     block[1, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Orange);
@@ -106,7 +106,7 @@ namespace TetrisUWP
                             block[i, j].Width = 25;
                             block[i, j].Fill = emptyBlockColor;
                             block[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                            block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                            //block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                         }
                     }
                     block[1, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Red);
@@ -129,7 +129,7 @@ namespace TetrisUWP
                             block[i, j].Width = 25;
                             block[i, j].Fill = emptyBlockColor;
                             block[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                            block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                            //block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                         }
                     }
                     block[1, 0].Fill = new SolidColorBrush(Windows.UI.Colors.RoyalBlue);
@@ -152,7 +152,7 @@ namespace TetrisUWP
                             block[i, j].Width = 25;
                             block[i, j].Fill = emptyBlockColor;
                             block[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                            block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                            //block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                         }
                     }
                     block[1, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Pink);
@@ -175,7 +175,7 @@ namespace TetrisUWP
                             block[i, j].Width = 25;
                             block[i, j].Fill = emptyBlockColor;
                             block[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                            block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                            //block[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                         }
                     }
                     block[2, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Purple);
