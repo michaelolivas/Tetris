@@ -39,12 +39,10 @@ namespace TetrisUWP
                                     {
                                         field[z, k] = field[z - 1, k];
                                     }
-
                                     if (z == 0)
                                     {
                                         field[z, k] = 0;
                                     }
-
                                 }
                             }
                             //We hae to implemement the score function here!
