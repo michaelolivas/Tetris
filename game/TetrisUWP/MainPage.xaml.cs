@@ -32,6 +32,7 @@ namespace TetrisUWP
     {
         SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
         Rectangle[,] uiField;
+        Rectangle[,] modified_field = new Rectangle[18,10];
         Rectangle[,] Line;
         public Grid bar;
         public Grid block;
@@ -80,7 +81,7 @@ namespace TetrisUWP
                     uiField[i, j].Width = 25;
                     uiField[i, j].Fill = emptyBlockColor;
                     uiField[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
-                     uiField[i,j].Margin = new Thickness(0, 0, -50*j, -50*i);
+                    uiField[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
                     GameWin.Children.Add(uiField[i, j]);
                 }
             }
@@ -139,17 +140,16 @@ namespace TetrisUWP
             }
             return false;
         }
-        public Rectangle[,] Solid_Field()
+        public void Solid_Field()
         {
-            Rectangle[,] modified_field = new Rectangle[18, 10];
             for (int i = 0; i < 18; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    modified_field[i, j] = uiField[i, j];
+                    modified_field[i, j] = new Rectangle();
+                    modified_field[i, j].Fill = uiField[i, j].Fill;
                 }
             }
-            return modified_field;
         }
         public Rectangle[,] original_block(Rectangle[,] block, int row, int column)
         {
@@ -163,7 +163,7 @@ namespace TetrisUWP
             }
             return test_block;
         }
-        public bool Falling_Block(Rectangle[,] block, int row, int column, Rectangle[,] test_block, Rectangle[,] modified_field, bool rotate, bool falling, bool overflow, int middle, int i)
+        public bool Falling_Block(Rectangle[,] block, int row, int column, Rectangle[,] test_block, bool rotate, bool falling, bool overflow, int middle, int i)
         {
             int walker;
             int row_counter = 0;
@@ -429,7 +429,7 @@ namespace TetrisUWP
             int row = 4;
             int column = 4;
             Rectangle[,] test_block = original_block(Line, row, column);
-            Rectangle[,] modified_field = Solid_Field();
+            Solid_Field();
             bool rotate = false;
             bool falling = true;
             bool overflow = false;
@@ -440,7 +440,7 @@ namespace TetrisUWP
                 Debug.WriteLine("Loop");
                 Line = original_block(Line, row, column);
                 test_block = original_block(Line, row, column);
-                falling = Falling_Block(Line, 4, 4, test_block, modified_field, rotate, falling, overflow, middle, i);
+                falling = Falling_Block(Line, 4, 4, test_block, rotate, falling, overflow, middle, i);
                 i++;
                 if (!falling)
                     break;
