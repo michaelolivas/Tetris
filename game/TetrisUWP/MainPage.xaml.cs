@@ -313,8 +313,6 @@ namespace TetrisUWP
             Field.Falling_Block(Box, 2, 2);
             Field.Falling_Block(L, 3, 3);
             Field.Falling_Block(T, 3, 3);*/
-
-
         }
         /*private void PageLostFocus(object sender, RoutedEventArgs e)
         {
