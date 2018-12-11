@@ -84,6 +84,7 @@ namespace TetrisUWP
                     GameWin.Children.Add(uiField[i, j]);
                 }
             }
+
         }
         public void Check_Line()
         {
@@ -172,8 +173,8 @@ namespace TetrisUWP
             Debug.WriteLine("Here.");
             for (int i = 0; i < 18; i++)
             {
-                //Fisrt Insert in the middle
-                if (i == 0) //first block ony 
+                //First Insert in the middle
+                if (i == 0) //first block only 
                 {
                     if (collision(block, row, column, row_counter, i, middle))
                     {
@@ -198,7 +199,7 @@ namespace TetrisUWP
                         }
                     }
                 }
-                if (i > 0)//inseterts each block one by one.
+                if (i > 0)//inserts each block one by one.
                 {
                     row_counter = (i < row) ? i : row - 1;
                     if (collision(block, row, column, row_counter, i, middle))
@@ -329,6 +330,8 @@ namespace TetrisUWP
                     break;
             }
             Field.Check_Line();
+            Field.Print_Grid();
+            Debug.WriteLine("");
             falling = true;
             i = 0;
             row = 2;
@@ -357,8 +360,6 @@ namespace TetrisUWP
             modified_field = Field.Solid_Field();
             while (i < 18)
             {
-                L = Field.original_block(L, row, column);
-                test_block = Field.original_block(L, row, column);
                 if (i>5)
                 {
                     L = Field.Rotate_Left(Field.original_block(L, row, column), test_block, row, column);
@@ -370,6 +371,7 @@ namespace TetrisUWP
             }
             
             Field.Check_Line();
+        
             //
             //Field.Falling_Block(T, 3, 3, test_block, modified_field, rotate, falling, overflow, middle);
             int[,] currField = Field.field;
@@ -522,11 +524,15 @@ namespace TetrisUWP
             Quit.Visibility = Visibility.Collapsed;
 
 
-            Falling_Block(Line, 4, 4);
+            /*Falling_Block(Line, 4, 4);
             Falling_Block(Line, 4, 4);
             await Task.Delay(10000);
 
             Falling_Block(Line, 4, 4);
+            */
+            gameBlock t = new gameBlock();
+
+            Falling_Block(t.block,t.x,t.y);
             //Falling_Block(Line, 4, 4);
 
             //Task t = new Task(start_game);
