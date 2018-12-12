@@ -33,10 +33,11 @@ namespace TetrisUWP
         SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
         Rectangle[,] uiField;
         Rectangle[,] Line;
+        Rectangle[,] sqFall;
         Grid currBlock;
         public Grid bar;
-        public Grid block;
-        public Grid sLine;
+        //public Grid block;
+        //public Grid sLine;
         public Rectangle one;
         bool pauseStatus;
         bool resumeStatus;
@@ -68,6 +69,24 @@ namespace TetrisUWP
             Line[2, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             Line[3, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
 
+            
+            sqFall = new Rectangle[2, 2];
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    sqFall[i, j] = new Rectangle();
+                    sqFall[i, j].Height = 25;
+                    sqFall[i, j].Width = 25;
+                    sqFall[i, j].Fill = emptyBlockColor;
+                    sqFall[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                    sqFall[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                }
+            }
+            sqFall[0, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+            sqFall[0, 1].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+            sqFall[1, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+            sqFall[1, 1].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
 
 
 
@@ -532,24 +551,25 @@ namespace TetrisUWP
 
             Falling_Block(Line, 4, 4);
             */
-            gameBlock t = new gameBlock();
-            Falling_Block(Line, 4, 4);
 
-            Falling_Block(t.block,t.x,t.y);
+
+            //Falling_Block(Line, 4, 4);
+
+            //Falling_Block(t.block,t.x,t.y);
 
             //Task t = new Task(start_game);
             //t.Start();
 
-            /*
-            bar = create_z();
-            GameWin.Children.Add(bar);
+
+            //sLine = create_bar();
+            gameBlock sLine = new gameBlock();
+            GameWin.Children.Add(sLine.obj);
             int x = 0;
             
             for (x = 0; x >= -800; x--)
             {
-
-                bar.Margin = new Thickness(0, 0, -50, x);
-                bar.Visibility = Visibility.Visible;
+                sLine.obj.Margin = new Thickness(0, 0, -250, x);
+                sLine.obj.Visibility = Visibility.Visible;
                 await Task.Delay(1000);
                 x += -49;
                 while (pauseStatus == true)
@@ -563,19 +583,48 @@ namespace TetrisUWP
                     }
                 }
             }
-            bool barStatus = true;
+            sLine.obj.Visibility = Visibility.Collapsed;
+            Falling_Block(Line, 4, 4);
+            
+            for (x = 0; x >= -800; x--)
+            {
+                sLine.obj.Margin = new Thickness(0, 0, -250, x);
+                sLine.obj.Visibility = Visibility.Visible;
+                await Task.Delay(1000);
+                x += -49;
+                while (pauseStatus == true)
+                {
+                    int y = 1;
+                    await Task.Delay(y);
+                    y++;
+                    if (resumeStatus == true)
+                    {
+                        break;
+                    }
+                }
+            }
+            sLine.obj.Visibility = Visibility.Collapsed;
+            Falling_Block(Line, 4, 4);
+        ////
+
+            /*
+             * bool barStatus = true;
             if (barStatus == true)
             {
-                block = create_square();
-                GameWin.Children.Add(block);
+
+                gameBlock newsq = new gameBlock();
+                GameWin.Children.Add(newsq.yeeerr);
                 for (int i = 0; i >= -800; i--)
                 {
-                    block.Margin = new Thickness(0, 0, -50, i);
-                    bar.Visibility = Visibility.Visible;
+                    newsq.yeeerr.Margin = new Thickness(0, 0, -250, i);
+                    newsq.yeeerr.Visibility = Visibility.Visible;
                     await Task.Delay(1000);
                     i += -49;
                 }
-            }*/
+                newsq.yeeerr.Visibility = Visibility.Collapsed;
+                Falling_Block(sqFall, 2, 2);
+            }
+            */
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
