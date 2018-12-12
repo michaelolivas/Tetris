@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
@@ -16,15 +17,17 @@ namespace TetrisUWP
         public int x;
         public int y;
         public Rectangle[,] block;
+        public Grid obj = new Grid();
         public gameBlock()
         {
             SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
             num = new Random().Next(1, 7);
             Debug.WriteLine(num);
-            switch (num)
+            switch (1)
             {
              //LINE
                 case 1: 
+                    /*
                     x = 4;
                     y = 4;
                     block = new Rectangle[x, y];
@@ -45,6 +48,43 @@ namespace TetrisUWP
                     block[2, 1].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
                     block[3, 1].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
                     Debug.WriteLine("Line");
+                    */
+                    Grid bar = new Grid();
+
+                    Rectangle one = new Rectangle();
+                    one.Height = 25;
+                    one.Width = 25;
+                    one.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+                    one.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+
+                    Rectangle two = new Rectangle();
+                    two.Height = 25;
+                    two.Width = 25;
+                    two.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+                    two.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                    two.Margin = new Thickness(0, -50, 0, 0);
+
+                    Rectangle three = new Rectangle();
+                    three.Height = 25;
+                    three.Width = 25;
+                    three.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+                    three.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                    three.Margin = new Thickness(0, -100, 0, 0);
+
+                    Rectangle four = new Rectangle();
+                    four.Height = 25;
+                    four.Width = 25;
+                    four.Fill = new SolidColorBrush(Windows.UI.Colors.Red);
+                    four.Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                    four.Margin = new Thickness(0, -150, 0, 0);
+
+                    bar.Children.Add(one);
+                    bar.Children.Add(two);
+                    bar.Children.Add(three);
+                    bar.Children.Add(four);
+
+                    obj = bar;
+
                     break;
              //SQUARE
                 case 2:

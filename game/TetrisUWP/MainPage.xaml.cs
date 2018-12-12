@@ -33,11 +33,13 @@ namespace TetrisUWP
         SolidColorBrush emptyBlockColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 177, 177, 173));
         Rectangle[,] uiField;
         Rectangle[,] Line;
+        Rectangle[,] sqFall;
         Grid currBlock;
         public Grid bar;
         public Grid block;
         public Grid sLine;
         public Rectangle one;
+        public int k;
         bool pauseStatus;
         bool resumeStatus;
         //private bool pageFocus = false;
@@ -68,7 +70,23 @@ namespace TetrisUWP
             Line[2, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
             Line[3, 2].Fill = new SolidColorBrush(Windows.UI.Colors.Yellow);
 
-
+            sqFall = new Rectangle[2, 2];
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    sqFall[i, j] = new Rectangle();
+                    sqFall[i, j].Height = 25;
+                    sqFall[i, j].Width = 25;
+                    sqFall[i, j].Fill = emptyBlockColor;
+                    sqFall[i, j].Stroke = new SolidColorBrush(Windows.UI.Colors.Black);
+                    sqFall[i, j].Margin = new Thickness(0, 0, -50 * j, -50 * i);
+                }
+            }
+            sqFall[0, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+            sqFall[0, 1].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+            sqFall[1, 0].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
+            sqFall[1, 1].Fill = new SolidColorBrush(Windows.UI.Colors.Green);
 
 
             //Initialize Game UI Field
@@ -126,6 +144,7 @@ namespace TetrisUWP
         public bool collision(Rectangle[,] block, int row, int column, int row_counter, int i, int middle)
         {
             int walker = 0;
+            k = 18 - row_counter;
             for (int x = 0; x < column; x++)
             {
                 if (uiField[i, middle - 1 + walker].Fill != emptyBlockColor && block[row - 1, x].Fill != emptyBlockColor)
@@ -207,6 +226,7 @@ namespace TetrisUWP
                     if (collision(block, row, column, row_counter, i, middle))
                     {
                         falling = false;
+                        k = 18 - row_counter;
                         break;
                     }
                     if (falling)
@@ -525,6 +545,49 @@ namespace TetrisUWP
             Resume.Visibility = Visibility.Collapsed;
             Quit.Visibility = Visibility.Collapsed;
 
+            gameBlock sLine = new gameBlock();
+            GameWin.Children.Add(sLine.obj);
+            int x = 0;
+
+            for (x = 50; x >= -800; x--)
+            {
+                sLine.obj.Margin = new Thickness(0, 0, -250, x);
+                sLine.obj.Visibility = Visibility.Visible;
+                await Task.Delay(1000);
+                x += -49;
+                while (pauseStatus == true)
+                {
+                    int y = 1;
+                    await Task.Delay(y);
+                    y++;
+                    if (resumeStatus == true)
+                    {
+                        break;
+                    }
+                }
+            }
+            sLine.obj.Visibility = Visibility.Collapsed;
+            Falling_Block(Line, 4, 4);
+            for (x = 50; x >= -800 + (k * 50); x--)
+            {
+                sLine.obj.Margin = new Thickness(0, 0, -250, x);
+                sLine.obj.Visibility = Visibility.Visible;
+                await Task.Delay(1000);
+                x += -49;
+                while (pauseStatus == true)
+                {
+                    int y = 1;
+                    await Task.Delay(y);
+                    y++;
+                    if (resumeStatus == true)
+                    {
+                        break;
+                    }
+                }
+            }
+            
+            sLine.obj.Visibility = Visibility.Collapsed;
+            Falling_Block(Line, 4, 4);
 
             /*Falling_Block(Line, 4, 4);
             Falling_Block(Line, 4, 4);
@@ -532,10 +595,6 @@ namespace TetrisUWP
 
             Falling_Block(Line, 4, 4);
             */
-            gameBlock t = new gameBlock();
-            Falling_Block(Line, 4, 4);
-
-            Falling_Block(t.block,t.x,t.y);
 
             //Task t = new Task(start_game);
             //t.Start();
