@@ -332,6 +332,8 @@ namespace TetrisUWP
                     break;
             }
             Field.Check_Line();
+            Field.Print_Grid();
+            Debug.WriteLine("");
             falling = true;
             i = 0;
             row = 2;
@@ -360,8 +362,6 @@ namespace TetrisUWP
             modified_field = Field.Solid_Field();
             while (i < 18)
             {
-                L = Field.original_block(L, row, column);
-                test_block = Field.original_block(L, row, column);
                 if (i>5)
                 {
                     L = Field.Rotate_Left(Field.original_block(L, row, column), test_block, row, column);
@@ -373,6 +373,7 @@ namespace TetrisUWP
             }
             
             Field.Check_Line();
+        
             //
             //Field.Falling_Block(T, 3, 3, test_block, modified_field, rotate, falling, overflow, middle);
             int[,] currField = Field.field;
