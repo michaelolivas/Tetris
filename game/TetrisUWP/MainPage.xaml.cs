@@ -34,6 +34,7 @@ namespace TetrisUWP
         Rectangle[,] uiField;
         Rectangle[,] modified_field = new Rectangle[18,10];
         Rectangle[,] Line;
+        gameBlock obj = new gameBlock();
         public Grid bar;
         public Grid block;
         public Grid sLine;
@@ -425,27 +426,32 @@ namespace TetrisUWP
             //Game_Grid Field = new Game_Grid();
 
 
-
-            int row = 4;
-            int column = 4;
-            Rectangle[,] test_block = original_block(Line, row, column);
-            Solid_Field();
-            bool rotate = false;
-            bool falling = true;
-            bool overflow = false;
-            int middle = 4;
-            int i = 0;
-            while (i < 18)
+            for(int w = 0; w < 5; w++)
             {
-                Debug.WriteLine("Loop");
-                Line = original_block(Line, row, column);
-                test_block = original_block(Line, row, column);
-                falling = Falling_Block(Line, 4, 4, test_block, rotate, falling, overflow, middle, i);
-                i++;
-                if (!falling)
-                    break;
+                obj = new gameBlock();
+                int row = obj.x;
+                int column = obj.y;
+                Rectangle[,] test_block = original_block(obj.block, row, column);
+                Solid_Field();
+                bool rotate = false;
+                bool falling = true;
+                bool overflow = false;
+                int middle = 4;
+                int i = 0;
+                while (i < 18)
+                {
+                    Debug.WriteLine("Loop");
+                    Line = original_block(obj.block, row, column);
+                    test_block = original_block(obj.block, row, column);
+                    falling = Falling_Block(obj.block, row, column, test_block, rotate, falling, overflow, middle, i);
+                    i++;
+                    if (!falling)
+                        break;
+                }
+                Check_Line();
+                await Task.Delay(1000);
             }
-            Check_Line();
+
             /*Falling_Block(Line, 4, 4);
             Falling_Block(Line, 4, 4);
             await Task.Delay(10000);

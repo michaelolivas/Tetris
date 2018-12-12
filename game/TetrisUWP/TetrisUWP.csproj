@@ -110,6 +110,7 @@
     <Compile Include="Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
     </Compile>
+    <Compile Include="uiBackend.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
