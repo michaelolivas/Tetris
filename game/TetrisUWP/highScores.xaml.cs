@@ -170,19 +170,6 @@ namespace TetrisUWP
             string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
             Debug.Write(savedTickets);
         }
-        public async Task<Dictionary<string, string>[]> saveToTxt(string path, string json)
-        {
-            string directory = @"C:\Users\rigom\source\repos\Tetriss\game\TetrisUWP\" + "Scores" + ".txt";
-            await Task.Run(() =>
-            {
-                Task.Yield();
-                using (var file = File.Create(directory))
-                {
-                    File.WriteAllText(path, json);
-                }
-            });
-            return null;
-        }
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
