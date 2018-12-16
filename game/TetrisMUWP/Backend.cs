@@ -5,14 +5,16 @@ namespace TetrisMUWP
 {
     public class Game_Grid
     {
-        public int[,] field = new int[18, 10];
+        const int fieldRow = 18;
+        const int fieldColumn = 10;
+        public int[,] field = new int[fieldRow,fieldColumn];
 
         public Game_Grid()
         {
             //initialize the grid with 0s
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < fieldRow; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
                     field[i, j] = 0;
                 }
@@ -21,17 +23,17 @@ namespace TetrisMUWP
 
         public void Check_Line()
         {
-            for (int i = 17; i >= 0; i--)
+            for (int i = fieldRow-1; i >= 0; i--)
             {
                 int count = 0; //counts to check if the row is full
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
                     if (field[i, j] == 1) //Checks if there is a peice of the object on that spot
                     {
                         count++;
-                        if (count == 10) //if there is a peice of the object for that whole row, clear it
+                        if (count == fieldColumn) //if there is a peice of the object for that whole row, clear it
                         {
-                            for (int k = 0; k < 10; k++)
+                            for (int k = 0; k < fieldColumn; k++)
                             {
                                 for (int z = i; z >= 0; z--)
                                 {
@@ -54,7 +56,46 @@ namespace TetrisMUWP
             }
 
         }
+        //Prints out the grid in the console.
+        public int[,] Print_Grid()
+        {
+            for (int i = 0; i < fieldRow; i++)
+            {
+                for (int j = 0; j < fieldColumn; j++)
+                {
+                    Debug.Write($"{field[i, j]}");
+                }
+                Debug.WriteLine("");
+            }
+            return field;
+        }
 
+
+        public int[,] Solid_Field()
+        {
+            int[,] modified_field = new int[fieldRow, fieldColumn];
+            for (int i = 0; i < fieldRow; i++)
+            {
+                for (int j = 0; j < fieldColumn; j++)
+                {
+                    modified_field[i, j] = field[i, j];
+                }
+            }
+            return modified_field;
+        }
+
+        public int[,] original_block(int[,] block, int row, int column)
+        {
+            int[,] test_block = new int[row, column];
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    test_block[i, j] = block[i, j];
+                }
+            }
+            return test_block;
+        }
         public int [,] Rotate_Left(int[,] block, int [,] test_block, int row, int column)
         {
             int i = 0;
@@ -108,20 +149,6 @@ namespace TetrisMUWP
 
         }
 
-        //Prints out the grid in the console.
-        public int[,] Print_Grid()
-        {
-            for (int i = 0; i < 18; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    Debug.Write($"{field[i, j]}");
-                }
-                Debug.WriteLine("");
-            }
-            return field;
-        }
-
 
         public bool collision(int[,] test_block, int [,] modified_field, int row, int column, int row_counter, int i, int middle)
         {
@@ -132,7 +159,14 @@ namespace TetrisMUWP
                 int walker = 0;
                 for (int x = 0; x < column; x++)
                 {
-                    if (modified_field[i-y, middle - 1 + walker] == 1 && test_block[row_walker, x] == 1)
+                    if(middle == 0)
+                    {
+                        if (modified_field[i - y, middle + walker] == 1 && test_block[row_walker, x] == 1)
+                        {
+                            return true;
+                        }
+                    }
+                    if (middle>0 && modified_field[i-y, middle - 1 + walker] == 1 && test_block[row_walker, x] == 1)
                     {
                         return true;
                     }
@@ -142,30 +176,43 @@ namespace TetrisMUWP
             return false;
         }
 
-        public int [,] Solid_Field()
+        bool column_emptyLeft(int[,] block, int column, int middle)
         {
-            int[,] modified_field = new int[18, 10];
-            for(int i =0; i<18; i++)
+            int count = 0;
+            int middle_walker = (middle==0)? 0:1;
+            for(int y = 0; y<column; y++)
             {
-                for(int j= 0; j<10; j++)
+                if (block[y, middle - middle_walker] == 0)
                 {
-                    modified_field[i, j] = field[i, j];
+                    count++;
+                    if(count == column - 1)
+                    {
+                        return true;
+                    }
                 }
             }
-            return modified_field;
+            return false;
         }
-
-        public int [,]original_block(int[,] block, int row, int column)
+        public void move_left(int[,] block,int[,] modified_field, int column, ref int middle)
         {
-            int[,] test_block = new int[row, column];
-            for(int i=0; i<row; i++)
+            for (int i = 0; i < fieldRow; i++)
             {
-                for(int j=0; j<column; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
-                    test_block[i, j] = block[i, j];
+                    field[i, j] = modified_field[i,j];
                 }
             }
-            return test_block;
+            if( middle == 1)
+            {
+                if(column_emptyLeft(block, column, middle))
+                {
+                    middle--;
+                }
+            }
+            if(middle> 1)
+            {
+                middle--;
+            }
         }
         public bool Falling_Block(int[,] block, int row, int column, int [,] test_block, int[,] modified_field, bool rotate, bool falling, bool overflow, int middle,int i)
         {
@@ -173,7 +220,13 @@ namespace TetrisMUWP
             int row_counter = 0;
             int row_remainder = row;
             int counter = 0;
+            int middle_walker = 1;
+
                 //Fisrt Insert in the middle
+            if (middle == 0)
+            {
+                middle_walker = 0;
+            }
             if (i == 0) //first block ony 
             {
                 if (collision(test_block, modified_field, row, column, row_counter, i, middle))
@@ -185,13 +238,13 @@ namespace TetrisMUWP
                     walker = 0;
                     for (int x = 0; x < column; x++)
                     {
-                        if (modified_field[i, middle - 1 + walker] == 0 && test_block[row - 1, x] == 1)
+                        if (modified_field[i, middle - middle_walker + walker] == 0 && test_block[row - 1, x] == 1)
                         {
-                            field[i, middle - 1 + walker] = block[row - 1, x];
+                            field[i, middle - middle_walker + walker] = block[row - 1, x];
                         }
-                        if (modified_field[i, middle - 1 + walker] == 0 && test_block[row - 1, x] == 0)
+                        if (modified_field[i, middle - middle_walker + walker] == 0 && test_block[row - 1, x] == 0)
                         {
-                            field[i, middle - 1 + walker] = 0;
+                            field[i, middle - middle_walker + walker] = 0;
                         }
                             walker++;
                     }
@@ -211,27 +264,27 @@ namespace TetrisMUWP
                         walker = 0;
                         for (int x = 0; x < column; x++)
                         {
-                            if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 1)
+                            if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] == 1)
                             {
-                                field[i - y, middle - 1 + walker] = block[row - 1 - y, x];
+                                field[i - y, middle - middle_walker + walker] = block[row - 1 - y, x];
                             }
-                            if (modified_field[i - y, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                            if (modified_field[i - y, middle - middle_walker + walker] == 1 && test_block[row - 1 - y, x] == 0)
                             {
-                                field[i - y, middle - 1 + walker] = 1;
+                                field[i - y, middle - middle_walker + walker] = 1;
                             }
-                            if (modified_field[i - y, middle - 1 + walker] == 0 && test_block[row - 1 - y, x] == 0)
+                            if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] == 0)
                             {
-                                field[i - y, middle - 1 + walker] = 0;
+                                field[i - y, middle - middle_walker + walker] = 0;
                             }
                             if (i >=row && y == row_counter)
                             {
-                                if (modified_field[i - y, middle - 1 + walker] == 0 && (test_block[row - 1 - y, x] == 1 || test_block[row - 1 - y, x] == 0))
+                                if (modified_field[i - y, middle - middle_walker + walker] == 0 && (test_block[row - 1 - y, x] == 1 || test_block[row - 1 - y, x] == 0))
                                 {
-                                    field[i - row, middle - 1 + walker] = 0;
+                                    field[i - row, middle - middle_walker + walker] = 0;
                                 }
-                                if (modified_field[i - y, middle - 1 + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                                if (modified_field[i - y, middle - middle_walker + walker] == 1 && test_block[row - 1 - y, x] == 0)
                                 {
-                                    field[i - row, middle - 1 + walker] = 1;
+                                    field[i - row, middle - middle_walker + walker] = 1;
                                 }
                             }
                             walker++;
@@ -242,6 +295,8 @@ namespace TetrisMUWP
             }
             if (i == 17 && falling)
             {
+                Print_Grid();
+                Debug.WriteLine("");
                 do
                 {
                     counter = 0;
@@ -294,8 +349,15 @@ namespace TetrisMUWP
                             walker++;
                         }
                     }
+                    if (overflow)
+                    {
+                        Print_Grid();
+                        Debug.WriteLine("");
+                    }
                 } while (overflow) ;
             }
+            Print_Grid();
+            Debug.WriteLine("");
             for (int a = 0; a < row; a++)
             {
                 for (int b = 0; b < column; b++)
