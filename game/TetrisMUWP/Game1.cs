@@ -14,6 +14,7 @@ namespace TetrisMUWP
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        KeyboardState previousState;
         const float SKYRATIO = 2f / 3f;
         float screenWidth;
         float screenHeight;
@@ -23,7 +24,7 @@ namespace TetrisMUWP
         int xpos = 200;
 
         private TimeSpan? lastBulletShot;
-        private static readonly TimeSpan ShootInterval = TimeSpan.FromSeconds(100);
+        private static readonly TimeSpan ShootInterval = TimeSpan.FromSeconds(1);
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -42,6 +43,7 @@ namespace TetrisMUWP
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
             base.Initialize();
+            previousState = Keyboard.GetState();
         }
 
         /// <summary>
@@ -59,21 +61,15 @@ namespace TetrisMUWP
         void KeyboardHandler(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Space)) { 
-                if (lastBulletShot == null || gameTime.ElapsedGameTime - (TimeSpan)lastBulletShot >= ShootInterval)
-                {
-                    // Allow the user to shoot because he either has not shot before or it's been 1 second since the last shot.
-                    xpos += 50;
-                }
-            }
-            /*if (state.IsKeyDown(Keys.Right))
+            
+            if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
                 Debug.WriteLine("D");
                 xpos += 25;
-            }*/
-            if (state.IsKeyDown(Keys.Left))
+            }
+            if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
                 xpos -= 25;
-
+            previousState = state;
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -89,11 +85,13 @@ namespace TetrisMUWP
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// 
         protected override void Update(GameTime gameTime)
         {
+            
             // TODO: Add your update logic here
             KeyboardHandler(gameTime);
-            if(ypos < 500)
+            if (ypos < 500)
                 ypos += 1;
             base.Update(gameTime);
         }
