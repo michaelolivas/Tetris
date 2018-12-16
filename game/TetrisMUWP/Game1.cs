@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
 
@@ -20,6 +21,9 @@ namespace TetrisMUWP
         bool color = true;
         int ypos = 0;
         int xpos = 200;
+
+        private TimeSpan? lastBulletShot;
+        private static readonly TimeSpan ShootInterval = TimeSpan.FromSeconds(100);
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -52,15 +56,22 @@ namespace TetrisMUWP
 
             // TODO: use this.Content to load your game content here
         }
-        void KeyboardHandler()
+        void KeyboardHandler(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.D))
+            if (state.IsKeyDown(Keys.Space)) { 
+                if (lastBulletShot == null || gameTime.ElapsedGameTime - (TimeSpan)lastBulletShot >= ShootInterval)
+                {
+                    // Allow the user to shoot because he either has not shot before or it's been 1 second since the last shot.
+                    xpos += 50;
+                }
+            }
+            /*if (state.IsKeyDown(Keys.Right))
             {
                 Debug.WriteLine("D");
                 xpos += 25;
-            }
-            if (state.IsKeyDown(Keys.A))
+            }*/
+            if (state.IsKeyDown(Keys.Left))
                 xpos -= 25;
 
         }
@@ -81,19 +92,10 @@ namespace TetrisMUWP
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-            Debug.WriteLine("test");
+            KeyboardHandler(gameTime);
             if(ypos < 500)
                 ypos += 1;
             base.Update(gameTime);
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.D))
-            {
-                Debug.WriteLine("D");
-                xpos += 25;
-                base.Update(gameTime);
-            }
-            if (state.IsKeyDown(Keys.A))
-                xpos -= 25; 
         }
 
         /// <summary>
