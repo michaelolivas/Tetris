@@ -16,16 +16,18 @@
         <TextBlock HorizontalAlignment="Left" Height="108" Margin="109,151,0,0" TextWrapping="Wrap" Text="HIGH" VerticalAlignment="Top" Width="203" FontFamily="Segoe Print" FontSize="72" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
         <TextBlock HorizontalAlignment="Left" Height="108" Margin="0,172,0,0" TextWrapping="Wrap" Text="SCORES" VerticalAlignment="Top" Width="305" FontSize="72" FontFamily="Segoe Print" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Grid.Column="1"/>
         <Button x:Name="back1" Content="BACK" HorizontalAlignment="Left" Height="52" Margin="225,10,0,0" VerticalAlignment="Top" Width="76" FontFamily="Segoe Print" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="back_Click" FocusVisualSecondaryBrush="White" Grid.Column="1"/>
-        <TextBlock Name="User0" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,300,0,0" SelectionChanged="TextBlock_SelectionChanged_1"/>
-        <TextBlock Name="Score0" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15,300,0,0" Grid.Column="1"/>
-        <TextBlock Name ="User1" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,350,0,0"/>
-        <TextBlock Name="Score1" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15,350,0,0" Grid.Column="1"/>
-        <TextBlock Name="User2" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,400,0,0"/>
-        <TextBlock Name="Score2" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15,400,0,0" Grid.Column="1"/>
-        <TextBlock Name="User3" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,450,0,0"/>
-        <TextBlock Name="Score3" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15,450,0,0" Grid.Column="1"/>
-        <TextBlock Name="User4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,500,0,0"/>
-        <TextBlock Name="Score4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15,500,0,0" Grid.Column="1"/>
+        <TextBlock Name="User0" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,300,0,0" SelectionChanged="TextBlock_SelectionChanged_1" FontSize="40" FontStretch="Normal" FontWeight="Normal" FontFamily="Segoe UI" />
+        <TextBlock Name="Score0" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="14.667,310,0,0" Grid.Column="1" FontSize="25"/>
+        <TextBlock Name ="User1" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,355,0,0" FontSize="32"/>
+        <TextBlock Name="Score1" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="14.667,360,0,0" Grid.Column="1" FontSize="25"/>
+        <TextBlock Name="User2" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,400,0,0" FontSize="28"/>
+        <TextBlock Name="Score2" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="14.667,402,0,0" Grid.Column="1" FontSize="25"/>
+        <TextBlock Name="User3" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,446,0,0" FontSize="25"/>
+        <TextBlock Name="Score3" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="14.667,446,0,0" Grid.Column="1" FontSize="25"/>
+        <TextBlock Name="User4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,489,0,0" FontSize="22"/>
+        <TextBlock Name="Score4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="14.667,487,0,0" Grid.Column="1" FontSize="25"/>
         <Image HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Source="/Assets/LargeTile.png" Margin="253,-20,0,0" Grid.ColumnSpan="2"/>
+        <Button x:Name="save" Content="SAVE" HorizontalAlignment="Left" Margin="327,598,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" FontFamily="Segoe Print" Width="100" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="Save_Click" FocusVisualSecondaryBrush="White" Height="34"/>
+        <TextBox x:Name="nameplayer" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="326,566,0,0" Text="Enter Name" VerticalAlignment="Top" TextChanging="player_name" FontWeight="Bold" MaxLength="10" RequestedTheme="Dark" AutomationProperties.AccessibilityView="Content" AutomationProperties.PositionInSet="-8"/>
     </Grid>
 </Page>

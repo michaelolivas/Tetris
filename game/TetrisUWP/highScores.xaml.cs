@@ -35,6 +35,8 @@ namespace TetrisUWP
         Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         Windows.Storage.StorageFile scoresFile;
 
+        string NewName = "Jorome";
+        string NewScore = "31100"; //will be used for passed in score
 
         public highScores()
         {
@@ -51,16 +53,20 @@ namespace TetrisUWP
             score_block[4] = Score4;
             for (int i = 0; i < NUM_OF_USERS; i++)
             {
-                users[i].Add("Player", "1000");
+                users[i].Add("Ply", "0");
                 name_block[i].Text = users[i].Keys.ElementAt(0);//.ToString();
                 score_block[i].Text = users[i].Values.ElementAt(0);//.ToString();
             }
 
-            compare_score("rigo", "4500");
-            compare_score("bert", "5000");
-            compare_score("leo", "3000");
-            compare_score("midtest", "4700");
+            //// Use for Testing /////
+            /* compare_score("test2", "3500");
+             compare_score("rigo", "4500");
+             compare_score("bert", "5000");
+             compare_score("leo", "3000");
+             compare_score("midtest", "4700");
+             compare_score("test3", "4999");*/
 
+            notupdate_score();
             save_scores();
             read_scores();
         }
@@ -73,6 +79,7 @@ namespace TetrisUWP
                 score_block[i].Text = users[i].Values.ElementAt(0).ToString();
             }
         }
+
         private void compare_score(string name, string score)
         {
             if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[0].Text))
@@ -147,10 +154,16 @@ namespace TetrisUWP
                 add_score(4, name, score);
                 update_UI();
             }
+
+            save_scores();
+            read_scores();
         }
 
         private void add_score(int index, string name, string score)
         {
+            int MaxLength = 3;
+            if (name.Length > MaxLength)
+                name = name.Substring(0, MaxLength);
             users[index].Add(name, score);
         }
         private void remove_score(int index)
@@ -170,23 +183,10 @@ namespace TetrisUWP
             string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
             Debug.Write(savedTickets);
         }
-        public async Task<Dictionary<string, string>[]> saveToTxt(string path, string json)
-        {
-            string directory = @"C:\Users\rigom\source\repos\Tetriss\game\TetrisUWP\" + "Scores" + ".txt";
-            await Task.Run(() =>
-            {
-                Task.Yield();
-                using (var file = File.Create(directory))
-                {
-                    File.WriteAllText(path, json);
-                }
-            });
-            return null;
-        }
 
         private void back_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Start)); //open the start window again
+                this.Frame.Navigate(typeof(Start)); //open the start window again
         }
 
         private void TextBlock_SelectionChanged()
@@ -197,6 +197,28 @@ namespace TetrisUWP
         private void TextBlock_SelectionChanged_1(object sender, RoutedEventArgs e)
         {
 
+        }
+        
+        private void notupdate_score()
+        {
+            if (Convert.ToUInt64(NewScore) < Convert.ToUInt64(score_block[4].Text))
+            {
+                save.Visibility = Visibility.Collapsed;
+                nameplayer.Visibility = Visibility.Collapsed;
+            }
+        }
+        
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+                save.Visibility = Visibility.Collapsed;
+                nameplayer.Visibility = Visibility.Collapsed;
+
+               compare_score(NewName, NewScore); // test score
+        }
+
+        private void player_name(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+          NewName = nameplayer.Text;
         }
     }
 }
