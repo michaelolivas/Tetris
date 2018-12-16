@@ -18,7 +18,9 @@ namespace TetrisMUWP
         float screenWidth;
         float screenHeight;
         Texture2D grass;
+        Texture2D teeBar;
         bool color = true;
+        bool flag;
         int ypos = 0;
         int xpos = 200;
 
@@ -53,24 +55,18 @@ namespace TetrisMUWP
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
+            //teeBar = Content.Load<Texture2D>("grass");
 
             // TODO: use this.Content to load your game content here
         }
-        void KeyboardHandler(GameTime gameTime)
+        void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Space)) { 
-                if (lastBulletShot == null || gameTime.ElapsedGameTime - (TimeSpan)lastBulletShot >= ShootInterval)
-                {
-                    // Allow the user to shoot because he either has not shot before or it's been 1 second since the last shot.
-                    xpos += 50;
-                }
-            }
-            /*if (state.IsKeyDown(Keys.Right))
+            if (state.IsKeyDown(Keys.Right))
             {
                 Debug.WriteLine("D");
                 xpos += 25;
-            }*/
+            }
             if (state.IsKeyDown(Keys.Left))
                 xpos -= 25;
 
@@ -92,9 +88,16 @@ namespace TetrisMUWP
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-            KeyboardHandler(gameTime);
-            if(ypos < 500)
+            flag = false;
+            KeyboardHandler();
+            if (ypos < 500)
+            {
                 ypos += 1;
+                if (ypos == 499)
+                {
+                    flag = true;
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -105,14 +108,45 @@ namespace TetrisMUWP
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
-            spriteBatch.Draw(grass, new Rectangle(xpos, ypos,
-              25, 25), Color.White);
-            spriteBatch.End();
-            // TODO: Add your drawing code here
 
+            //int num = new Random().Next(1, 2);
+            //spriteBatch.Begin();
+            shapes();
+            //spriteBatch.End();
+
+            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
-        
+        private void shapes()
+        {
+            for (int i = 0; i <= 5; i++)
+            {
+                int x = new Random().Next(1, 3);
+                switch (x)
+                {
+                    case 1:
+                        Debug.WriteLine("box");
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.End();
+                        break;
+
+                    case 2:
+                        Debug.WriteLine("line");
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, 25, 25), Color.White);
+                        spriteBatch.End();
+                        break;
+                }
+            }
+
+        }
+
     }
 }
