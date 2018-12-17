@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
 
@@ -43,10 +44,17 @@ namespace TetrisMUWP
         int middle = 4;
         int i = 0;
 
-        int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
-        int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
-        int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
-        int[,] T = new int[3, 3] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        List<int[,]> Blocks = new List<int [,]>();
+        Color[] Block_Color = {Color.Transparent, Color.Cyan, Color.Purple, Color.Orange, Color.Blue,
+                                Color.Red, Color.Green, Color.Yellow};
+        int[,] Line = new int[4, 4] { { 0, 0, 0, 0 }, { 1, 1, 1, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
+        int[,] T = new int[3, 3] { { 0, 0, 0 }, { 2, 2, 2 }, { 0, 2, 0 } };
+        int[,] L = new int[3, 3] { { 0, 0, 0 }, { 3, 3, 3 }, { 3, 0, 0 } };
+        int[,] Backwards_L = new int[3, 3] { { 0, 0, 0 }, { 4, 4, 4 }, { 0, 0, 4} };
+        int[,] Z = new int[3, 3] { { 0, 0, 0 }, { 0, 5, 5 }, { 5, 5, 0 } };
+        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 5, 5, 0 }, { 0, 5, 5} };
+        int[,] Box = new int[2, 2] { { 6, 6 }, { 6, 6 } };
+
         Game_Grid Field;
 
         public Game1()
@@ -69,7 +77,14 @@ namespace TetrisMUWP
 
             Field = new Game_Grid();
 
-           // test_block = Field.original_block(Line, row, column);
+            Blocks.Add(Line);
+            Blocks.Add(T);
+            Blocks.Add(L);
+            Blocks.Add(Backwards_L);
+            Blocks.Add(Z);
+            Blocks.Add(Backwards_Z);
+            Blocks.Add(Box);
+            // test_block = Field.original_block(Line, row, column);
             //modified_field = Field.Solid_Field();
 
 
@@ -179,6 +194,7 @@ namespace TetrisMUWP
                 for (int x = 0; x < fieldColumn; x++)
                 {
                     Color currColor = Color.FromNonPremultiplied(50,50,50,50);
+                    Color Field_Color = Block_Color[Field.field[y, x]];
                     //Color tintColor = TetronimoColors[Board[x, y]];
                     if (Field.field[y, x] == 1)
                     {
@@ -197,37 +213,7 @@ namespace TetrisMUWP
             spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos - blockSize, blockSize, blockSize), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
-        }
-        private void shapes()
-        {
-            for (int i = 0; i <= 5; i++)
-            {
-                int x = new Random().Next(1, 3);
-                switch (x)
-                {
-                    case 1:
-                        Debug.WriteLine("box");
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + blockSize, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos + blockSize, blockSize, blockSize), Color.White);
-                        spriteBatch.End();
-                        break;
-
-                    case 2:
-                        Debug.WriteLine("line");
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + blockSize, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, blockSize, blockSize), Color.White);
-                        spriteBatch.End();
-                        break;
-                }
-            }
 
         }
-
     }
 }
