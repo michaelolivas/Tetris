@@ -346,6 +346,7 @@ namespace TetrisUWP
             Field.Print_Grid();
             Debug.WriteLine("");
             */
+            /*
             falling = true;
             i = 0;
             row = 2;
@@ -365,7 +366,7 @@ namespace TetrisUWP
                 if (!falling)
                     break;
             }
-            Field.Check_Line();
+            Field.Check_Line();*/
             /*
             falling = true;
             i = 0;
@@ -389,6 +390,7 @@ namespace TetrisUWP
 
             //
             //Field.Falling_Block(T, 3, 3, test_block, modified_field, rotate, falling, overflow, middle);
+            /*
             int[,] currField = Field.field;
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
