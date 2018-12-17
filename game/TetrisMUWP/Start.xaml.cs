@@ -38,7 +38,7 @@ namespace TetrisMUWP
 
         private void highScore_Click(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(highScores)); //open the scores window
+            this.Frame.Navigate(typeof(highScores)); //open the scores window
         }
     }
 }

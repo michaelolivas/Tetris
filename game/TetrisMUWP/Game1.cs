@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 
 namespace TetrisMUWP
@@ -21,7 +22,8 @@ namespace TetrisMUWP
         float screenWidth;
         float screenHeight;
         Texture2D grass;
-        Texture2D teeBar;
+        Texture2D box;
+        Texture2D line;
         bool color = true;
         bool flag;
         const int blockSize = 50;
@@ -67,6 +69,7 @@ namespace TetrisMUWP
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
 
+            this.IsMouseVisible = true;
             Field = new Game_Grid();
 
            // test_block = Field.original_block(Line, row, column);
@@ -77,6 +80,7 @@ namespace TetrisMUWP
             previousState = Keyboard.GetState();
         }
 
+
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -86,8 +90,8 @@ namespace TetrisMUWP
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
-            //teeBar = Content.Load<Texture2D>("grass");
-
+            box = Content.Load<Texture2D>("grass");
+            line = Content.Load<Texture2D>("grass");
             // TODO: use this.Content to load your game content here
         }
         void KeyboardHandler()
@@ -191,11 +195,11 @@ namespace TetrisMUWP
                 }
             }
             spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
-            spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
             spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos, blockSize, blockSize), Color.White);
             spriteBatch.Draw(grass, new Rectangle(xpos, ypos - blockSize, blockSize, blockSize), Color.White);
             spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos - blockSize, blockSize, blockSize), Color.White);
             spriteBatch.End();
+
             base.Draw(gameTime);
         }
         private void shapes()
@@ -208,10 +212,12 @@ namespace TetrisMUWP
                     case 1:
                         Debug.WriteLine("box");
                         spriteBatch.Begin();
+
                         spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
                         spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos, blockSize, blockSize), Color.White);
                         spriteBatch.Draw(grass, new Rectangle(xpos, ypos + blockSize, blockSize, blockSize), Color.White);
                         spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos + blockSize, blockSize, blockSize), Color.White);
+
                         spriteBatch.End();
                         break;
 
@@ -220,8 +226,9 @@ namespace TetrisMUWP
                         spriteBatch.Begin();
                         spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
                         spriteBatch.Draw(grass, new Rectangle(xpos, ypos + blockSize, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, blockSize, blockSize), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 2*blockSize, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 3*blockSize, blockSize, blockSize), Color.White);
+
                         spriteBatch.End();
                         break;
                 }
