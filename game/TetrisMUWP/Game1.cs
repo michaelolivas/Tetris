@@ -62,10 +62,10 @@ namespace TetrisMUWP
             graphics.PreferredBackBufferHeight = 700;   // set this value to the desired height of your window
             graphics.ApplyChanges();
 
-            Field = new Game_Grid();
+            //Field = new Game_Grid();
 
-            test_block = Field.original_block(Line, row, column);
-            modified_field = Field.Solid_Field();
+           // test_block = Field.original_block(Line, row, column);
+            //modified_field = Field.Solid_Field();
 
 
             base.Initialize();
@@ -113,16 +113,16 @@ namespace TetrisMUWP
         /// 
         protected override void Update(GameTime gameTime)
         {
-            Line = Field.original_block(Line, row, column);
-            test_block = Field.original_block(Line, row, column);
-            falling = Field.Falling_Block(Line, 4, 4, test_block, modified_field, rotate, falling, overflow, middle, i);
-            i++;
+            //Line = Field.original_block(Line, row, column);
+            //test_block = Field.original_block(Line, row, column);
+            //falling = Field.Falling_Block(Line, row, column, test_block, modified_field, rotate, falling, overflow, middle, i);
+            //i++;
 
-            ypos = row * 25;
+            //ypos = row * 25;
             // TODO: Add your update logic here
             KeyboardHandler();
-            /*if (ypos < 700)
-                ypos += 1;*/
+            if (ypos < 700)
+                ypos += 1;
             base.Update(gameTime);
         }
 

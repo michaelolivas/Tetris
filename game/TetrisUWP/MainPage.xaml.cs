@@ -390,6 +390,7 @@ namespace TetrisUWP
 
             //
             //Field.Falling_Block(T, 3, 3, test_block, modified_field, rotate, falling, overflow, middle);
+            /*
             int[,] currField = Field.field;
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);
