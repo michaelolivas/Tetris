@@ -36,9 +36,10 @@ namespace TetrisMUWP
         int i = 0;
 
         int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
+        int[,] T = new int[3, 3] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } };
         int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
         int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
-        int[,] T = new int[3, 3] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+
         Game_Grid Field;
 
         public Game1()
@@ -58,8 +59,8 @@ namespace TetrisMUWP
             // TODO: Add your initialization logic here
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
-            graphics.PreferredBackBufferWidth = 700;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 700;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = 1000;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 1000;   // set this value to the desired height of your window
             graphics.ApplyChanges();
 
             //Field = new Game_Grid();
@@ -121,7 +122,7 @@ namespace TetrisMUWP
             //ypos = row * 25;
             // TODO: Add your update logic here
             KeyboardHandler();
-            if (ypos < 700)
+            if (ypos < 1000)
                 ypos += 1;
             base.Update(gameTime);
         }
