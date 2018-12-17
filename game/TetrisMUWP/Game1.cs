@@ -178,7 +178,7 @@ namespace TetrisMUWP
             {
                 for (int x = 0; x < fieldColumn; x++)
                 {
-                    Color currColor = Color.Transparent;
+                    Color currColor = Color.FromNonPremultiplied(50,50,50,50);
                     //Color tintColor = TetronimoColors[Board[x, y]];
                     if (Field.field[y, x] == 1)
                     {
