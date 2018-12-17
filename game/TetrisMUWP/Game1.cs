@@ -24,7 +24,7 @@ namespace TetrisMUWP
         Texture2D teeBar;
         bool color = true;
         bool flag;
-
+        const int blockSize = 50;
         int ypos = 0;
         int xpos = 200;
         int boardxpos = 100;
@@ -66,11 +66,8 @@ namespace TetrisMUWP
             // TODO: Add your initialization logic here
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
-            graphics.PreferredBackBufferWidth = 700;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 700;   // set this value to the desired height of your window
-            graphics.ApplyChanges();
 
-            //Field = new Game_Grid();
+            Field = new Game_Grid();
 
            // test_block = Field.original_block(Line, row, column);
             //modified_field = Field.Solid_Field();
@@ -96,20 +93,24 @@ namespace TetrisMUWP
         void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
+            Debug.WriteLine("x:" + xpos);
+            Debug.WriteLine("y:" + ypos);
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
-                if(xpos < boardxpos + 10*25-25)
-                xpos += 25;
+                if(xpos < boardxpos + 10*blockSize-blockSize)
+                xpos += blockSize;
             }
             if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
             {
 
                 if(xpos> boardxpos)
-                xpos -= 25;
+                xpos -= blockSize;
             }
             if (state.IsKeyDown(Keys.Space))
-                if(ypos < 18*25)
-                    ypos += 25;
+            {
+                if (ypos <  17 * blockSize)
+                    ypos += 5;
+            }
             previousState = state;
         }
         /// <summary>
@@ -134,16 +135,26 @@ namespace TetrisMUWP
             //falling = Field.Falling_Block(Line, row, column, test_block, modified_field, rotate, falling, overflow, middle, i);
             //i++;
 
-            //ypos = row * 25;
+            //ypos = row * blockSize;
             // TODO: Add your update logic here
             flag = false;
             KeyboardHandler();
-            if (ypos < boardypos + 18*25-25)
+            if (ypos < boardypos + 18 * blockSize - blockSize) {
                 ypos += 1;
                 if (ypos == 499)
                 {
                     flag = true;
                 }
+            }
+            if (ypos == boardypos + 18 * blockSize - blockSize)
+            {
+                Debug.WriteLine("Collision!");
+                Debug.WriteLine("x:" + xpos);
+                Debug.WriteLine("y:" + ypos);
+                Debug.WriteLine((int)(((xpos - boardxpos) + blockSize) / blockSize) - 1);
+                Debug.WriteLine((int)((ypos - boardypos + blockSize) / blockSize) - 2);
+                Field.field[(int) ((ypos - boardypos + blockSize) / blockSize)- 1,(int)(((xpos - boardxpos) + blockSize) / blockSize) - 1] = 1;
+                ypos = 0;
             }
             base.Update(gameTime);
         }
@@ -158,7 +169,7 @@ namespace TetrisMUWP
 
             //int num = new Random().Next(1, 2);
             //spriteBatch.Begin();
-            shapes();
+            //shapes();
             //spriteBatch.End();
 
             // TODO: Add your drawing code here
@@ -167,15 +178,23 @@ namespace TetrisMUWP
             {
                 for (int x = 0; x < fieldColumn; x++)
                 {
+                    Color currColor = Color.Transparent;
                     //Color tintColor = TetronimoColors[Board[x, y]];
-
+                    if (Field.field[y, x] == 1)
+                    {
+                        currColor = Color.Red;
+                    }
                     // Since for the board itself background colors are transparent, we'll go ahead and give this one
                     // a custom color.  This can be omitted if you draw a background image underneath your board
 
-                    spriteBatch.Draw(grass, new Rectangle(boardxpos + x * 25, boardypos + y * 25, 25, 25),new Rectangle(0, 0, 32, 32), Color.Black);
+                    spriteBatch.Draw(grass, new Rectangle(boardxpos + x * blockSize, boardypos + y * blockSize, blockSize, blockSize), currColor);
                 }
             }
-            spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
+            spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
+            spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
+            spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos, blockSize, blockSize), Color.White);
+            spriteBatch.Draw(grass, new Rectangle(xpos, ypos - blockSize, blockSize, blockSize), Color.White);
+            spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos - blockSize, blockSize, blockSize), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -189,20 +208,20 @@ namespace TetrisMUWP
                     case 1:
                         Debug.WriteLine("box");
                         spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + blockSize, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos + blockSize, ypos + blockSize, blockSize, blockSize), Color.White);
                         spriteBatch.End();
                         break;
 
                     case 2:
                         Debug.WriteLine("line");
                         spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + blockSize, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, blockSize, blockSize), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, blockSize, blockSize), Color.White);
                         spriteBatch.End();
                         break;
                 }
