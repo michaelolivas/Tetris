@@ -21,6 +21,10 @@ namespace TetrisMUWP
         float screenWidth;
         float screenHeight;
         Texture2D grass;
+        Texture2D teeBar;
+        bool color = true;
+        bool flag;
+
         int ypos = 0;
         int xpos = 200;
         int boardxpos = 100;
@@ -85,13 +89,13 @@ namespace TetrisMUWP
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
+            //teeBar = Content.Load<Texture2D>("grass");
 
             // TODO: use this.Content to load your game content here
         }
         void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
-            
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
                 if(xpos < boardxpos + 10*25-25)
@@ -132,9 +136,15 @@ namespace TetrisMUWP
 
             //ypos = row * 25;
             // TODO: Add your update logic here
+            flag = false;
             KeyboardHandler();
-            if (ypos < boardypos + 18*25 -25)
+            if (ypos < boardypos + 18*25-25)
                 ypos += 1;
+                if (ypos == 499)
+                {
+                    flag = true;
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -145,6 +155,13 @@ namespace TetrisMUWP
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            //int num = new Random().Next(1, 2);
+            //spriteBatch.Begin();
+            shapes();
+            //spriteBatch.End();
+
+            // TODO: Add your drawing code here
             spriteBatch.Begin();
             for (int y = 0; y < fieldRow; y++)
             {
@@ -162,6 +179,36 @@ namespace TetrisMUWP
             spriteBatch.End();
             base.Draw(gameTime);
         }
-        
+        private void shapes()
+        {
+            for (int i = 0; i <= 5; i++)
+            {
+                int x = new Random().Next(1, 3);
+                switch (x)
+                {
+                    case 1:
+                        Debug.WriteLine("box");
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.End();
+                        break;
+
+                    case 2:
+                        Debug.WriteLine("line");
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, 25, 25), Color.White);
+                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, 25, 25), Color.White);
+                        spriteBatch.End();
+                        break;
+                }
+            }
+
+        }
+
     }
 }
