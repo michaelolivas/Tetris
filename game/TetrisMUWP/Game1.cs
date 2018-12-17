@@ -15,12 +15,16 @@ namespace TetrisMUWP
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState previousState;
+        public const int fieldRow = 18;
+        public const int fieldColumn = 10;
         const float SKYRATIO = 2f / 3f;
         float screenWidth;
         float screenHeight;
         Texture2D grass;
         int ypos = 0;
         int xpos = 200;
+        int boardxpos = 100;
+        int boardypos = 100;
 
         const int boardX = 10;
         const int boardY = 18;
@@ -90,10 +94,18 @@ namespace TetrisMUWP
             
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
+                if(xpos < boardxpos + 10*25-25)
                 xpos += 25;
             }
             if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
+            {
+
+                if(xpos> boardxpos)
                 xpos -= 25;
+            }
+            if (state.IsKeyDown(Keys.Space))
+                if(ypos < 18*25)
+                    ypos += 25;
             previousState = state;
         }
         /// <summary>
@@ -121,7 +133,7 @@ namespace TetrisMUWP
             //ypos = row * 25;
             // TODO: Add your update logic here
             KeyboardHandler();
-            if (ypos < 700)
+            if (ypos < boardypos + 18*25 -25)
                 ypos += 1;
             base.Update(gameTime);
         }
@@ -134,6 +146,18 @@ namespace TetrisMUWP
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
+            for (int y = 0; y < fieldRow; y++)
+            {
+                for (int x = 0; x < fieldColumn; x++)
+                {
+                    //Color tintColor = TetronimoColors[Board[x, y]];
+
+                    // Since for the board itself background colors are transparent, we'll go ahead and give this one
+                    // a custom color.  This can be omitted if you draw a background image underneath your board
+
+                    spriteBatch.Draw(grass, new Rectangle(boardxpos + x * 25, boardypos + y * 25, 25, 25),new Rectangle(0, 0, 32, 32), Color.Black);
+                }
+            }
             spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
