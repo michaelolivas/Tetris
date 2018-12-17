@@ -12,7 +12,7 @@
 
 
     <Grid MaxWidth="700" MaxHeight="700" Name="GridOne" Margin="0,0,0,0" Background="#FF007ACC"  >
-        <Grid x:Name="GameWin" HorizontalAlignment="Left" Height="450"  VerticalAlignment="Top" Width="250" Background="#FFB1B1B2" Margin="35,205,0,0" MaxWidth="250" MaxHeight="450" BorderBrush="Black">
+        <Grid x:Name="GameWin" HorizontalAlignment="Left" Height="450"  VerticalAlignment="Top" Width="250" Background="#FFB1B1B2" Margin="35,205,0,0" MaxWidth="250" MaxHeight="450" BorderBrush="Black" Canvas.ZIndex="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="25"/>
@@ -67,6 +67,7 @@
         <Button x:Name="newGame" Content="NEW GAME" HorizontalAlignment="Left" Margin="300,558,0,0" VerticalAlignment="Top" FontFamily="Comic Sans MS" FontSize="48" Click="newGame_Click" FocusVisualPrimaryBrush="{x:Null}" Foreground="Black" Background="{x:Null}" BorderBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FontWeight="Bold"/>
         <Button x:Name="Resume" Content="RESUME" HorizontalAlignment="Left" Margin="336,558,0,0" VerticalAlignment="Top" Click="Resume_Click" FontFamily="Comic Sans MS" FontSize="48" FontWeight="Bold" Visibility="Collapsed" FocusVisualPrimaryBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" BorderBrush="{x:Null}" Background="{x:Null}"/>
         <Button x:Name="Quit" Content="QUIT" HorizontalAlignment="Left" Margin="619,653,0,0" VerticalAlignment="Top" Click="Quit_Click" FontFamily="Comic Sans MS" FontSize="18" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FocusVisualPrimaryBrush="{x:Null}" Visibility="Collapsed"/>
-        <Image HorizontalAlignment="Left" Height="200" Margin="224,10,0,0" VerticalAlignment="Top" Width="200" Source="/Assets/LargeTile.png"/>
+        <Image HorizontalAlignment="Left" Height="200" Margin="224,10,0,0" VerticalAlignment="Top" Width="200" Source="/Assets/LargeTile.png" Canvas.ZIndex="2"/>
+        <Grid HorizontalAlignment="Left" Height="95" Margin="35,110,0,0" VerticalAlignment="Top" Width="250" Canvas.ZIndex="1" Background="#FF007ACC"/>
     </Grid>
 </Page>
