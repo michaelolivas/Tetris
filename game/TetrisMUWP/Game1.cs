@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 
 namespace TetrisMUWP
@@ -19,7 +20,8 @@ namespace TetrisMUWP
         float screenWidth;
         float screenHeight;
         Texture2D grass;
-        Texture2D teeBar;
+        Texture2D box;
+        Texture2D line;
         bool color = true;
         bool flag;
 
@@ -62,9 +64,10 @@ namespace TetrisMUWP
             // TODO: Add your initialization logic here
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
-            graphics.PreferredBackBufferWidth = 700;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 700;   // set this value to the desired height of your window
-            graphics.ApplyChanges();
+            //graphics.PreferredBackBufferWidth = 700;  // set this value to the desired width of your window
+            //graphics.PreferredBackBufferHeight = 700;   // set this value to the desired height of your window
+            //graphics.ApplyChanges();
+            this.IsMouseVisible = true;
 
             //Field = new Game_Grid();
 
@@ -76,6 +79,7 @@ namespace TetrisMUWP
             previousState = Keyboard.GetState();
         }
 
+
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -85,8 +89,8 @@ namespace TetrisMUWP
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
-            //teeBar = Content.Load<Texture2D>("grass");
-
+            box = Content.Load<Texture2D>("grass");
+            line = Content.Load<Texture2D>("grass");
             // TODO: use this.Content to load your game content here
         }
         void KeyboardHandler()
@@ -153,9 +157,6 @@ namespace TetrisMUWP
             //spriteBatch.End();
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-            spriteBatch.End();
             base.Draw(gameTime);
         }
         private void shapes()
@@ -168,20 +169,20 @@ namespace TetrisMUWP
                     case 1:
                         Debug.WriteLine("box");
                         spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(box, new Rectangle(xpos, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(box, new Rectangle(xpos + 25, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(box, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(box, new Rectangle(xpos + 25, ypos + 25, 25, 25), Color.White);
                         spriteBatch.End();
                         break;
 
                     case 2:
                         Debug.WriteLine("line");
                         spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, 25, 25), Color.White);
+                        spriteBatch.Draw(line, new Rectangle(xpos, ypos, 25, 25), Color.White);
+                        spriteBatch.Draw(line, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
+                        spriteBatch.Draw(line, new Rectangle(xpos, ypos + 50, 25, 25), Color.White);
+                        spriteBatch.Draw(line, new Rectangle(xpos, ypos + 75, 25, 25), Color.White);
                         spriteBatch.End();
                         break;
                 }

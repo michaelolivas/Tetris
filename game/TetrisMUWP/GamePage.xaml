@@ -7,6 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-  <SwapChainPanel x:Name="swapChainPanel" />
+    <SwapChainPanel x:Name="swapChainPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Grid x:Name="grid" HorizontalAlignment="Center" Height="980" VerticalAlignment="Center" Width="1500" Margin="0,0,0,0" Background="CornflowerBlue">
+            <Button x:Name="Click" Content="New Game" HorizontalAlignment="Center" Margin="0,247,0,0" VerticalAlignment="Top" Height="107" Width="399" Click="Button_Click" Background="{x:Null}" FontFamily="Comic Sans MS" FontSize="72"/>
+        </Grid>
+
+    </SwapChainPanel>
 
 </Page>
