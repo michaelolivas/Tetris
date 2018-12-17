@@ -338,13 +338,13 @@ namespace TetrisUWP
             bool overflow = false;
             int middle = 4;
             int i = 0;
-            while (i < 18)
+            /*while (i < 18)
             {
                 Line = Field.original_block(Line, row, column);
                 test_block = Field.original_block(Line, row, column);
                 if (i>5)
                 {
-                    Line = Field.Rotate_Left(Line, test_block, row, column);
+                    Field.move_left(Line,column, ref middle);
                 }
                 falling = Field.Falling_Block(Line, 4, 4, test_block, modified_field, rotate, falling, overflow, middle, i);
                 i++;
@@ -354,6 +354,8 @@ namespace TetrisUWP
             Field.Check_Line();
             Field.Print_Grid();
             Debug.WriteLine("");
+            */
+            /*
             falling = true;
             i = 0;
             row = 2;
@@ -366,14 +368,15 @@ namespace TetrisUWP
                 test_block = Field.original_block(Box, row, column);
                 if (i>5)
                 {
-                    Box = Field.Rotate_Left(Box, test_block, row, column);
+                    Field.move_left(Box,modified_field, column, ref middle);
                 }
                 falling = Field.Falling_Block(Box, 2, 2, test_block, modified_field, rotate, falling, overflow, middle,i);
                 i++;
                 if (!falling)
                     break;
             }
-            Field.Check_Line();
+            Field.Check_Line();*/
+            /*
             falling = true;
             i = 0;
             row = 3;
@@ -393,9 +396,12 @@ namespace TetrisUWP
             }
             
             Field.Check_Line();
-        
+
+            */
+
             //
             //Field.Falling_Block(T, 3, 3, test_block, modified_field, rotate, falling, overflow, middle);
+            /*
             int[,] currField = Field.field;
             Field.Falling_Block(Line, 4, 4);
             Field.Falling_Block(Box, 2, 2);

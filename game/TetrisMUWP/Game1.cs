@@ -14,6 +14,7 @@ namespace TetrisMUWP
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        KeyboardState previousState;
         const float SKYRATIO = 2f / 3f;
         float screenWidth;
         float screenHeight;
@@ -21,11 +22,29 @@ namespace TetrisMUWP
         Texture2D teeBar;
         bool color = true;
         bool flag;
+
         int ypos = 0;
         int xpos = 200;
 
-        private TimeSpan? lastBulletShot;
-        private static readonly TimeSpan ShootInterval = TimeSpan.FromSeconds(100);
+        const int boardX = 10;
+        const int boardY = 18;
+
+        int row = 4;
+        int column = 4;
+        int[,] test_block;
+        int[,] modified_field;
+        bool rotate = false;
+        bool falling = true;
+        bool overflow = false;
+        int middle = 4;
+        int i = 0;
+
+        int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
+        int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
+        int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
+        int[,] T = new int[3, 3] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        Game_Grid Field;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -43,7 +62,18 @@ namespace TetrisMUWP
             // TODO: Add your initialization logic here
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            graphics.PreferredBackBufferWidth = 700;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 700;   // set this value to the desired height of your window
+            graphics.ApplyChanges();
+
+            //Field = new Game_Grid();
+
+           // test_block = Field.original_block(Line, row, column);
+            //modified_field = Field.Solid_Field();
+
+
             base.Initialize();
+            previousState = Keyboard.GetState();
         }
 
         /// <summary>
@@ -62,14 +92,14 @@ namespace TetrisMUWP
         void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Right))
+
+            if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
-                Debug.WriteLine("D");
                 xpos += 25;
             }
-            if (state.IsKeyDown(Keys.Left))
+            if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
                 xpos -= 25;
-
+            previousState = state;
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -85,13 +115,21 @@ namespace TetrisMUWP
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// 
         protected override void Update(GameTime gameTime)
         {
+            //Line = Field.original_block(Line, row, column);
+            //test_block = Field.original_block(Line, row, column);
+            //falling = Field.Falling_Block(Line, row, column, test_block, modified_field, rotate, falling, overflow, middle, i);
+            //i++;
+
+            //ypos = row * 25;
             // TODO: Add your update logic here
             flag = false;
             KeyboardHandler();
             if (ypos < 500)
             {
+
                 ypos += 1;
                 if (ypos == 499)
                 {
@@ -115,6 +153,9 @@ namespace TetrisMUWP
             //spriteBatch.End();
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
         private void shapes()
