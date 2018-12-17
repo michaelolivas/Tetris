@@ -210,15 +210,21 @@ namespace TetrisMUWP
         
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-                save.Visibility = Visibility.Collapsed;
-                nameplayer.Visibility = Visibility.Collapsed;
+            save.Visibility = Visibility.Collapsed;
+            nameplayer.Visibility = Visibility.Collapsed;
 
-               compare_score(NewName, NewScore); // test score
+            compare_score(NewName, NewScore); // test score
         }
 
         private void player_name(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-          NewName = nameplayer.Text;
+            /*if (Start.click == true)
+            {
+                nameplayer.Visibility = Visibility.Collapsed;
+
+            }*/
+            NewName = nameplayer.Text;
+
         }
     }
 }
