@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
 
@@ -39,10 +40,17 @@ namespace TetrisMUWP
         int middle = 4;
         int i = 0;
 
-        int[,] Line = new int[4, 4] { { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 }, { 0, 0, 1, 0 } };
-        int[,] Box = new int[2, 2] { { 1, 1 }, { 1, 1 } };
-        int[,] L = new int[3, 3] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 1 } };
-        int[,] T = new int[3, 3] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } };
+        List<int[,]> Blocks = new List<int [,]>();
+        Color[] Block_Color = {Color.Transparent, Color.Cyan, Color.Purple, Color.Orange, Color.Blue,
+                                Color.Red, Color.Green, Color.Yellow};
+        int[,] Line = new int[4, 4] { { 0, 0, 0, 0 }, { 1, 1, 1, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
+        int[,] T = new int[3, 3] { { 0, 0, 0 }, { 2, 2, 2 }, { 0, 2, 0 } };
+        int[,] L = new int[3, 3] { { 0, 0, 0 }, { 3, 3, 3 }, { 3, 0, 0 } };
+        int[,] Backwards_L = new int[3, 3] { { 0, 0, 0 }, { 4, 4, 4 }, { 0, 0, 4} };
+        int[,] Z = new int[3, 3] { { 0, 0, 0 }, { 0, 5, 5 }, { 5, 5, 0 } };
+        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 5, 5, 0 }, { 0, 5, 5} };
+        int[,] Box = new int[2, 2] { { 6, 6 }, { 6, 6 } };
+
         Game_Grid Field;
 
         public Game1()
@@ -66,9 +74,15 @@ namespace TetrisMUWP
             graphics.PreferredBackBufferHeight = 700;   // set this value to the desired height of your window
             graphics.ApplyChanges();
 
-            //Field = new Game_Grid();
-
-           // test_block = Field.original_block(Line, row, column);
+            Field = new Game_Grid();
+            Blocks.Add(Line);
+            Blocks.Add(T);
+            Blocks.Add(L);
+            Blocks.Add(Backwards_L);
+            Blocks.Add(Z);
+            Blocks.Add(Backwards_Z);
+            Blocks.Add(Box);
+            // test_block = Field.original_block(Line, row, column);
             //modified_field = Field.Solid_Field();
 
 
@@ -149,45 +163,23 @@ namespace TetrisMUWP
 
             //int num = new Random().Next(1, 2);
             //spriteBatch.Begin();
-            shapes();
             //spriteBatch.End();
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-            spriteBatch.End();
-            base.Draw(gameTime);
-        }
-        private void shapes()
-        {
-            for (int i = 0; i <= 5; i++)
+            for(int y = 0; y< boardY; y++)
             {
-                int x = new Random().Next(1, 3);
-                switch (x)
+                for(int x = 0; x<boardX; x++)
                 {
-                    case 1:
-                        Debug.WriteLine("box");
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos + 25, ypos + 25, 25, 25), Color.White);
-                        spriteBatch.End();
-                        break;
+                    Color Field_Color = Block_Color[Field.field[y, x]];
 
-                    case 2:
-                        Debug.WriteLine("line");
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 25, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 50, 25, 25), Color.White);
-                        spriteBatch.Draw(grass, new Rectangle(xpos, ypos + 75, 25, 25), Color.White);
-                        spriteBatch.End();
-                        break;
+
+
                 }
             }
+            spriteBatch.End();
 
+            base.Draw(gameTime);
         }
-
     }
 }

@@ -14,7 +14,7 @@ namespace TetrisUWP
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    field[i, j] = 0;
+                    field[i, j] = 1;
                 }
             }
         }
