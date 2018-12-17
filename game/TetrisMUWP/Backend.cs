@@ -5,8 +5,8 @@ namespace TetrisMUWP
 {
     public class Game_Grid
     {
-        const int fieldRow = 18;
-        const int fieldColumn = 10;
+        public const int fieldRow = 18;
+        public const int fieldColumn = 10;
         public int[,] field = new int[fieldRow,fieldColumn];
 
         public Game_Grid()
