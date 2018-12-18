@@ -45,8 +45,8 @@ namespace TetrisMUWP
         int[,] L = new int[3, 3] { { 0, 0, 0 }, { 3, 3, 3 }, { 3, 0, 0 } };
         int[,] Backwards_L = new int[3, 3] { { 0, 0, 0 }, { 4, 4, 4 }, { 0, 0, 4} };
         int[,] Z = new int[3, 3] { { 0, 0, 0 }, { 0, 5, 5 }, { 5, 5, 0 } };
-        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 5, 5, 0 }, { 0, 5, 5} };
-        int[,] Box = new int[2, 2] { { 6, 6 }, { 6, 6 } };
+        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 6, 6, 0 }, { 0, 6, 6} };
+        int[,] Box = new int[2, 2] { { 7, 7 }, { 7, 7 } };
         int[,] Rand_Piece = null;
 
         int [,] Field = new int[boardY, boardX];
@@ -74,9 +74,14 @@ namespace TetrisMUWP
                     Field[y, x] = 0;
                 }
             }
+
+            //screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            //screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
             
-            screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
-            screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
             this.IsMouseVisible = true;
             Blocks.Add(Line);
             Blocks.Add(T);
@@ -158,18 +163,20 @@ namespace TetrisMUWP
                 {
                     int next_blockY = y + BlockY;
                     int next_blockX = x + BlockX;
-                    if(Rand_Piece[BlockY, BlockX] != 0)
+                    if(Rand_Piece[BlockX, BlockY] != 0)
                     {
-                        if(next_blockX<0 ||next_blockX >= 10)
+                        if(next_blockX<0 ||next_blockX > 10)
                         {
                             return true;
                         }
                         
                     }
+
                     if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockX, BlockY] != 0))
                     {
                         return true;
                     }
+
                 }
                 
             }
@@ -210,7 +217,7 @@ namespace TetrisMUWP
             }
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
-                if (BlockLocation.X < 9)
+                if (BlockLocation.X < 10)
                 {
                     Vector2 Next_Position = BlockLocation + new Vector2(1, 0);
                     if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
@@ -219,11 +226,14 @@ namespace TetrisMUWP
             }
             if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
             {
-                if (BlockLocation.X > 0)
+                if (BlockLocation.X >= 0)
                 {
                     Vector2 Next_Position = BlockLocation + new Vector2(-1, 0);
                     if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
+                    {
                         BlockLocation = Next_Position;
+                        Next_Position.X = -1;
+                    }
                 }
             }
             /*if (state.IsKeyDown(Keys.Space))
