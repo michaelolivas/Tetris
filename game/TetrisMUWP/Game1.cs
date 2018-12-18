@@ -51,11 +51,6 @@ namespace TetrisMUWP
         int [,] Field = new int[boardY, boardX];
         Vector2 FieldLocation = Vector2.Zero;
         Vector2 BlockLocation = Vector2.Zero;
-        bool Rotate = false;
-        bool Overflow = false;
-        int middle = 4;
-        int Backend_Falling = 0;
-        int[,] test_block; 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -96,6 +91,25 @@ namespace TetrisMUWP
 
             base.Initialize();
             previousState = Keyboard.GetState();
+        }
+        public void Rotate_Right()
+        {
+            int len = Rand_Piece.GetLength(0);
+            int[,] temp_block = new int[len, len]; //temp block to switch rows and columns
+            int i = 0;
+            int j = 0;
+            for (int x = 0; x < len; x++)
+            {
+                for (int y = len - 1; y >= 0; y--)
+                {
+                    temp_block[i, j] = Rand_Piece[y, x]; //copies the content from the original to the new 
+                    j++;
+                }
+                j = 0;
+                i++;
+            }
+            Rand_Piece = temp_block;
+
         }
         public bool Collision(int x, int y)
         {
@@ -160,8 +174,11 @@ namespace TetrisMUWP
         void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
-            //Debug.WriteLine("x:" + xpos);
-            //Debug.WriteLine("y:" + ypos);
+            if (state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space))
+            {
+                Rotate_Right();
+                Debug.Write("Rotate");
+            }
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
                 if (BlockLocation.X < 9)
@@ -180,11 +197,11 @@ namespace TetrisMUWP
                         BlockLocation = Next_Position;
                 }
             }
-            if (state.IsKeyDown(Keys.Space))
+            /*if (state.IsKeyDown(Keys.Space))
             {
                 if (ypos <  17 * blockSize)
                     ypos += 5;
-            }
+            }*/
             previousState = state;
         }
         /// <summary>
