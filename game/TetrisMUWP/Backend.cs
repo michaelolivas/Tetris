@@ -1,38 +1,39 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace TetrisUWP
+namespace TetrisMUWP
 {
     public class Game_Grid
     {
-        public int[,] field = new int[18, 10];
+        public const int fieldRow = 18;
+        public const int fieldColumn = 10;
+        public int[,] field = new int[fieldRow,fieldColumn];
 
-        public int[,] Board()
+        public Game_Grid()
         {
             //initialize the grid with 0s
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < fieldRow; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
                     field[i, j] = 0;
                 }
             }
-            return field;
         }
 
         public void Check_Line()
         {
-            for (int i = 17; i >= 0; i--)
+            for (int i = fieldRow-1; i >= 0; i--)
             {
                 int count = 0; //counts to check if the row is full
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
                     if (field[i, j] == 1) //Checks if there is a peice of the object on that spot
                     {
                         count++;
-                        if (count == 10) //if there is a peice of the object for that whole row, clear it
+                        if (count == fieldColumn) //if there is a peice of the object for that whole row, clear it
                         {
-                            for (int k = 0; k < 10; k++)
+                            for (int k = 0; k < fieldColumn; k++)
                             {
                                 for (int z = i; z >= 0; z--)
                                 {
@@ -58,9 +59,9 @@ namespace TetrisUWP
         //Prints out the grid in the console.
         public int[,] Print_Grid()
         {
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < fieldRow; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
                     Debug.Write($"{field[i, j]}");
                 }
@@ -72,10 +73,10 @@ namespace TetrisUWP
 
         public int[,] Solid_Field()
         {
-            int[,] modified_field = new int[18, 10];
-            for (int i = 0; i < 18; i++)
+            int[,] modified_field = new int[fieldRow, fieldColumn];
+            for (int i = 0; i < fieldRow; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
                     modified_field[i, j] = field[i, j];
                 }
@@ -95,6 +96,12 @@ namespace TetrisUWP
             }
             return test_block;
         }
+
+        internal static int[,] Board()
+        {
+            throw new NotImplementedException();
+        }
+
         public int [,] Rotate_Left(int[,] block, int [,] test_block, int row, int column)
         {
             int i = 0;
@@ -194,9 +201,9 @@ namespace TetrisUWP
         }
         public void move_left(int[,] block,int[,] modified_field, int column, ref int middle)
         {
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < fieldRow; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < fieldColumn; j++)
                 {
                     field[i, j] = modified_field[i,j];
                 }
@@ -263,13 +270,13 @@ namespace TetrisUWP
                         walker = 0;
                         for (int x = 0; x < column; x++)
                         {
-                            if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] != 0)
+                            if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] == 1)
                             {
                                 field[i - y, middle - middle_walker + walker] = block[row - 1 - y, x];
                             }
-                            if (modified_field[i - y, middle - middle_walker + walker] != 0 && test_block[row - 1 - y, x] == 0)
+                            if (modified_field[i - y, middle - middle_walker + walker] == 1 && test_block[row - 1 - y, x] == 0)
                             {
-                                field[i - y, middle - middle_walker + walker] = modified_field[i - y, middle - middle_walker + walker];
+                                field[i - y, middle - middle_walker + walker] = 1;
                             }
                             if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] == 0)
                             {
@@ -283,7 +290,7 @@ namespace TetrisUWP
                                 }
                                 if (modified_field[i - y, middle - middle_walker + walker] == 1 && test_block[row - 1 - y, x] == 0)
                                 {
-                                    field[i - row, middle - middle_walker + walker] = modified_field[i - y, middle - middle_walker + walker] ;
+                                    field[i - row, middle - middle_walker + walker] = 1;
                                 }
                             }
                             walker++;
@@ -292,7 +299,7 @@ namespace TetrisUWP
                 }
 
             }
-            /*if (i == 17 && falling)
+            if (i == 17 && falling)
             {
                 Print_Grid();
                 Debug.WriteLine("");
@@ -354,7 +361,7 @@ namespace TetrisUWP
                         Debug.WriteLine("");
                     }
                 } while (overflow) ;
-            }*/
+            }
             Print_Grid();
             Debug.WriteLine("");
             for (int a = 0; a < row; a++)
