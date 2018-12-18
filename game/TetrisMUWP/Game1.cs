@@ -267,9 +267,12 @@ namespace TetrisMUWP
                 if (Collision((int)NextSpot.X, (int)NextSpot.Y))
                 {
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
-                    //Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
-                    Rand_Piece = (int[,])Blocks[6].Clone();
-                    BlockLocation = Vector2.Zero;
+                    Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
+                    //generate random pos
+                    int len = Rand_Piece.GetLength(0);
+                    int ran = rnd.Next(0, fieldColumn - len);
+                    Vector2 ranPos = new Vector2(ran, 0);
+                    BlockLocation = ranPos;
                 }
                 else
                 {
