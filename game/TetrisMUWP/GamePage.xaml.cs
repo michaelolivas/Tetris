@@ -39,6 +39,7 @@ namespace TetrisMUWP
             grid.Visibility = Visibility.Collapsed;
             pause.Visibility = Visibility.Visible;
             pauseB.Visibility = Visibility.Visible;
+
             var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
