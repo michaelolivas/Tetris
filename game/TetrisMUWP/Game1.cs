@@ -26,8 +26,8 @@ namespace TetrisMUWP
         const int blockSize = 50;
         int ypos = 0; //Block y
         int xpos = 0; //Block x
-        int boardxpos = 0;
-        int boardypos = 0;
+        int boardxpos = 100;
+        int boardypos = 100;
         bool falling = true;
         const int boardX = 10;
         const int boardY = 18;
@@ -44,18 +44,15 @@ namespace TetrisMUWP
         int[,] L = new int[3, 3] { { 0, 0, 0 }, { 3, 3, 3 }, { 3, 0, 0 } };
         int[,] Backwards_L = new int[3, 3] { { 0, 0, 0 }, { 4, 4, 4 }, { 0, 0, 4} };
         int[,] Z = new int[3, 3] { { 0, 0, 0 }, { 0, 5, 5 }, { 5, 5, 0 } };
-        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 5, 5, 0 }, { 0, 5, 5} };
-        int[,] Box = new int[2, 2] { { 6, 6 }, { 6, 6 } };
+        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 6, 6, 0 }, { 0, 6, 6} };
+        int[,] Box = new int[2, 2] { { 7, 7 }, { 7, 7 } };
         int[,] Rand_Piece = null;
 
         int [,] Field = new int[boardY, boardX];
-        Vector2 FieldLocation = Vector2.Zero;
+        Vector2 FieldLocation =  new Vector2(10,10);
         Vector2 BlockLocation = Vector2.Zero;
-        bool Rotate = false;
-        bool Overflow = false;
-        int middle = 4;
-        int Backend_Falling = 0;
-        int[,] test_block; 
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -90,9 +87,6 @@ namespace TetrisMUWP
             Blocks.Add(Backwards_Z);
             Blocks.Add(Box);
             Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
-
-            // test_block = Field.original_block(Line, row, column);
-            //modified_field = Field.Solid_Field();
 
             
             base.Initialize();
@@ -135,14 +129,6 @@ namespace TetrisMUWP
                     if(Rand_Piece[x,y] !=0)
                         Field[pasteY, pasteX] = Rand_Piece[x, y];
                 }
-            }
-            for (int i = 0; i < fieldRow; i++)
-            {
-                for (int j = 0; j < fieldColumn; j++)
-                {
-                    Debug.Write($"{Field[i, j]}");
-                }
-                Debug.WriteLine("");
             }
         }
         /// <summary>
@@ -227,24 +213,6 @@ namespace TetrisMUWP
                 }
                 Period_Counter = 0;
             }
-            
-            /*if (ypos < boardypos + 18 * blockSize - blockSize - blockSize * Rand_Piece.GetLength(0)) {
-                ypos += 1;
-                if (ypos == 18*blockSize-blockSize)
-                {
-                    flag = true;
-                }
-            }
-            if (ypos == boardypos + 18 * blockSize - blockSize-blockSize * Rand_Piece.GetLength(0))
-            {
-                Debug.WriteLine("Collision!");
-                Debug.WriteLine("x:" + xpos);
-                Debug.WriteLine("y:" + ypos);
-                Debug.WriteLine((int)(((xpos - boardxpos) + blockSize) / blockSize) - 1);
-                Debug.WriteLine((int)((ypos - boardypos + blockSize) / blockSize) - 2);
-                Field.field[(int) ((ypos - boardypos + blockSize + blockSize*Rand_Piece.GetLength(0)) / blockSize)- 1,(int)(((xpos - boardxpos) + blockSize) / blockSize) - 1] = 1;
-                ypos = 0;
-            }*/
             base.Update(gameTime);
         }
 
@@ -281,10 +249,8 @@ namespace TetrisMUWP
                         spriteBatch.Draw(grass, new Rectangle((int)FieldLocation.X + ((int)BlockLocation.X + x) * blockSize,
                                                               (int)FieldLocation.Y + ((int)BlockLocation.Y + y) * blockSize, blockSize, blockSize),
                                                                Block_Color[Rand_Piece[x, y]]);
-
                 } 
             }
-            
             spriteBatch.End();
             base.Draw(gameTime);
 
