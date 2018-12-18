@@ -1,18 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Xml.Serialization;
 using Windows.UI.ViewManagement;
+using System.Linq;
 
-namespace TetrisMUWP
+namespace tetrisMUWP
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game
     {
+        private int _score;
+        private Score _scoremanager;
+        private SpriteFont _font;
+
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState previousState;
@@ -33,7 +42,7 @@ namespace TetrisMUWP
         const int boardY = 18;
         int Position_Period = 300;
         int Period_Counter = 0;
-        int score = 0;
+        //int score = 0;
         Random rnd = new Random();
 
 
@@ -52,10 +61,29 @@ namespace TetrisMUWP
         int [,] Field = new int[boardY, boardX];
         Vector2 FieldLocation =  new Vector2(10,10);
         Vector2 BlockLocation = Vector2.Zero;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+        }
+        /// <summary>
+        /// highscore data function
+        /// </summary>
+       [Serializable]
+        public struct HighScoreData
+        {
+            public string[] UserName;
+            public int[] Score;
+            public int Count;
+
+            public HighScoreData(int count)
+            {
+                UserName = new string[count];
+                Score = new int[count];
+
+                Count = count;
+            }
         }
 
         /// <summary>
@@ -66,8 +94,10 @@ namespace TetrisMUWP
         /// </summary>
         protected override void Initialize()
         {
+
+
             // TODO: Add your initialization logic here
-            for(int y=0; y < boardY; y++)
+            for (int y=0; y < boardY; y++)
             {
                 for(int x= 0; x< boardX; x++)
                 {
@@ -115,7 +145,7 @@ namespace TetrisMUWP
                             {
                                 Field[i, k] = 0;
                             }
-                            score += 100;
+                            _score += 100;
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
                                 for (int c = 0; c < 10; c++) {
@@ -198,6 +228,11 @@ namespace TetrisMUWP
         /// </summary>
         protected override void LoadContent()
         {
+            _scoremanager = Score.Load();
+
+            _font = Content.Load<SpriteFont>("Font");
+
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
@@ -259,6 +294,8 @@ namespace TetrisMUWP
         {
             // TODO: Add your update logic here
 
+            _scoremanager.add(new Models.Score({username = "Jorome" , value = _score } );
+
             flag = false;
 
             Period_Counter += gameTime.ElapsedGameTime.Milliseconds;
@@ -294,6 +331,11 @@ namespace TetrisMUWP
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+
+            spriteBatch.DrawString(_font, "Score: " + _score, new Vector2(10, 10), Color.Red);
+
+            spriteBatch.DrawString(_font, "High Score: \n " + string.Join("\n", _scoremanager.Highscores.Select(c => c.username + ": " + c.value).ToArray()), new Vector2(10, 10), Color.Red);
+
             for (int y = 0; y < fieldRow; y++)
             {
                 for (int x = 0; x < fieldColumn; x++)
