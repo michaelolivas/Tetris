@@ -50,7 +50,7 @@ namespace TetrisMUWP
         int[,] Rand_Piece = null;
 
         int [,] Field = new int[boardY, boardX];
-        Vector2 FieldLocation =  new Vector2(10,10);
+        Vector2 FieldLocation =  new Vector2(450,500);
         Vector2 BlockLocation = Vector2.Zero;
         public Game1()
         {
@@ -74,9 +74,6 @@ namespace TetrisMUWP
                     Field[y, x] = 0;
                 }
             }
-
-            //screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
-            //screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
             graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             graphics.IsFullScreen = true;
@@ -92,7 +89,6 @@ namespace TetrisMUWP
             Blocks.Add(Box);
             Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
 
-            
             base.Initialize();
             previousState = Keyboard.GetState();
         }
@@ -166,14 +162,11 @@ namespace TetrisMUWP
                         {
                             return true;
                         }
-                        
                     }
-
                     if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockX, BlockY] != 0))
                     {
                         return true;
                     }
-
                 }
                 
             }
@@ -208,6 +201,10 @@ namespace TetrisMUWP
         void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Escape) && !previousState.IsKeyDown(Keys.Escape))
+            {
+                this.Exit();
+            }
             if (state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space))
             {
                 Rotate_Right();
