@@ -33,7 +33,7 @@ namespace TetrisMUWP
         const int boardY = 18;
         int Position_Period = 300;
         int Period_Counter = 0;
-        int score = 0;
+        public int score = 0;
         Random rnd = new Random();
 
 
@@ -116,6 +116,7 @@ namespace TetrisMUWP
                                 Field[i, k] = 0;
                             }
                             score += 100;
+                            
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
                                 for (int c = 0; c < 10; c++) {
@@ -125,6 +126,7 @@ namespace TetrisMUWP
                             clear = true;
                             //i = 0;
                             //We hae to implemement the score function here!
+                            
                         }
                     }
                 }
@@ -132,6 +134,7 @@ namespace TetrisMUWP
             }
 
         }
+        
         public void Rotate_Right()
         {
             int len = Rand_Piece.GetLength(0);

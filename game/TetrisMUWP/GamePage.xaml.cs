@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,6 +27,10 @@ namespace TetrisMUWP
     public sealed partial class GamePage : Page
     {
 		Game1 _game;
+        string current = "0";
+        string old = "";
+        
+        
 
         public GamePage()
         {
@@ -57,5 +63,17 @@ namespace TetrisMUWP
             pauseB.Visibility = Visibility.Visible;
             resume.Visibility = Visibility.Collapsed;
         }
+
+        void CompositionTarget_Rendering(object sender, EventArgs e)
+        {
+            string scoreString = score.ToString();
+            showScore.Text = showScore.Text.Replace(scoreString, scoreString);
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
     }
+
 }
