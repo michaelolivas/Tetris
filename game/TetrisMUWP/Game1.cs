@@ -33,6 +33,7 @@ namespace TetrisMUWP
         const int boardY = 18;
         int Position_Period = 300;
         int Period_Counter = 0;
+        int score = 0;
         Random rnd = new Random();
 
 
@@ -51,8 +52,6 @@ namespace TetrisMUWP
         int [,] Field = new int[boardY, boardX];
         Vector2 FieldLocation =  new Vector2(10,10);
         Vector2 BlockLocation = Vector2.Zero;
-
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -75,9 +74,14 @@ namespace TetrisMUWP
                     Field[y, x] = 0;
                 }
             }
+
+            //screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            //screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
             
-            screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
-            screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
             this.IsMouseVisible = true;
             Blocks.Add(Line);
             Blocks.Add(T);
@@ -92,6 +96,61 @@ namespace TetrisMUWP
             base.Initialize();
             previousState = Keyboard.GetState();
         }
+        public void Check_Line()
+        {
+            bool clear = false;
+            for (int i = fieldRow - 1; i >= 0; i--)
+            {
+                int count = 0; //counts to check if the row is full
+                if (clear)
+                    i = 0;
+                for (int j = 0; j < fieldColumn; j++)
+                {
+                    if (Field[i, j] != 0) //Checks if there is a peice of the object on that spot
+                    {
+                        count++;
+                        if (count == fieldColumn) //if there is a peice of the object for that whole row, clear it
+                        {
+                            for (int k = 0; k < fieldColumn; k++)//clear row
+                            {
+                                Field[i, k] = 0;
+                            }
+                            score += 100;
+                            for (int w = i-1; w >= 0; w--)//Shift rows Down
+                            {
+                                for (int c = 0; c < 10; c++) {
+                                    Field[w + 1, c] = Field[w, c];
+                                }
+                            }
+                            clear = true;
+                            //i = 0;
+                            //We hae to implemement the score function here!
+                        }
+                    }
+                }
+
+            }
+
+        }
+        public void Rotate_Right()
+        {
+            int len = Rand_Piece.GetLength(0);
+            int[,] temp_block = new int[len, len]; //temp block to switch rows and columns
+            int i = 0;
+            int j = 0;
+            for (int x = 0; x < len; x++)
+            {
+                for (int y = len - 1; y >= 0; y--)
+                {
+                    temp_block[i, j] = Rand_Piece[y, x]; //copies the content from the original to the new 
+                    j++;
+                }
+                j = 0;
+                i++;
+            }
+            Rand_Piece = temp_block;
+
+        }
         public bool Collision(int x, int y)
         {
             for(int BlockY = 0; BlockY < Rand_Piece.GetLength(0); BlockY++)
@@ -101,18 +160,20 @@ namespace TetrisMUWP
                 {
                     int next_blockY = y + BlockY;
                     int next_blockX = x + BlockX;
-                    if(Rand_Piece[BlockY, BlockX] != 0)
+                    if(Rand_Piece[BlockX, BlockY] != 0)
                     {
-                        if(next_blockX<0 ||next_blockX >= 10)
+                        if(next_blockX<0 ||next_blockX > 10)
                         {
                             return true;
                         }
                         
                     }
+
                     if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockX, BlockY] != 0))
                     {
                         return true;
                     }
+
                 }
                 
             }
@@ -147,11 +208,13 @@ namespace TetrisMUWP
         void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
-            //Debug.WriteLine("x:" + xpos);
-            //Debug.WriteLine("y:" + ypos);
+            if (state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space))
+            {
+                Rotate_Right();
+            }
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
-                if (BlockLocation.X < 9)
+                if (BlockLocation.X < 10)
                 {
                     Vector2 Next_Position = BlockLocation + new Vector2(1, 0);
                     if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
@@ -160,18 +223,21 @@ namespace TetrisMUWP
             }
             if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
             {
-                if (BlockLocation.X > 0)
+                if (BlockLocation.X >= 0)
                 {
                     Vector2 Next_Position = BlockLocation + new Vector2(-1, 0);
                     if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
+                    {
                         BlockLocation = Next_Position;
+                        Next_Position.X = -1;
+                    }
                 }
             }
-            if (state.IsKeyDown(Keys.Space))
+            /*if (state.IsKeyDown(Keys.Space))
             {
                 if (ypos <  17 * blockSize)
                     ypos += 5;
-            }
+            }*/
             previousState = state;
         }
         /// <summary>
@@ -204,13 +270,15 @@ namespace TetrisMUWP
                 if (Collision((int)NextSpot.X, (int)NextSpot.Y))
                 {
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
-                    Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
+                    //Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
+                    Rand_Piece = (int[,])Blocks[6].Clone();
                     BlockLocation = Vector2.Zero;
                 }
                 else
                 {
                         BlockLocation = NextSpot;
                 }
+                Check_Line();
                 Period_Counter = 0;
             }
             base.Update(gameTime);
