@@ -76,6 +76,7 @@ namespace TetrisMUWP
             
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            this.IsMouseVisible = true;
             Blocks.Add(Line);
             Blocks.Add(T);
             Blocks.Add(L);
@@ -88,7 +89,7 @@ namespace TetrisMUWP
             // test_block = Field.original_block(Line, row, column);
             //modified_field = Field.Solid_Field();
 
-
+            
             base.Initialize();
             previousState = Keyboard.GetState();
         }
@@ -163,7 +164,7 @@ namespace TetrisMUWP
                         }
                         
                     }
-                    if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockY, BlockY] != 0))
+                    if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockX, BlockY] != 0))
                     {
                         return true;
                     }
@@ -263,7 +264,7 @@ namespace TetrisMUWP
             Period_Counter += gameTime.ElapsedGameTime.Milliseconds;
 
             KeyboardHandler();
-            if (Period_Counter >= Position_Period)
+            if (Period_Counter > Position_Period)
             {
                 Vector2 NextSpot = BlockLocation + new Vector2(0, 1);
                 if (Collision((int)NextSpot.X, (int)NextSpot.Y))
