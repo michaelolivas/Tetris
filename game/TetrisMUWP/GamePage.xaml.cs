@@ -42,5 +42,17 @@ namespace TetrisMUWP
             var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
+
+        private void PauseB_Click(object sender, RoutedEventArgs e)
+        {
+            pauseB.Visibility = Visibility.Collapsed;
+            resume.Visibility = Visibility.Visible;
+        }
+
+        private void Resume_Click(object sender, RoutedEventArgs e)
+        {
+            pauseB.Visibility = Visibility.Visible;
+            resume.Visibility = Visibility.Collapsed;
+        }
     }
 }
