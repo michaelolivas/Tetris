@@ -25,7 +25,6 @@ namespace TetrisMUWP
     /// </summary>
     public sealed partial class Start : Page
     {
-        bool click = true;
 
         public Start()
         {
@@ -42,7 +41,7 @@ namespace TetrisMUWP
         {
             //click = true;
             this.Frame.Navigate(typeof(highScores)); //open the scores window
-
+            
         }
     }
 }

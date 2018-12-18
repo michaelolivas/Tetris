@@ -8,8 +8,11 @@
     mc:Ignorable="d">
 
     <SwapChainPanel x:Name="swapChainPanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-        <Grid x:Name="grid" HorizontalAlignment="Center" Height="980" VerticalAlignment="Center" Width="1500" Margin="0,0,0,0" Background="CornflowerBlue">
-            <Button x:Name="Click" Content="New Game" HorizontalAlignment="Center" Margin="0,247,0,0" VerticalAlignment="Top" Height="107" Width="399" Click="Button_Click" Background="{x:Null}" FontFamily="Comic Sans MS" FontSize="72"/>
+        <Grid x:Name="grid" HorizontalAlignment="Center" Height="1000" VerticalAlignment="Center" Width="1500" Canvas.ZIndex="1" Background="CornflowerBlue">
+            <Button x:Name="Click" Content="New Game" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Height="107" Width="399" Click="Button_Click" Background="{x:Null}" FontFamily="Comic Sans MS" FontSize="72" Canvas.ZIndex="2"/>
+        </Grid>
+        <Grid x:Name="pause" HorizontalAlignment="Left" Height="1000" Margin="500,0,0,0" VerticalAlignment="Center" Width="1000" Canvas.ZIndex="1" Background="CornflowerBlue" Visibility="Collapsed">
+            <Button x:Name="pauseB" Content="PAUSE" HorizontalAlignment="Left" Margin="80,150,0,0" VerticalAlignment="Top" Height="100" Width="257" Background="{x:Null}" FontFamily="Comic Sans MS" FontSize="72" Visibility="Collapsed"/>
         </Grid>
 
     </SwapChainPanel>

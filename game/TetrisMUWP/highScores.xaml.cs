@@ -17,7 +17,6 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 
-
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TetrisMUWP
@@ -218,13 +217,7 @@ namespace TetrisMUWP
 
         private void player_name(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            /*if (Start.click == true)
-            {
-                nameplayer.Visibility = Visibility.Collapsed;
-
-            }*/
             NewName = nameplayer.Text;
-
         }
     }
 }

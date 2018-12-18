@@ -74,7 +74,7 @@ namespace TetrisMUWP
             // TODO: Add your initialization logic here
             screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
-
+            this.IsMouseVisible = true;
             Field = new Game_Grid();
 
             Blocks.Add(Line);
