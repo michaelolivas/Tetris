@@ -22,15 +22,37 @@ namespace TetrisMUWP
     /// </summary>
     public sealed partial class GamePage : Page
     {
-		readonly Game1 _game;
+		Game1 _game;
 
 		public GamePage()
         {
             this.InitializeComponent();
 
 			// Create the game.
-			var launchArguments = string.Empty;
+			//var launchArguments = string.Empty;
+            //_game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Click.Visibility = Visibility.Collapsed;
+            grid.Visibility = Visibility.Collapsed;
+            pause.Visibility = Visibility.Visible;
+            pauseB.Visibility = Visibility.Visible;
+            var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
+        }
+
+        private void PauseB_Click(object sender, RoutedEventArgs e)
+        {
+            pauseB.Visibility = Visibility.Collapsed;
+            resume.Visibility = Visibility.Visible;
+        }
+
+        private void Resume_Click(object sender, RoutedEventArgs e)
+        {
+            pauseB.Visibility = Visibility.Visible;
+            resume.Visibility = Visibility.Collapsed;
         }
     }
 }
