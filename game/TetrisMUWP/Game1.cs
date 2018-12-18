@@ -109,14 +109,11 @@ namespace TetrisMUWP
                         count++;
                         if (count == fieldColumn) //if there is a peice of the object for that whole row, clear it
                         {
-                            Debug.WriteLine("count:" + count + "i:" + i);
                             for (int k = 0; k < fieldColumn; k++)//clear row
                             {
                                 Field[i, k] = 0;
                             }
                             score += 100;
-                            Debug.WriteLine("Score:" + score);
-
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
                                 for (int c = 0; c < 10; c++) {
@@ -190,14 +187,6 @@ namespace TetrisMUWP
                         Field[pasteY, pasteX] = Rand_Piece[x, y];
                 }
             }
-            for (int i = 0; i < fieldRow; i++)
-            {
-                for (int j = 0; j < fieldColumn; j++)
-                {
-                    Debug.Write($"{Field[i, j]}");
-                }
-                Debug.WriteLine("");
-            }
         }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -218,7 +207,6 @@ namespace TetrisMUWP
             if (state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space))
             {
                 Rotate_Right();
-                Debug.Write("Rotate");
             }
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
@@ -286,24 +274,6 @@ namespace TetrisMUWP
                 Check_Line();
                 Period_Counter = 0;
             }
-            
-            /*if (ypos < boardypos + 18 * blockSize - blockSize - blockSize * Rand_Piece.GetLength(0)) {
-                ypos += 1;
-                if (ypos == 18*blockSize-blockSize)
-                {
-                    flag = true;
-                }
-            }
-            if (ypos == boardypos + 18 * blockSize - blockSize-blockSize * Rand_Piece.GetLength(0))
-            {
-                Debug.WriteLine("Collision!");
-                Debug.WriteLine("x:" + xpos);
-                Debug.WriteLine("y:" + ypos);
-                Debug.WriteLine((int)(((xpos - boardxpos) + blockSize) / blockSize) - 1);
-                Debug.WriteLine((int)((ypos - boardypos + blockSize) / blockSize) - 2);
-                Field.field[(int) ((ypos - boardypos + blockSize + blockSize*Rand_Piece.GetLength(0)) / blockSize)- 1,(int)(((xpos - boardxpos) + blockSize) / blockSize) - 1] = 1;
-                ypos = 0;
-            }*/
             base.Update(gameTime);
         }
 
