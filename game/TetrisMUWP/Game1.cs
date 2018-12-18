@@ -100,7 +100,7 @@ namespace TetrisMUWP
                 int count = 0; //counts to check if the row is full
                 for (int j = 0; j < fieldColumn; j++)
                 {
-                    if (Field[i, j] == 1) //Checks if there is a peice of the object on that spot
+                    if (Field[i, j] != 0) //Checks if there is a peice of the object on that spot
                     {
                         count++;
                         if (count == fieldColumn) //if there is a peice of the object for that whole row, clear it
@@ -109,14 +109,15 @@ namespace TetrisMUWP
                             {
                                 for (int z = i; z >= 0; z--)
                                 {
-                                    if (z >= 1)
+
+                                    /*if (z >= 1)
                                     {
                                         Field[z, k] = Field[z - 1, k];
                                     }
                                     if (z == 0)
                                     {
                                         Field[z, k] = 0;
-                                    }
+                                    }*/
                                 }
                             }
                             //We hae to implemement the score function here!
