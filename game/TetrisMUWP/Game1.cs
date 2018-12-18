@@ -95,9 +95,12 @@ namespace TetrisMUWP
         }
         public void Check_Line()
         {
+            bool clear = false;
             for (int i = fieldRow - 1; i >= 0; i--)
             {
                 int count = 0; //counts to check if the row is full
+                if (clear)
+                    i = 0;
                 for (int j = 0; j < fieldColumn; j++)
                 {
                     if (Field[i, j] != 0) //Checks if there is a peice of the object on that spot
@@ -105,23 +108,21 @@ namespace TetrisMUWP
                         count++;
                         if (count == fieldColumn) //if there is a peice of the object for that whole row, clear it
                         {
-                            for (int k = 0; k < fieldColumn; k++)
+                            Debug.WriteLine("count:" + count + "i:" + i);
+                            for (int k = 0; k < fieldColumn; k++)//clear row
                             {
-                                for (int z = i; z >= 0; z--)
-                                {
+                                Field[i, k] = 0;
+                            }
 
-                                    /*if (z >= 1)
-                                    {
-                                        Field[z, k] = Field[z - 1, k];
-                                    }
-                                    if (z == 0)
-                                    {
-                                        Field[z, k] = 0;
-                                    }*/
+                            for (int w = i-1; w >= 0; w--)//Shift rows Down
+                            {
+                                for (int c = 0; c < 10; c++) {
+                                    Field[w + 1, c] = Field[w, c];
                                 }
                             }
+                            clear = true;
+                            //i = 0;
                             //We hae to implemement the score function here!
-                            i++;
                         }
                     }
                 }
