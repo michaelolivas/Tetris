@@ -33,6 +33,7 @@ namespace TetrisMUWP
         const int boardY = 18;
         int Position_Period = 300;
         int Period_Counter = 0;
+        int score = 0;
         Random rnd = new Random();
 
 
@@ -113,6 +114,8 @@ namespace TetrisMUWP
                             {
                                 Field[i, k] = 0;
                             }
+                            score += 100;
+                            Debug.WriteLine("Score:" + score);
 
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
@@ -272,7 +275,8 @@ namespace TetrisMUWP
                 if (Collision((int)NextSpot.X, (int)NextSpot.Y))
                 {
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
-                    Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
+                    //Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
+                    Rand_Piece = (int[,])Blocks[6].Clone();
                     BlockLocation = Vector2.Zero;
                 }
                 else
