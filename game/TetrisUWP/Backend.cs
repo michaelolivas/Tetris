@@ -7,16 +7,17 @@ namespace TetrisUWP
     {
         public int[,] field = new int[18, 10];
 
-        public Game_Grid()
+        public int[,] Board()
         {
             //initialize the grid with 0s
             for (int i = 0; i < 18; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    field[i, j] = 1;
+                    field[i, j] = 0;
                 }
             }
+            return field;
         }
 
         public void Check_Line()
@@ -212,7 +213,7 @@ namespace TetrisUWP
                 middle--;
             }
         }
-        public bool Falling_Block(int[,] block, int row, int column, int [,] test_block, int[,] modified_field, bool rotate, bool falling, bool overflow, int middle,int i)
+        public int [,] Falling_Block(int[,] block, int row, int column, int [,] test_block, int[,] modified_field, bool rotate, bool falling, bool overflow, int middle,int i)
         {
             int walker;
             int row_counter = 0;
@@ -229,7 +230,7 @@ namespace TetrisUWP
             {
                 if (collision(test_block, modified_field, row, column, row_counter, i, middle))
                 {
-                    return false;
+                    return field;
                 }
                 if (falling)
                 {
@@ -253,7 +254,7 @@ namespace TetrisUWP
                 row_counter = (i < row) ? i : row-1;
                 if (collision(test_block, modified_field, row, column, row_counter, i, middle))
                 {
-                    return false;
+                    return field;
                 }
                 if (falling)
                 {
@@ -262,13 +263,13 @@ namespace TetrisUWP
                         walker = 0;
                         for (int x = 0; x < column; x++)
                         {
-                            if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] == 1)
+                            if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] != 0)
                             {
                                 field[i - y, middle - middle_walker + walker] = block[row - 1 - y, x];
                             }
-                            if (modified_field[i - y, middle - middle_walker + walker] == 1 && test_block[row - 1 - y, x] == 0)
+                            if (modified_field[i - y, middle - middle_walker + walker] != 0 && test_block[row - 1 - y, x] == 0)
                             {
-                                field[i - y, middle - middle_walker + walker] = 1;
+                                field[i - y, middle - middle_walker + walker] = modified_field[i - y, middle - middle_walker + walker];
                             }
                             if (modified_field[i - y, middle - middle_walker + walker] == 0 && test_block[row - 1 - y, x] == 0)
                             {
@@ -282,7 +283,7 @@ namespace TetrisUWP
                                 }
                                 if (modified_field[i - y, middle - middle_walker + walker] == 1 && test_block[row - 1 - y, x] == 0)
                                 {
-                                    field[i - row, middle - middle_walker + walker] = 1;
+                                    field[i - row, middle - middle_walker + walker] = modified_field[i - y, middle - middle_walker + walker] ;
                                 }
                             }
                             walker++;
@@ -291,7 +292,7 @@ namespace TetrisUWP
                 }
 
             }
-            if (i == 17 && falling)
+            /*if (i == 17 && falling)
             {
                 Print_Grid();
                 Debug.WriteLine("");
@@ -353,7 +354,7 @@ namespace TetrisUWP
                         Debug.WriteLine("");
                     }
                 } while (overflow) ;
-            }
+            }*/
             Print_Grid();
             Debug.WriteLine("");
             for (int a = 0; a < row; a++)
@@ -363,7 +364,7 @@ namespace TetrisUWP
                     block[a, b] = test_block[a, b];
                 }
             }
-            return true;
+            return field;
         }
     }
 }

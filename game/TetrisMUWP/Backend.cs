@@ -96,6 +96,12 @@ namespace TetrisMUWP
             }
             return test_block;
         }
+
+        internal static int[,] Board()
+        {
+            throw new NotImplementedException();
+        }
+
         public int [,] Rotate_Left(int[,] block, int [,] test_block, int row, int column)
         {
             int i = 0;
@@ -214,7 +220,7 @@ namespace TetrisMUWP
                 middle--;
             }
         }
-        public bool Falling_Block(int[,] block, int row, int column, int [,] test_block, int[,] modified_field, bool rotate, bool falling, bool overflow, int middle,int i)
+        public int [,] Falling_Block(int[,] block, int row, int column, int [,] test_block, int[,] modified_field, bool rotate, bool falling, bool overflow, int middle,int i)
         {
             int walker;
             int row_counter = 0;
@@ -231,7 +237,7 @@ namespace TetrisMUWP
             {
                 if (collision(test_block, modified_field, row, column, row_counter, i, middle))
                 {
-                    return false;
+                    return field;
                 }
                 if (falling)
                 {
@@ -255,7 +261,7 @@ namespace TetrisMUWP
                 row_counter = (i < row) ? i : row-1;
                 if (collision(test_block, modified_field, row, column, row_counter, i, middle))
                 {
-                    return false;
+                    return field;
                 }
                 if (falling)
                 {
@@ -365,7 +371,7 @@ namespace TetrisMUWP
                     block[a, b] = test_block[a, b];
                 }
             }
-            return true;
+            return field;
         }
     }
 }
