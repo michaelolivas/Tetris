@@ -92,6 +92,41 @@ namespace TetrisMUWP
             base.Initialize();
             previousState = Keyboard.GetState();
         }
+        public void Check_Line()
+        {
+            for (int i = fieldRow - 1; i >= 0; i--)
+            {
+                int count = 0; //counts to check if the row is full
+                for (int j = 0; j < fieldColumn; j++)
+                {
+                    if (Field[i, j] == 1) //Checks if there is a peice of the object on that spot
+                    {
+                        count++;
+                        if (count == fieldColumn) //if there is a peice of the object for that whole row, clear it
+                        {
+                            for (int k = 0; k < fieldColumn; k++)
+                            {
+                                for (int z = i; z >= 0; z--)
+                                {
+                                    if (z >= 1)
+                                    {
+                                        Field[z, k] = Field[z - 1, k];
+                                    }
+                                    if (z == 0)
+                                    {
+                                        Field[z, k] = 0;
+                                    }
+                                }
+                            }
+                            //We hae to implemement the score function here!
+                            i++;
+                        }
+                    }
+                }
+
+            }
+
+        }
         public void Rotate_Right()
         {
             int len = Rand_Piece.GetLength(0);
@@ -241,6 +276,7 @@ namespace TetrisMUWP
                 {
                         BlockLocation = NextSpot;
                 }
+                Check_Line();
                 Period_Counter = 0;
             }
             
