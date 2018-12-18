@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,12 +26,12 @@ namespace TetrisMUWP
     {
 		Game1 _game;
 
-		public GamePage()
+        public GamePage()
         {
             this.InitializeComponent();
 
-			// Create the game.
-			//var launchArguments = string.Empty;
+            // Create the game.
+            //var launchArguments = string.Empty;
             //_game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
 
