@@ -88,7 +88,7 @@ namespace TetrisMUWP
             Blocks.Add(Z);
             Blocks.Add(Backwards_Z);
             Blocks.Add(Box);
-            Rand_Piece = (int[,])Blocks[rnd.Next(1, Blocks.Count)].Clone();
+            Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
 
             // test_block = Field.original_block(Line, row, column);
             //modified_field = Field.Solid_Field();
@@ -112,12 +112,12 @@ namespace TetrisMUWP
                         {
                             return true;
                         }
+                        
                     }
-                    if (next_blockY >=18  || Field[next_blockY, next_blockX] != 0)
+                    if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockY, BlockY] != 0))
                     {
                         return true;
-                    } 
-
+                    }
                 }
                 
             }
@@ -131,9 +131,17 @@ namespace TetrisMUWP
                 {
                     int pasteX = Fieldx +x;
                     int pasteY = Fieldy+y;
-                    if(Rand_Piece[y,x] !=0)
-                        Field[pasteY-2, pasteX] = Rand_Piece[y, x];
+                    if(Rand_Piece[x,y] !=0)
+                        Field[pasteY, pasteX] = Rand_Piece[x, y];
                 }
+            }
+            for (int i = 0; i < fieldRow; i++)
+            {
+                for (int j = 0; j < fieldColumn; j++)
+                {
+                    Debug.Write($"{Field[i, j]}");
+                }
+                Debug.WriteLine("");
             }
         }
         /// <summary>
@@ -156,14 +164,21 @@ namespace TetrisMUWP
             //Debug.WriteLine("y:" + ypos);
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
-                if (!Collision((int)BlockLocation.X, (int)BlockLocation.Y))
-                    BlockLocation += new Vector2(0,-1);
+                if (BlockLocation.X < 9)
+                {
+                    Vector2 Next_Position = BlockLocation + new Vector2(1, 0);
+                    if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
+                        BlockLocation = Next_Position;
+                }
             }
             if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
             {
-
-                if(!Collision((int)BlockLocation.X, (int)BlockLocation.Y))
-                    BlockLocation += new Vector2(0,1);
+                if (BlockLocation.X > 0)
+                {
+                    Vector2 Next_Position = BlockLocation + new Vector2(-1, 0);
+                    if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
+                        BlockLocation = Next_Position;
+                }
             }
             if (state.IsKeyDown(Keys.Space))
             {
@@ -199,13 +214,16 @@ namespace TetrisMUWP
             if (Period_Counter >= Position_Period)
             {
                 Vector2 NextSpot = BlockLocation + new Vector2(0, 1);
-                if (Collision((int)BlockLocation.X, (int)BlockLocation.Y))
+                if (Collision((int)NextSpot.X, (int)NextSpot.Y))
                 {
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
-                    Rand_Piece = (int[,])Blocks[rnd.Next(1, Blocks.Count)].Clone();
+                    Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
                     BlockLocation = Vector2.Zero;
                 }
-                BlockLocation = NextSpot;
+                else
+                {
+                        BlockLocation = NextSpot;
+                }
                 Period_Counter = 0;
             }
             
