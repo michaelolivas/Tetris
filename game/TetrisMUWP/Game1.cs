@@ -19,8 +19,16 @@ namespace TetrisMUWP
         public const int fieldRow = 18;
         public const int fieldColumn = 10;
         const float SKYRATIO = 2f / 3f;
+        float screenWidth;
+        float screenHeight;
         Texture2D grass;
+        bool flag = true;
         const int blockSize = 50;
+        int ypos = 0; //Block y
+        int xpos = 0; //Block x
+        int boardxpos = 100;
+        int boardypos = 100;
+        bool falling = true;
         const int boardX = 10;
         const int boardY = 18;
         int Position_Period = 300;
@@ -66,10 +74,12 @@ namespace TetrisMUWP
                     Field[y, x] = 0;
                 }
             }
-            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
-            graphics.IsFullScreen = true;
-            graphics.ApplyChanges();
+            //screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            //screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            //graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            //graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            //graphics.IsFullScreen = true;
+            //graphics.ApplyChanges();
             
             this.IsMouseVisible = true;
             Blocks.Add(Line);
@@ -80,8 +90,121 @@ namespace TetrisMUWP
             Blocks.Add(Backwards_Z);
             Blocks.Add(Box);
             Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
+
             base.Initialize();
             previousState = Keyboard.GetState();
+        }
+        public void shiftDown()
+        {
+
+        }
+        public void shiftLeft()
+        {
+            int len = Rand_Piece.GetLength(0);
+
+            bool go = false;
+            int counter = 0;
+            for (int i = 0; i < len; i++)
+            {
+                if (Rand_Piece[i, 2] != 0)
+                {
+                    counter += 1;
+                }
+            }
+            if (counter == 0)
+                go = true;
+            if (go)
+            {
+
+                for (int row = 0; row < len - 1; row++)
+                {
+                    for (int col = 0; col < len; col++)
+                    {
+                        Debug.WriteLine("r:" + row + "col: " + col);
+                        Rand_Piece[row, col] = Rand_Piece[row + 1, col];
+                        Rand_Piece[row + 1, col] = 0;
+                    }
+                }
+            }
+        }
+        public void shiftRight()
+        {
+            int len = Rand_Piece.GetLength(0);
+            bool go = false;
+            int counter = 0;
+            for (int i = 0; i < len; i++)
+            {
+                if (Rand_Piece[i, 0] != 0)
+                {
+                    counter += 1;
+                }
+            }
+            if (counter == 0)
+                go = true;
+            if (go)
+            {
+
+                for (int row = len - 1; row > 0; row--)
+                {
+                    for (int col = 0; col < len; col++)
+                    {
+                        Rand_Piece[row, col] = Rand_Piece[row - 1, col];
+                        Rand_Piece[row - 1, col] = 0;
+                    }
+                }
+            }
+            
+        }
+        public int blockOffset(string pos)
+        {
+            int len = Rand_Piece.GetLength(0);
+            int offset = 0;
+            switch(pos){
+                case "right":
+                    for (int i = 0; i < len; i++)
+                    {
+                        for (int j = 0; j < len; j++)
+                        {
+                            if (Rand_Piece[j, i] != 0)
+                            {
+                                offset = (len - 1) - i;
+                            }
+                        }
+                    }
+                    Debug.WriteLine("right");
+                    break;
+                case "left":
+                    for (int i = 0; i < len; i++)
+                    {
+                        for (int j = len-1; j >=0 ; j--)
+                        {
+                            if (Rand_Piece[j, 1] != 0)
+                            {
+                                offset = (len - 1) - i;
+                            }
+                        }
+                    }
+                    Debug.WriteLine("Left");
+                    break;
+                case "down":
+                    for (int i = 0; i < len; i++)
+                    {
+                        for (int j = 0; j < len; j++)
+                        {
+                            if (Rand_Piece[i, j] != 0)
+                            {
+                                offset = (len - 1) - i;
+                                Debug.WriteLine("i: " + i);
+                                Debug.WriteLine("j:" + j);
+                            }
+                        }
+                    }
+                    Debug.WriteLine("down");
+                    break;
+
+            }
+            return offset;
+                
         }
         public void Check_Line()
         {
@@ -119,9 +242,9 @@ namespace TetrisMUWP
             }
 
         }
-        public int[,] Rotate_Right(int [,] block)
+        public void Rotate_Right()
         {
-            int len = block.GetLength(0);
+            int len = Rand_Piece.GetLength(0);
             int[,] temp_block = new int[len, len]; //temp block to switch rows and columns
             int i = 0;
             int j = 0;
@@ -129,36 +252,36 @@ namespace TetrisMUWP
             {
                 for (int y = len - 1; y >= 0; y--)
                 {
-                    temp_block[i, j] = block[y, x]; //copies the content from the original to the new 
+                    temp_block[i, j] = Rand_Piece[y, x]; //copies the content from the original to the new 
                     j++;
                 }
                 j = 0;
                 i++;
             }
-            return temp_block;
+            Rand_Piece = temp_block;
 
         }
-        public bool Collision(int[,] block, int x, int y)
+        public bool Collision(int x, int y)
         {
-            for(int BlockY = 0; BlockY < block.GetLength(0); BlockY++)
+        
+            for(int BlockY = 0; BlockY < Rand_Piece.GetLength(0); BlockY++)
             {
 
-                for (int BlockX = 0; BlockX < block.GetLength(0); BlockX++)
+                for (int BlockX = 0; BlockX < Rand_Piece.GetLength(0); BlockX++)
                 {
                     int next_blockY = y + BlockY;
                     int next_blockX = x + BlockX;
                     if(Rand_Piece[BlockX, BlockY] != 0)
                     {
-                        if(next_blockX < 0 ||next_blockX >=10)
+                        if(next_blockX<0 ||next_blockX > 10)
                         {
                             return true;
                         }
                     }
-                    if (next_blockY == 18 || (Field[next_blockY, next_blockX] != 0 && block[BlockX, BlockY] != 0))
+                    if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockX, BlockY] != 0))
                     {
                         return true;
                     }
-
                 }
                 
             }
@@ -176,6 +299,15 @@ namespace TetrisMUWP
                         Field[pasteY, pasteX] = Rand_Piece[x, y];
                 }
             }
+            for (int i = 0; i < fieldRow; i++)
+            {
+                for (int j = 0; j < fieldColumn; j++)
+                {
+                    Debug.Write($"{Field[i, j]}");
+                }
+                Debug.WriteLine("");
+            }
+            Debug.WriteLine(blockOffset("down"));
         }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -199,26 +331,42 @@ namespace TetrisMUWP
             }
             if (state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space))
             {
-                int [,] Orentation = Rotate_Right(Rand_Piece);
-                if(!Collision(Orentation, (int)BlockLocation.X, (int)BlockLocation.Y))
-                {
-                    Rand_Piece = Orentation;
-                }
+                Rotate_Right();
             }
             if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
             {
-                Vector2 Next_Position = BlockLocation + new Vector2(1, 0);
-                if (!Collision(Rand_Piece, (int)Next_Position.X, (int)Next_Position.Y))
-                    BlockLocation = Next_Position;
+                if (BlockLocation.X == 10-Rand_Piece.GetLength(0))
+                {
+                    shiftRight();
+                }
+                else if (BlockLocation.X < 10)
+                {
+                    Vector2 Next_Position = BlockLocation + new Vector2(1, 0);
+                    if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
+                        BlockLocation = Next_Position;
+                }
             }
             if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
             {
-                Vector2 Next_Position = BlockLocation + new Vector2(-1, 0);
-                if (!Collision(Rand_Piece, (int)Next_Position.X, (int)Next_Position.Y))
+                if(BlockLocation.X == 0)
                 {
-                    BlockLocation = Next_Position;
+                    shiftLeft();
+                }
+                if (BlockLocation.X != 0)
+                {
+                    Vector2 Next_Position = BlockLocation + new Vector2(-1, 0);
+                    if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
+                    {
+                        BlockLocation = Next_Position;
+                        Next_Position.X = -1;
+                    }
                 }
             }
+            /*if (state.IsKeyDown(Keys.Space))
+            {
+                if (ypos <  17 * blockSize)
+                    ypos += 5;
+            }*/
             previousState = state;
         }
         /// <summary>
@@ -239,6 +387,9 @@ namespace TetrisMUWP
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
+            Debug.WriteLine(BlockLocation);
+
+            flag = false;
 
             Period_Counter += gameTime.ElapsedGameTime.Milliseconds;
 
@@ -246,7 +397,7 @@ namespace TetrisMUWP
             if (Period_Counter > Position_Period)
             {
                 Vector2 NextSpot = BlockLocation + new Vector2(0, 1);
-                if (Collision(Rand_Piece, (int)NextSpot.X, (int)NextSpot.Y))
+                if (Collision((int)NextSpot.X, (int)NextSpot.Y))
                 {
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
                     Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
@@ -258,12 +409,11 @@ namespace TetrisMUWP
                 }
                 else
                 {
-                    BlockLocation = NextSpot;
+                        BlockLocation = NextSpot;
                 }
                 Check_Line();
                 Period_Counter = 0;
             }
-           
             base.Update(gameTime);
         }
 
