@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Newtonsoft.Json;
+using TetrisMUWP.ScoreManager;
 
 namespace TetrisMUWP
 {
@@ -16,6 +17,7 @@ namespace TetrisMUWP
     /// </summary>
     public class Game1 : Game
     {
+        highScores saveScore = new highScores();
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState previousState;
@@ -412,7 +414,6 @@ namespace TetrisMUWP
                     {
                         Debug.WriteLine("Gameover");
                         GameOver = true;
-
                         Pause = true;
 
                         //highScores input = new highScores();
