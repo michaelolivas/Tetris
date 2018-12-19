@@ -17,7 +17,6 @@ namespace TetrisMUWP
     /// </summary>
     public class Game1 : Game
     {
-        highScores saveScore = new highScores();
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState previousState;
@@ -27,13 +26,7 @@ namespace TetrisMUWP
         float screenWidth;
         float screenHeight;
         Texture2D grass;
-        bool flag = true;
         const int blockSize = 50;
-        int ypos = 0; //Block y
-        int xpos = 0; //Block x
-        int boardxpos = 100;
-        int boardypos = 100;
-        bool falling = true;
         const int boardX = 10;
         const int boardY = 18;
         int Position_Period = 300;
@@ -43,8 +36,6 @@ namespace TetrisMUWP
         bool Pause = false;
         int ElapseTime = 0;
         Random rnd = new Random();
-        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        Windows.Storage.StorageFile gameFile;
 
 
         /// <summary>
@@ -438,7 +429,6 @@ namespace TetrisMUWP
                         GameOver = true;
                         Pause = true;
 
-                        //highScores input = new highScores();
                         //input.Visibility = Visibility.Visible;
                         
                     }
