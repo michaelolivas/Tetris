@@ -28,23 +28,10 @@ namespace TetrisMUWP
     public sealed partial class GamePage : Page
     {
 		Game1 _game;
-        //Game1 sc = new Game1();
-        //int sc;
-        
-        //string scoreS = "";
-        
-
 
         public GamePage()
         {
             this.InitializeComponent();
-            //sc = Game1.score;
-            //sc += 100;
-            //showScore.Text = sc.ToString();
-            //showScore.UpdateLayout();
-            // Create the game.
-            //var launchArguments = string.Empty;
-            //_game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
 
 
@@ -58,19 +45,7 @@ namespace TetrisMUWP
             _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
        
-        public void ShowScore_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
-        {
-            //sc = Game1.score;
-            //scoreS = sc.scoreString;
-            //sc += 100;
-            //showScore.Text = sc.ToString();
-        }
-
-        private void ShowScore_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //sc += 100;
-            //showScore.Text = sc.ToString();
-        }
+        
     }
 
 }

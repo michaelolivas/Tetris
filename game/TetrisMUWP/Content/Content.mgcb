@@ -37,20 +37,6 @@
 /processorParam:TextureFormat=Color
 /build:grass.png
 
-#begin Score.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Score.spritefont
-
-#begin Scores.spritefont
-/importer:FontDescriptionImporter
-/processor:LocalizedFontProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Scores.spritefont
-
 #begin teeBar.PNG
 /importer:TextureImporter
 /processor:TextureProcessor
