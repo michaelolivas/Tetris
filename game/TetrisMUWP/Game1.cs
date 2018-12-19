@@ -328,7 +328,7 @@ namespace TetrisMUWP
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
-            scoreFont = Content.Load<SpriteFont>("Score");
+            //scoreFont = Content.Load<SpriteFont>("Score");
 
             //teeBar = Content.Load<Texture2D>("grass");
 
@@ -464,7 +464,7 @@ namespace TetrisMUWP
                                                                Block_Color[Rand_Piece[x, y]]);
                 } 
             }
-            spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2(screenWidth - 100, 50), Color.Black);
+            //spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2(screenWidth - 100, 50), Color.Black);
             spriteBatch.End();
             base.Draw(gameTime);
 
