@@ -128,13 +128,14 @@ namespace TetrisMUWP
         }
         public void shiftLeft()
         {
+            Debug.WriteLine("shL");
             int len = Rand_Piece.GetLength(0);
 
             bool go = false;
             int counter = 0;
             for (int i = 0; i < len; i++)
             {
-                if (Rand_Piece[i, i] != 0)
+                if (Rand_Piece[0, i] != 0)
                 {
                     counter += 1;
                 }
@@ -157,12 +158,13 @@ namespace TetrisMUWP
         }
         public void shiftRight()
         {
+            Debug.WriteLine("shR");
             int len = Rand_Piece.GetLength(0);
             bool go = false;
             int counter = 0;
             for (int i = 0; i < len; i++)
             {
-                if (Rand_Piece[i, 0] != 0)
+                if (Rand_Piece[len-1, i] != 0)
                 {
                     counter += 1;
                 }
@@ -182,57 +184,6 @@ namespace TetrisMUWP
                 }
             }
             
-        }
-        public int blockOffset(string pos)
-        {
-            int len = Rand_Piece.GetLength(0);
-            int offset = 0;
-            switch(pos){
-                case "right":
-                    for (int i = 0; i < len; i++)
-                    {
-                        for (int j = 0; j < len; j++)
-                        {
-                            if (Rand_Piece[j, i] != 0)
-                            {
-                                offset = (len - 1) - i;
-                            }
-                        }
-                    }
-                    Debug.WriteLine("right");
-                    break;
-                case "left":
-                    for (int i = 0; i < len; i++)
-                    {
-                        for (int j = len-1; j >=0 ; j--)
-                        {
-                            if (Rand_Piece[j, 1] != 0)
-                            {
-                                offset = (len - 1) - i;
-                            }
-                        }
-                    }
-                    Debug.WriteLine("Left");
-                    break;
-                case "down":
-                    for (int i = 0; i < len; i++)
-                    {
-                        for (int j = 0; j < len; j++)
-                        {
-                            if (Rand_Piece[i, j] != 0)
-                            {
-                                offset = (len - 1) - i;
-                                Debug.WriteLine("i: " + i);
-                                Debug.WriteLine("j:" + j);
-                            }
-                        }
-                    }
-                    Debug.WriteLine("down");
-                    break;
-
-            }
-            return offset;
-                
         }
         public void Check_Line()
         {
@@ -337,7 +288,6 @@ namespace TetrisMUWP
                 }
                 Debug.WriteLine("");
             }
-            Debug.WriteLine(blockOffset("down"));
         }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
