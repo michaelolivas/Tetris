@@ -188,16 +188,6 @@ namespace TetrisUWP
         {
                 this.Frame.Navigate(typeof(Start)); //open the start window again
         }
-
-        private void TextBlock_SelectionChanged()
-        {
-
-        }
-
-        private void TextBlock_SelectionChanged_1(object sender, RoutedEventArgs e)
-        {
-
-        }
         
         private void notupdate_score()
         {
@@ -207,7 +197,7 @@ namespace TetrisUWP
             {
                 save.Visibility = Visibility.Collapsed;
                 nameplayer.Visibility = Visibility.Collapsed;
-            }
+            }   
         }
         
         private void Save_Click(object sender, RoutedEventArgs e)
