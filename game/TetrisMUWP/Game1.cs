@@ -96,7 +96,33 @@ namespace TetrisMUWP
         }
         public void shiftDown()
         {
+            Debug.WriteLine("shD");
+            int len = Rand_Piece.GetLength(0);
 
+            bool go = false;
+            int counter = 0;
+            for (int i = 0; i < len; i++)
+            {
+                if (Rand_Piece[i, len-1] != 0)
+                {
+                    counter += 1;
+                }
+            }
+            if (counter == 0)
+                go = true;
+            if (go)
+            {
+
+                for (int row = 0; row < len; row++)
+                {
+                    for (int col = len-1; col > 0; col--)
+                    {
+                        Debug.WriteLine("r:" + row + "col: " + col);
+                        Rand_Piece[row, col] = Rand_Piece[row, col-1];
+                        Rand_Piece[row, col-1] = 0;
+                    }
+                }
+            }
         }
         public void shiftLeft()
         {
@@ -347,8 +373,13 @@ namespace TetrisMUWP
             if (Period_Counter > Position_Period)
             {
                 Vector2 NextSpot = BlockLocation + new Vector2(0, 1);
+                
                 if (Collision((int)NextSpot.X, (int)NextSpot.Y))
                 {
+                    if (BlockLocation.Y == 18 - Rand_Piece.GetLength(0))
+                    {
+                        shiftDown();
+                    }
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
                     Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
                     //generate random pos
