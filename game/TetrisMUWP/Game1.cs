@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
+using Newtonsoft.Json;
 
 namespace TetrisMUWP
 {
@@ -35,6 +36,8 @@ namespace TetrisMUWP
         int Period_Counter = 0;
         int score = 0;
         Random rnd = new Random();
+        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        Windows.Storage.StorageFile gameFile;
 
 
         List<int[,]> Blocks = new List<int [,]>();
@@ -93,6 +96,13 @@ namespace TetrisMUWP
 
             base.Initialize();
             previousState = Keyboard.GetState();
+        }
+        public async void saveGame()
+        {
+            string json = JsonConvert.SerializeObject(_game);
+            gameFile = await storageFolder.CreateFileAsync("savedGame.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            //Write data to the file
+            await Windows.Storage.FileIO.WriteTextAsync(gameFile, json);
         }
         public void shiftDown()
         {
