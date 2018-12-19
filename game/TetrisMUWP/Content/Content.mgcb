@@ -56,3 +56,10 @@
 /processorParam:TextureFormat=Color
 /build:teeBar.PNG;teeBar.png
 
+#begin testfont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:testfont.spritefont
+

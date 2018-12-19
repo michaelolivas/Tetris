@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using TetrisMUWP.ScoreManager;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -33,9 +34,6 @@ namespace TetrisMUWP
         public TextBlock[] score_block = new TextBlock[NUM_OF_USERS];
         Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         Windows.Storage.StorageFile scoresFile;
-
-        string NewName = "Jorome";
-        string NewScore = "31100"; //will be used for passed in score
 
         public highScores()
         {
@@ -56,27 +54,20 @@ namespace TetrisMUWP
                 name_block[i].Text = users[i].Keys.ElementAt(0);//.ToString();
                 score_block[i].Text = users[i].Values.ElementAt(0);//.ToString();
             }
-
-            //// Use for Testing /////
-            /* compare_score("test2", "3500");
-             compare_score("rigo", "4500");
-             compare_score("bert", "5000");
-             compare_score("leo", "3000");
-             compare_score("midtest", "4700");
-             compare_score("test3", "4999");*/
-
-            notupdate_score();
             save_scores();
             read_scores();
         }
 
-        private void update_UI()
+
+        playerscore player = new playerscore();
+
+        public void newplayer(string name, string points)
         {
-            for (int i = 0; i < NUM_OF_USERS; i++)
-            {
-                name_block[i].Text = users[i].Keys.ElementAt(0);
-                score_block[i].Text = users[i].Values.ElementAt(0).ToString();
-            }
+            name = "Jorome"; //player.playername;
+            points = "1000"; //player.points;
+
+            compare_score(name, points);
+
         }
 
         private void compare_score(string name, string score)
@@ -94,11 +85,9 @@ namespace TetrisMUWP
                     add_score(0, name_block[i + 1].Text, score_block[i + 1].Text);
 
                     i++;
-                    update_UI();
                 }
                 remove_score(0);
                 add_score(0, name, score);
-                update_UI();
             }
 
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[1].Text))
@@ -114,11 +103,9 @@ namespace TetrisMUWP
                     add_score(1, name_block[i + 1].Text, score_block[i + 1].Text);
 
                     i++;
-                    update_UI();
                 }
                 remove_score(1);
                 add_score(1, name, score);
-                update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[2].Text))
             {
@@ -133,11 +120,9 @@ namespace TetrisMUWP
                     add_score(2, name_block[i + 1].Text, score_block[i + 1].Text);
 
                     i++;
-                    update_UI();
                 }
                 remove_score(2);
                 add_score(2, name, score);
-                update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[3].Text))
             {
@@ -145,13 +130,11 @@ namespace TetrisMUWP
                add_score(4,name_block[3].Text,score_block[3].Text);
                remove_score(3);
                add_score(3, name, score);
-               update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[4].Text))
             {
                 remove_score(4);
                 add_score(4, name, score);
-                update_UI();
             }
 
             save_scores();
@@ -182,12 +165,9 @@ namespace TetrisMUWP
             string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
             Debug.Write(savedTickets);
         }
-
-        private void back_Click(object sender, RoutedEventArgs e)
-        {
-                this.Frame.Navigate(typeof(Start)); //open the start window again
-        }
-
+        /// <summary>
+        /// gcs
+        /// </summary>
         private void TextBlock_SelectionChanged()
         {
 
@@ -197,28 +177,7 @@ namespace TetrisMUWP
         {
 
         }
-        
-        private void notupdate_score()
-        {
-            if (Convert.ToUInt64(NewScore) < Convert.ToUInt64(score_block[4].Text))
-            {
-                save.Visibility = Visibility.Collapsed;
-                nameplayer.Visibility = Visibility.Collapsed;
-            }
-        }
-        
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            save.Visibility = Visibility.Collapsed;
-            nameplayer.Visibility = Visibility.Collapsed;
 
-            compare_score(NewName, NewScore); // test score
-        }
-
-        private void player_name(TextBox sender, TextBoxTextChangingEventArgs args)
-        {
-            NewName = nameplayer.Text;
-        }
     }
 }
 
