@@ -61,29 +61,43 @@ namespace TetrisMUWP
                 score_block[i].Text = users[i].Values.ElementAt(0);//.ToString();
             }
 
-            newplayer(NewName, NewScore);
+            //newplayer(NewName, NewScore); //test
+            //compare_score(NewName, NewScore);
+
+            ///testing values for high score list algorithm
+            ///takes 3 characters from username
+            compare_score("Jorome", "150");
+            compare_score("Rigo", "389");
+            compare_score("Leo", "390");
+            compare_score("Michael", "100");
+            compare_score("Tetris God", "200000000");
 
             save_scores();
             read_scores();
         }
 
-        static playerscore player = new playerscore();
+        /*
+        public static playerscore player { get; set; } //test
+        public playerscore player = new playerscore(); //test
 
-        public string NewName = player.playername;
-        public string NewScore = player.points;
+        public string NewName;
+        public string NewScore;
 
 
-        public void newplayer(string name, string points)
+       public void newplayer(string name, string points)
         {
-            name = NewName; //NewName;
-            points = NewScore; //NewScore;
+            NewName = name;
+            NewScore = points; //NewScore;
 
             compare_score(name, points);
+            update_UI();
 
             save_scores();
             read_scores();
-        }
-
+        }*/
+        /// <summary>
+        /// This method updates each name_block and score_block whenever it is called
+        /// </summary>
             private void update_UI()
             {
                 for (int i = 0; i < NUM_OF_USERS; i++)
@@ -93,6 +107,13 @@ namespace TetrisMUWP
                 }
             }
 
+        /// <summary>
+        /// This method compares the users score after ending the game with the scores that are
+        /// stored in the Json file.
+        /// </summary>
+        /// scores are string and so they have to be converted to long for comparison
+        /// <param name="name"></param>
+        /// <param name="score"></param>
         private void compare_score(string name, string score)
         {
             if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[0].Text))
@@ -168,10 +189,19 @@ namespace TetrisMUWP
                 update_UI();
             }
 
+            update_UI();
             save_scores();
             read_scores();
         }
 
+        /// <summary>
+        /// Add score is the method used mostly in compare score method
+        /// </summary>
+        /// This method takes index, name and score as a parameter.
+        /// the length of string name is taken and is limited to three characters.
+        /// <param name="index"></param>
+        /// <param name="name"></param>
+        /// <param name="score"></param>
         private void add_score(int index, string name, string score)
         {
             int MaxLength = 3;
@@ -179,17 +209,30 @@ namespace TetrisMUWP
                 name = name.Substring(0, MaxLength);
             users[index].Add(name, score);
         }
+
+        /// <summary>
+        /// This method takes index as a paramater
+        /// The index is used to located the desired user score to be removed
+        /// </summary>
+        /// <param name="index"></param>
         private void remove_score(int index)
         {
             users[index].Remove(users[index].Keys.ElementAt(0));
         }
+        /// <summary>
+        /// This method saves the changes made in the dictionary and is written to the json file
+        /// </summary>
         private async void save_scores()
         {
             string json = JsonConvert.SerializeObject(users);
-            scoresFile = await storageFolder.CreateFileAsync("user_scores.json", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            scoresFile = await storageFolder.CreateFileAsync("user_scores.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             //Write data to the file
             await Windows.Storage.FileIO.WriteTextAsync(scoresFile, json);
         }
+        /// <summary>
+        /// This method is the opposite of save_scores()
+        /// it reads from the Json file to be outputed for user visual
+        /// </summary>
         private async void read_scores()
         {
             //read file

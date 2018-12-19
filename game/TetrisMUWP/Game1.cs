@@ -9,6 +9,8 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Newtonsoft.Json;
 using TetrisMUWP.ScoreManager;
+using Windows.UI.Xaml.Controls;
+
 
 namespace TetrisMUWP
 {
@@ -17,6 +19,7 @@ namespace TetrisMUWP
     /// </summary>
     public class Game1 : Game
     {
+        //highScores hsPage = new highScores();
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState previousState;
@@ -36,7 +39,6 @@ namespace TetrisMUWP
         bool Pause = false;
         int ElapseTime = 0;
         Random rnd = new Random();
-
 
         /// <summary>
         /// Initialize blocks and colors used
@@ -117,18 +119,6 @@ namespace TetrisMUWP
             base.Initialize();
             previousState = Keyboard.GetState();
         }
-        public async void saveGame()
-        {
-            //string json = JsonConvert.SerializeObject(_game);
-            //gameFile = await storageFolder.CreateFileAsync("savedGame.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            //Write data to the file
-            //await Windows.Storage.FileIO.WriteTextAsync(gameFile, json);
-        }
-        /// <summary>
-        /// This function is called when the falling block hits the bottom
-        /// This is necessary since the matrix of the falling block hits the bottom but the actual block itself is not touching the floor
-        /// instead of trying to move the matrix dopwn more, we are moving the block within the matrix itself
-        /// </summary>
         public void shiftDown()
         {
             int len = Rand_Piece.GetLength(0);
@@ -423,6 +413,19 @@ namespace TetrisMUWP
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         /// 
+
+        //public static playerscore newnew = new playerscore();
+        /*
+        public void updatescore()
+        {
+     
+
+            hsPage.NewName = "Rigo";
+            hsPage.NewScore = score.ToString();
+            hsPage.newplayer("Rigo", "100");
+
+        }*/
+
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
@@ -466,7 +469,6 @@ namespace TetrisMUWP
                         Pause = true;
 
                         //input.Visibility = Visibility.Visible;
-                        
                     }
                 }
                 else
