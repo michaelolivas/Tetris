@@ -35,6 +35,12 @@ namespace TetrisMUWP
         Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
         Windows.Storage.StorageFile scoresFile;
 
+        /// <summary>
+        /// testing variables
+        /// </summary>
+        string testname = "Jorome";
+        string testscore = "31100"; //will be used for passed in score
+
         public highScores()
         {
             this.InitializeComponent();
@@ -54,21 +60,38 @@ namespace TetrisMUWP
                 name_block[i].Text = users[i].Keys.ElementAt(0);//.ToString();
                 score_block[i].Text = users[i].Values.ElementAt(0);//.ToString();
             }
+
+            newplayer(NewName, NewScore);
+
             save_scores();
             read_scores();
         }
 
+        static playerscore player = new playerscore();
 
-        playerscore player = new playerscore();
+        public string NewName = player.playername;
+        public string NewScore = player.points;
+
 
         public void newplayer(string name, string points)
         {
-            name = "Jorome"; //player.playername;
-            points = "1000"; //player.points;
+            name = NewName; //NewName;
+            points = NewScore; //NewScore;
 
             compare_score(name, points);
 
+            save_scores();
+            read_scores();
         }
+
+            private void update_UI()
+            {
+                for (int i = 0; i < NUM_OF_USERS; i++)
+                {
+                name_block[i].Text = users[i].Keys.ElementAt(0);
+                score_block[i].Text = users[i].Values.ElementAt(0).ToString();
+                }
+            }
 
         private void compare_score(string name, string score)
         {
@@ -85,9 +108,11 @@ namespace TetrisMUWP
                     add_score(0, name_block[i + 1].Text, score_block[i + 1].Text);
 
                     i++;
+                    update_UI();
                 }
                 remove_score(0);
                 add_score(0, name, score);
+                update_UI();
             }
 
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[1].Text))
@@ -103,9 +128,11 @@ namespace TetrisMUWP
                     add_score(1, name_block[i + 1].Text, score_block[i + 1].Text);
 
                     i++;
+                    update_UI();
                 }
                 remove_score(1);
                 add_score(1, name, score);
+                update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[2].Text))
             {
@@ -120,21 +147,25 @@ namespace TetrisMUWP
                     add_score(2, name_block[i + 1].Text, score_block[i + 1].Text);
 
                     i++;
+                    update_UI();
                 }
                 remove_score(2);
                 add_score(2, name, score);
+                update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[3].Text))
             {
-               remove_score(4);
-               add_score(4,name_block[3].Text,score_block[3].Text);
-               remove_score(3);
-               add_score(3, name, score);
+                remove_score(4);
+                add_score(4, name_block[3].Text, score_block[3].Text);
+                remove_score(3);
+                add_score(3, name, score);
+                update_UI();
             }
             else if (Convert.ToUInt64(score) > Convert.ToUInt64(score_block[4].Text))
             {
                 remove_score(4);
                 add_score(4, name, score);
+                update_UI();
             }
 
             save_scores();
@@ -165,19 +196,16 @@ namespace TetrisMUWP
             string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
             Debug.Write(savedTickets);
         }
-        /// <summary>
-        /// gcs
-        /// </summary>
-        private void TextBlock_SelectionChanged()
-        {
 
+        private void back_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Start)); //open the start window again
         }
 
         private void TextBlock_SelectionChanged_1(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
-
     }
 }
 
