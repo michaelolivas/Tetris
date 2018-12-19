@@ -26,5 +26,6 @@
         <TextBlock Name="User4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="130,489,0,0" FontSize="22"/>
         <TextBlock Name="Score4" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="14.667,487,0,0" Grid.Column="1" FontSize="25"/>
         <Image HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200" Source="/Assets/LargeTile.png" Margin="253,-20,0,0" Grid.ColumnSpan="2"/>
+        <Button x:Name="back" Content="BACK" Grid.Column="1" HorizontalAlignment="Left" Margin="198.667,44,0,0" VerticalAlignment="Top" Height="36" Width="84" Click="back_Click_1" Background="{x:Null}" BorderBrush="{x:Null}" FocusVisualSecondaryBrush="{x:Null}" FontFamily="Comic Sans MS" FontSize="20" FontStyle="Italic"/>
     </Grid>
 </Page>

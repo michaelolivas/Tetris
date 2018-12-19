@@ -224,10 +224,10 @@ namespace TetrisMUWP
         /// </summary>
         private async void save_scores()
         {
-            string json = JsonConvert.SerializeObject(users);
-            scoresFile = await storageFolder.CreateFileAsync("user_scores.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            //string json = JsonConvert.SerializeObject(users);
+            //scoresFile = await storageFolder.CreateFileAsync("user_scores.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             //Write data to the file
-            await Windows.Storage.FileIO.WriteTextAsync(scoresFile, json);
+            //await Windows.Storage.FileIO.WriteTextAsync(scoresFile, json);
         }
         /// <summary>
         /// This method is the opposite of save_scores()
@@ -236,18 +236,20 @@ namespace TetrisMUWP
         private async void read_scores()
         {
             //read file
-            string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
-            Debug.Write(savedTickets);
-        }
-
-        private void back_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(Start)); //open the start window again
+            //string savedTickets = await Windows.Storage.FileIO.ReadTextAsync(scoresFile);
+            //Debug.Write(savedTickets);
         }
 
         private void TextBlock_SelectionChanged_1(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void back_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Start)); //open the start window again
+            
+
         }
     }
 }
