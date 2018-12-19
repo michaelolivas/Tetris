@@ -47,6 +47,7 @@ namespace TetrisMUWP
             //_game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Click.Visibility = Visibility.Collapsed;
