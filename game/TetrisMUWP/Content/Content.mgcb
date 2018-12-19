@@ -25,13 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:block.png;grass.png
 
-#begin Font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Font.spritefont
-
 #begin grass.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -55,11 +48,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:teeBar.PNG;teeBar.png
-
-#begin testfont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:testfont.spritefont
 
