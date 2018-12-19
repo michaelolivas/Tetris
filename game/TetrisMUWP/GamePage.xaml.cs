@@ -2,9 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,15 +27,11 @@ namespace TetrisMUWP
     /// </summary>
     public sealed partial class GamePage : Page
     {
-		Game1 _game;
+		public Game1 _game;
 
         public GamePage()
         {
             this.InitializeComponent();
-
-            // Create the game.
-            //var launchArguments = string.Empty;
-            //_game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
 
 
@@ -41,22 +40,12 @@ namespace TetrisMUWP
             Click.Visibility = Visibility.Collapsed;
             grid.Visibility = Visibility.Collapsed;
             pause.Visibility = Visibility.Visible;
-            pauseB.Visibility = Visibility.Visible;
 
             var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
-
-        private void PauseB_Click(object sender, RoutedEventArgs e)
-        {
-            pauseB.Visibility = Visibility.Collapsed;
-            resume.Visibility = Visibility.Visible;
-        }
-
-        private void Resume_Click(object sender, RoutedEventArgs e)
-        {
-            pauseB.Visibility = Visibility.Visible;
-            resume.Visibility = Visibility.Collapsed;
-        }
+       
+        
     }
+
 }

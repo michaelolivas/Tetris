@@ -4,8 +4,10 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Newtonsoft.Json;
 
 namespace TetrisMUWP
 {
@@ -39,6 +41,8 @@ namespace TetrisMUWP
         bool Pause = false;
         int ElapseTime = 0;
         Random rnd = new Random();
+        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+        Windows.Storage.StorageFile gameFile;
 
 
         List<int[,]> Blocks = new List<int [,]>();
@@ -102,33 +106,43 @@ namespace TetrisMUWP
             base.Initialize();
             previousState = Keyboard.GetState();
         }
-        public int [,] shiftDown(int [,] block)
+        public async void saveGame()
         {
-            int count = 0;
-            for(int i =0; i < block.GetLength(0); i++)
+            //string json = JsonConvert.SerializeObject(_game);
+            //gameFile = await storageFolder.CreateFileAsync("savedGame.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            //Write data to the file
+            //await Windows.Storage.FileIO.WriteTextAsync(gameFile, json);
+        }
+        public void shiftDown()
+        {
+            int len = Rand_Piece.GetLength(0);
+
+            bool go = false;
+            int counter = 0;
+            for (int i = 0; i < len; i++)
             {
-                if (Rand_Piece[block.GetLength(0) - 1, i] == 0)
+                if (Rand_Piece[i, len-1] != 0)
                 {
-                    count++;
+                    counter += 1;
                 }
-                if(count == block.GetLength(0))
+            }
+            if (counter == 0)
+                go = true;
+            if (go)
+            {
+
+                for (int row = 0; row < len; row++)
                 {
-                    for (int row = 0; row < block.GetLength(0)-1; row++)
+                    for (int col = len-1; col > 0; col--)
                     {
-                        for (int col = 0; col < block.GetLength(0); col++)
-                        {
-                            Debug.WriteLine("r:" + row + "col: " + col);
-                            block[row, col] = block[row + 1, col];
-                            block[row + 1, col] = 0;
-                        }
+                        Rand_Piece[row, col] = Rand_Piece[row, col-1];
+                        Rand_Piece[row, col-1] = 0;
                     }
                 }
             }
-            return block;
         }
         public void shiftLeft()
         {
-            Debug.WriteLine("shL");
             int len = Rand_Piece.GetLength(0);
 
             bool go = false;
@@ -149,7 +163,6 @@ namespace TetrisMUWP
                 {
                     for (int col = 0; col < len; col++)
                     {
-                        Debug.WriteLine("r:" + row + "col: " + col);
                         Rand_Piece[row, col] = Rand_Piece[row + 1, col];
                         Rand_Piece[row + 1, col] = 0;
                     }
@@ -158,7 +171,6 @@ namespace TetrisMUWP
         }
         public void shiftRight()
         {
-            Debug.WriteLine("shR");
             int len = Rand_Piece.GetLength(0);
             bool go = false;
             int counter = 0;
@@ -205,6 +217,7 @@ namespace TetrisMUWP
                                 Field[i, k] = 0;
                             }
                             score += 100;
+                            Debug.WriteLine(score);
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
                                 for (int c = 0; c < 10; c++) {
@@ -260,7 +273,7 @@ namespace TetrisMUWP
                     if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && block[BlockX, BlockY] != 0))
                     {
                         if (next_blockY == 18)
-                            Rand_Piece = shiftDown(block);
+                            shiftDown();
                         return true;
                     }
                 }
@@ -280,14 +293,14 @@ namespace TetrisMUWP
                         Field[pasteY, pasteX] = Rand_Piece[x, y];
                 }
             }
-            for (int i = 0; i < fieldRow; i++)
+            /*for (int i = 0; i < fieldRow; i++)
             {
                 for (int j = 0; j < fieldColumn; j++)
                 {
                     Debug.Write($"{Field[i, j]}");
                 }
                 Debug.WriteLine("");
-            }
+            }*/
         }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -371,7 +384,7 @@ namespace TetrisMUWP
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-            Debug.WriteLine(BlockLocation);
+            //Debug.WriteLine(BlockLocation);
 
             if (!Pause)
             {
@@ -384,6 +397,10 @@ namespace TetrisMUWP
                 Vector2 NextSpot = BlockLocation + new Vector2(0, 1);
                 if (Collision(Rand_Piece, (int)NextSpot.X, (int)NextSpot.Y))
                 {
+                    if (BlockLocation.Y == 18 - Rand_Piece.GetLength(0) && !Collision(Rand_Piece, (int)NextSpot.X, (int)NextSpot.Y))
+                    {
+                        shiftDown();
+                    }
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
                     Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
                     //generate random pos
@@ -395,7 +412,12 @@ namespace TetrisMUWP
                     {
                         Debug.WriteLine("Gameover");
                         GameOver = true;
-                        Initialize();
+
+                        Pause = true;
+
+                        //highScores input = new highScores();
+                        //input.Visibility = Visibility.Visible;
+                        
                     }
                 }
                 else
