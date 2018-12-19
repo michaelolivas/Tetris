@@ -107,10 +107,10 @@ namespace TetrisMUWP
         }
         public async void saveGame()
         {
-            string json = JsonConvert.SerializeObject(_game);
-            gameFile = await storageFolder.CreateFileAsync("savedGame.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            //string json = JsonConvert.SerializeObject(_game);
+            //gameFile = await storageFolder.CreateFileAsync("savedGame.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             //Write data to the file
-            await Windows.Storage.FileIO.WriteTextAsync(gameFile, json);
+            //await Windows.Storage.FileIO.WriteTextAsync(gameFile, json);
         }
         public void shiftDown()
         {
@@ -271,7 +271,7 @@ namespace TetrisMUWP
                     if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && block[BlockX, BlockY] != 0))
                     {
                         if (next_blockY == 18)
-                            Rand_Piece = shiftDown(block);
+                            shiftDown();
                         return true;
                     }
                 }
@@ -395,7 +395,7 @@ namespace TetrisMUWP
                 Vector2 NextSpot = BlockLocation + new Vector2(0, 1);
                 if (Collision(Rand_Piece, (int)NextSpot.X, (int)NextSpot.Y))
                 {
-                    if (BlockLocation.Y == 18 - Rand_Piece.GetLength(0))
+                    if (BlockLocation.Y == 18 - Rand_Piece.GetLength(0) && !Collision(Rand_Piece, (int)NextSpot.X, (int)NextSpot.Y))
                     {
                         shiftDown();
                     }
