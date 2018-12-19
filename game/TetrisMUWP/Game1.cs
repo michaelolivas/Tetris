@@ -132,12 +132,13 @@ namespace TetrisMUWP
         }
         public void shiftRight()
         {
+            Debug.WriteLine("shR");
             int len = Rand_Piece.GetLength(0);
             bool go = false;
             int counter = 0;
             for (int i = 0; i < len; i++)
             {
-                if (Rand_Piece[i, 0] != 0)
+                if (Rand_Piece[len-1, i] != 0)
                 {
                     counter += 1;
                 }
