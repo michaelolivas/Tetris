@@ -216,6 +216,7 @@ namespace TetrisMUWP
                                 Field[i, k] = 0;
                             }
                             score += 100;
+                            Debug.WriteLine(score);
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
                                 for (int c = 0; c < 10; c++) {
@@ -410,7 +411,7 @@ namespace TetrisMUWP
                     {
                         Debug.WriteLine("Gameover");
                         GameOver = true;
-                        Initialize();
+                        Pause = true;
                     }
                 }
                 else
