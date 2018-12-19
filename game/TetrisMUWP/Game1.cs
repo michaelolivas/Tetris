@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Newtonsoft.Json;
+using TetrisMUWP.ScoreManager;
+using Windows.UI.Xaml.Controls;
 
 namespace TetrisMUWP
 {
@@ -16,6 +18,7 @@ namespace TetrisMUWP
     /// </summary>
     public class Game1 : Game
     {
+        //highScores hsPage = new highScores();
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState previousState;
@@ -41,10 +44,7 @@ namespace TetrisMUWP
         bool Pause = false;
         int ElapseTime = 0;
         Random rnd = new Random();
-        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        Windows.Storage.StorageFile gameFile;
-
-
+       
         List<int[,]> Blocks = new List<int [,]>();
         Color[] Block_Color = {Color.Transparent, Color.Cyan, Color.Purple, Color.Orange, Color.Blue,
                                 Color.Red, Color.Green, Color.Yellow};
@@ -105,13 +105,6 @@ namespace TetrisMUWP
             Pause = false;
             base.Initialize();
             previousState = Keyboard.GetState();
-        }
-        public async void saveGame()
-        {
-            //string json = JsonConvert.SerializeObject(_game);
-            //gameFile = await storageFolder.CreateFileAsync("savedGame.txt", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            //Write data to the file
-            //await Windows.Storage.FileIO.WriteTextAsync(gameFile, json);
         }
         public void shiftDown()
         {
@@ -381,6 +374,19 @@ namespace TetrisMUWP
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         /// 
+
+        //public static playerscore newnew = new playerscore();
+        /*
+        public void updatescore()
+        {
+     
+
+            hsPage.NewName = "Rigo";
+            hsPage.NewScore = score.ToString();
+            hsPage.newplayer("Rigo", "100");
+
+        }*/
+
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
@@ -415,9 +421,6 @@ namespace TetrisMUWP
 
                         Pause = true;
 
-                        //highScores input = new highScores();
-                        //input.Visibility = Visibility.Visible;
-                        
                     }
                 }
                 else
