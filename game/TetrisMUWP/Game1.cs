@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 
 namespace TetrisMUWP
@@ -22,6 +23,7 @@ namespace TetrisMUWP
         float screenWidth;
         float screenHeight;
         Texture2D grass;
+        SpriteFont scoreFont;
         bool flag = true;
         const int blockSize = 50;
         int ypos = 0; //Block y
@@ -33,7 +35,9 @@ namespace TetrisMUWP
         const int boardY = 18;
         int Position_Period = 300;
         int Period_Counter = 0;
-        public int score = 0;
+        int ssss;
+        int score = 0;
+        public string scoreString = "";
         Random rnd = new Random();
 
 
@@ -58,6 +62,7 @@ namespace TetrisMUWP
             Content.RootDirectory = "Content";
         }
 
+        
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -206,6 +211,7 @@ namespace TetrisMUWP
             return offset;
                 
         }
+        public int s;
         public void Check_Line()
         {
             bool clear = false;
@@ -226,7 +232,8 @@ namespace TetrisMUWP
                                 Field[i, k] = 0;
                             }
                             score += 100;
-                            
+                            //GamePage.showScore.Text = score.ToString();
+                            //GamePage.sc = score;
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
                                 for (int c = 0; c < 10; c++) {
@@ -321,6 +328,8 @@ namespace TetrisMUWP
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
+            scoreFont = Content.Load<SpriteFont>("Score");
+
             //teeBar = Content.Load<Texture2D>("grass");
 
             // TODO: use this.Content to load your game content here
@@ -455,6 +464,7 @@ namespace TetrisMUWP
                                                                Block_Color[Rand_Piece[x, y]]);
                 } 
             }
+            spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2(screenWidth - 100, 50), Color.Black);
             spriteBatch.End();
             base.Draw(gameTime);
 

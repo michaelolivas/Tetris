@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -27,15 +28,20 @@ namespace TetrisMUWP
     public sealed partial class GamePage : Page
     {
 		Game1 _game;
-        string current = "0";
-        string old = "";
+        //Game1 sc = new Game1();
+        //int sc;
         
+        //string scoreS = "";
         
+
 
         public GamePage()
         {
             this.InitializeComponent();
-
+            //sc = Game1.score;
+            //sc += 100;
+            //showScore.Text = sc.ToString();
+            //showScore.UpdateLayout();
             // Create the game.
             //var launchArguments = string.Empty;
             //_game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
@@ -46,33 +52,23 @@ namespace TetrisMUWP
             Click.Visibility = Visibility.Collapsed;
             grid.Visibility = Visibility.Collapsed;
             pause.Visibility = Visibility.Visible;
-            pauseB.Visibility = Visibility.Visible;
 
             var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
         }
-
-        private void PauseB_Click(object sender, RoutedEventArgs e)
+       
+        public void ShowScore_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            pauseB.Visibility = Visibility.Collapsed;
-            resume.Visibility = Visibility.Visible;
+            //sc = Game1.score;
+            //scoreS = sc.scoreString;
+            //sc += 100;
+            //showScore.Text = sc.ToString();
         }
 
-        private void Resume_Click(object sender, RoutedEventArgs e)
+        private void ShowScore_TextChanged(object sender, TextChangedEventArgs e)
         {
-            pauseB.Visibility = Visibility.Visible;
-            resume.Visibility = Visibility.Collapsed;
-        }
-
-        void CompositionTarget_Rendering(object sender, EventArgs e)
-        {
-            string scoreString = score.ToString();
-            showScore.Text = showScore.Text.Replace(scoreString, scoreString);
-        }
-
-        private void Quit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Exit();
+            //sc += 100;
+            //showScore.Text = sc.ToString();
         }
     }
 
