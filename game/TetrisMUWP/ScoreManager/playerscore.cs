@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TetrisMUWP.ScoreManager
 {
-    public class playerscore
+    public partial class playerscore
     {
-        public string playername { get; private set; }
-        public string points { get; private set; }
+        public string playername { get; set; }
+        public string points { get; set; }
     }
 }

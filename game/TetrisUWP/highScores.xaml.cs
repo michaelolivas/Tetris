@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace TetrisUWP
+namespace TetrisMUWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -159,7 +159,7 @@ namespace TetrisUWP
             read_scores();
         }
 
-        private void add_score(int index, string name, string score)
+        public void add_score(int index, string name, string score)
         {
             int MaxLength = 3;
             if (name.Length > MaxLength)
