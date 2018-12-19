@@ -27,7 +27,7 @@ namespace TetrisMUWP
     /// </summary>
     public sealed partial class GamePage : Page
     {
-		Game1 _game;
+		public Game1 _game;
 
         public GamePage()
         {
