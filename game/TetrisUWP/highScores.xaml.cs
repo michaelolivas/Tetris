@@ -201,6 +201,8 @@ namespace TetrisUWP
         
         private void notupdate_score()
         {
+            save.Visibility = Visibility.Collapsed;
+            nameplayer.Visibility = Visibility.Collapsed;
             if (Convert.ToUInt64(NewScore) < Convert.ToUInt64(score_block[4].Text))
             {
                 save.Visibility = Visibility.Collapsed;

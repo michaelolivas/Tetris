@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Newtonsoft.Json;
@@ -411,7 +412,12 @@ namespace TetrisMUWP
                     {
                         Debug.WriteLine("Gameover");
                         GameOver = true;
+
                         Pause = true;
+
+                        //highScores input = new highScores();
+                        //input.Visibility = Visibility.Visible;
+                        
                     }
                 }
                 else
