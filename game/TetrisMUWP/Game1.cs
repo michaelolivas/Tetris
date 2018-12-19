@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Newtonsoft.Json;
+using TetrisMUWP.ScoreManager;
 
 namespace TetrisMUWP
 {
@@ -35,10 +36,11 @@ namespace TetrisMUWP
         bool Pause = false;
         int ElapseTime = 0;
         Random rnd = new Random();
-        Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-        Windows.Storage.StorageFile gameFile;
 
 
+        /// <summary>
+        /// Initialize blocks and colors used
+        /// </summary>
         List<int[,]> Blocks = new List<int [,]>();
         Color[] Block_Color = {Color.Transparent, Color.Cyan, Color.Purple, Color.Orange, Color.Blue,
                                 Color.Red, Color.Green, Color.Yellow};
@@ -51,15 +53,23 @@ namespace TetrisMUWP
         int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 6, 6, 0 }, { 0, 6, 6} };
         int[,] Box = new int[2, 2] { { 7, 7 }, { 7, 7 } };
         int[,] Rand_Piece = null;
+
         //Board of the game 
+
+        /// <summary>
+        /// Initialize Field and locations
+        /// </summary>
+
         int [,] Field = new int[boardY, boardX];
         Vector2 FieldLocation =  new Vector2(450,500);
         Vector2 BlockLocation = Vector2.Zero;
 
         public object Window2 { get; private set; }
+ 
 
         /// <summary>
-        /// Default constructor 
+        /// Creates instance of game
+
         /// </summary>
         public Game1()
         {
@@ -75,7 +85,7 @@ namespace TetrisMUWP
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            ///Creates empty field
             for(int y=0; y < boardY; y++)
             {
                 for(int x= 0; x< boardX; x++)
@@ -83,14 +93,16 @@ namespace TetrisMUWP
                     Field[y, x] = 0;
                 }
             }
-            //screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
-            //screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
-            //graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            //graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            //Window width and Height
+            screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             //graphics.IsFullScreen = true;
-            //graphics.ApplyChanges();
+            graphics.ApplyChanges();
             
             this.IsMouseVisible = true;
+            //Add blocks to array fo blocks
             Blocks.Add(Line);
             Blocks.Add(T);
             Blocks.Add(L);
@@ -98,6 +110,7 @@ namespace TetrisMUWP
             Blocks.Add(Z);
             Blocks.Add(Backwards_Z);
             Blocks.Add(Box);
+            //create random instance of block
             Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
             GameOver = false;
             Pause = false;
@@ -111,12 +124,18 @@ namespace TetrisMUWP
             //Write data to the file
             //await Windows.Storage.FileIO.WriteTextAsync(gameFile, json);
         }
+        /// <summary>
+        /// This function is called when the falling block hits the bottom
+        /// This is necessary since the matrix of the falling block hits the bottom but the actual block itself is not touching the floor
+        /// instead of trying to move the matrix dopwn more, we are moving the block within the matrix itself
+        /// </summary>
         public void shiftDown()
         {
             int len = Rand_Piece.GetLength(0);
 
             bool go = false;
             int counter = 0;
+            ///Check if the lower row is empty, if it is then it can be moved down one more time
             for (int i = 0; i < len; i++)
             {
                 if (Rand_Piece[i, len-1] != 0)
@@ -126,6 +145,7 @@ namespace TetrisMUWP
             }
             if (counter == 0)
                 go = true;
+            //If the row is empty shift the rows inside the matrix down
             if (go)
             {
 
@@ -145,6 +165,7 @@ namespace TetrisMUWP
 
             bool go = false;
             int counter = 0;
+            ///Check if the left col is empty, if it is then it can be moved left one more time
             for (int i = 0; i < len; i++)
             {
                 if (Rand_Piece[0, i] != 0)
@@ -154,6 +175,7 @@ namespace TetrisMUWP
             }
             if (counter == 0)
                 go = true;
+            //If the Col is empty shift the rows inside the matrix left
             if (go)
             {
 
@@ -172,6 +194,7 @@ namespace TetrisMUWP
             int len = Rand_Piece.GetLength(0);
             bool go = false;
             int counter = 0;
+            ///Check if the right row is empty, if it is then it can be moved right one more time
             for (int i = 0; i < len; i++)
             {
                 if (Rand_Piece[len-1, i] != 0)
@@ -181,6 +204,7 @@ namespace TetrisMUWP
             }
             if (counter == 0)
                 go = true;
+            //If the col is empty shift the rows inside the matrix right
             if (go)
             {
 
@@ -195,14 +219,19 @@ namespace TetrisMUWP
             }
             
         }
+        /// <summary>
+        /// Function checks if there is a full row and removes it
+        /// </summary>
         public void Check_Line()
         {
             bool clear = false;
+            //iterate rows
             for (int i = fieldRow - 1; i >= 0; i--)
             {
                 int count = 0; //counts to check if the row is full
                 if (clear)
                     i = 0;
+                //Iterate col
                 for (int j = 0; j < fieldColumn; j++)
                 {
                     if (Field[i, j] != 0) //Checks if there is a peice of the object on that spot
@@ -214,8 +243,9 @@ namespace TetrisMUWP
                             {
                                 Field[i, k] = 0;
                             }
+                            //every row clear gets 100 points
                             score += 100;
-                            Debug.WriteLine(score);
+                            Debug.WriteLine("Score:" + score);
                             for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
                                 for (int c = 0; c < 10; c++) {
@@ -223,8 +253,6 @@ namespace TetrisMUWP
                                 }
                             }
                             clear = true;
-                            //i = 0;
-                            //We hae to implemement the score function here!
                         }
                     }
                 }
@@ -232,6 +260,11 @@ namespace TetrisMUWP
             }
 
         }
+        /// <summary>
+        /// Function rotates the falling block to the right
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
         public int [,] Rotate_Right(int [,] block)
         {
             int len = block.GetLength(0);
@@ -432,7 +465,6 @@ namespace TetrisMUWP
                         GameOver = true;
                         Pause = true;
 
-                        //highScores input = new highScores();
                         //input.Visibility = Visibility.Visible;
                         
                     }
