@@ -1,16 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Xml.Serialization;
 using Windows.UI.ViewManagement;
-using System.Linq;
-using Windows.UI.Xaml.Controls;
-using TetrisMUWP.ScoreManager;
+using Windows.UI.Xaml;
 
 namespace TetrisMUWP
 {
@@ -39,25 +34,30 @@ namespace TetrisMUWP
         const int boardY = 18;
         int Position_Period = 300;
         int Period_Counter = 0;
-        string score = "100";
+        int score = 0;
+        bool GameOver = false;
+        bool Pause = false;
+        int ElapseTime = 0;
         Random rnd = new Random();
 
 
-        List<int[,]> Blocks = new List<int[,]>();
+        List<int[,]> Blocks = new List<int [,]>();
         Color[] Block_Color = {Color.Transparent, Color.Cyan, Color.Purple, Color.Orange, Color.Blue,
                                 Color.Red, Color.Green, Color.Yellow};
         int[,] Line = new int[4, 4] { { 0, 0, 0, 0 }, { 1, 1, 1, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
         int[,] T = new int[3, 3] { { 0, 0, 0 }, { 2, 2, 2 }, { 0, 2, 0 } };
         int[,] L = new int[3, 3] { { 0, 0, 0 }, { 3, 3, 3 }, { 3, 0, 0 } };
-        int[,] Backwards_L = new int[3, 3] { { 0, 0, 0 }, { 4, 4, 4 }, { 0, 0, 4 } };
+        int[,] Backwards_L = new int[3, 3] { { 0, 0, 0 }, { 4, 4, 4 }, { 0, 0, 4} };
         int[,] Z = new int[3, 3] { { 0, 0, 0 }, { 0, 5, 5 }, { 5, 5, 0 } };
-        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 6, 6, 0 }, { 0, 6, 6 } };
+        int[,] Backwards_Z = new int[3, 3] { { 0, 0, 0 }, { 6, 6, 0 }, { 0, 6, 6} };
         int[,] Box = new int[2, 2] { { 7, 7 }, { 7, 7 } };
         int[,] Rand_Piece = null;
-
-        int[,] Field = new int[boardY, boardX];
-        Vector2 FieldLocation = new Vector2(10, 10);
+        
+        int [,] Field = new int[boardY, boardX];
+        Vector2 FieldLocation =  new Vector2(450,500);
         Vector2 BlockLocation = Vector2.Zero;
+
+        public object Window2 { get; private set; }
 
         public Game1()
         {
@@ -73,24 +73,21 @@ namespace TetrisMUWP
         /// </summary>
         protected override void Initialize()
         {
-
-
             // TODO: Add your initialization logic here
-            for (int y = 0; y < boardY; y++)
+            for(int y=0; y < boardY; y++)
             {
-                for (int x = 0; x < boardX; x++)
+                for(int x= 0; x< boardX; x++)
                 {
                     Field[y, x] = 0;
                 }
             }
-
             //screenHeight = (float)ApplicationView.GetForCurrentView().VisibleBounds.Height;
             //screenWidth = (float)ApplicationView.GetForCurrentView().VisibleBounds.Width;
-            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
-            graphics.IsFullScreen = true;
-            graphics.ApplyChanges();
-
+            //graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            //graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            //graphics.IsFullScreen = true;
+            //graphics.ApplyChanges();
+            
             this.IsMouseVisible = true;
             Blocks.Add(Line);
             Blocks.Add(T);
@@ -100,10 +97,93 @@ namespace TetrisMUWP
             Blocks.Add(Backwards_Z);
             Blocks.Add(Box);
             Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
-
-
+            GameOver = false;
+            Pause = false;
             base.Initialize();
             previousState = Keyboard.GetState();
+        }
+        public int [,] shiftDown(int [,] block)
+        {
+            int count = 0;
+            for(int i =0; i < block.GetLength(0); i++)
+            {
+                if (Rand_Piece[block.GetLength(0) - 1, i] == 0)
+                {
+                    count++;
+                }
+                if(count == block.GetLength(0))
+                {
+                    for (int row = 0; row < block.GetLength(0)-1; row++)
+                    {
+                        for (int col = 0; col < block.GetLength(0); col++)
+                        {
+                            Debug.WriteLine("r:" + row + "col: " + col);
+                            block[row, col] = block[row + 1, col];
+                            block[row + 1, col] = 0;
+                        }
+                    }
+                }
+            }
+            return block;
+        }
+        public void shiftLeft()
+        {
+            Debug.WriteLine("shL");
+            int len = Rand_Piece.GetLength(0);
+
+            bool go = false;
+            int counter = 0;
+            for (int i = 0; i < len; i++)
+            {
+                if (Rand_Piece[0, i] != 0)
+                {
+                    counter += 1;
+                }
+            }
+            if (counter == 0)
+                go = true;
+            if (go)
+            {
+
+                for (int row = 0; row < len - 1; row++)
+                {
+                    for (int col = 0; col < len; col++)
+                    {
+                        Debug.WriteLine("r:" + row + "col: " + col);
+                        Rand_Piece[row, col] = Rand_Piece[row + 1, col];
+                        Rand_Piece[row + 1, col] = 0;
+                    }
+                }
+            }
+        }
+        public void shiftRight()
+        {
+            Debug.WriteLine("shR");
+            int len = Rand_Piece.GetLength(0);
+            bool go = false;
+            int counter = 0;
+            for (int i = 0; i < len; i++)
+            {
+                if (Rand_Piece[len-1, i] != 0)
+                {
+                    counter += 1;
+                }
+            }
+            if (counter == 0)
+                go = true;
+            if (go)
+            {
+
+                for (int row = len - 1; row > 0; row--)
+                {
+                    for (int col = 0; col < len; col++)
+                    {
+                        Rand_Piece[row, col] = Rand_Piece[row - 1, col];
+                        Rand_Piece[row - 1, col] = 0;
+                    }
+                }
+            }
+            
         }
         public void Check_Line()
         {
@@ -125,10 +205,9 @@ namespace TetrisMUWP
                                 Field[i, k] = 0;
                             }
                             score += 100;
-                            for (int w = i - 1; w >= 0; w--)//Shift rows Down
+                            for (int w = i-1; w >= 0; w--)//Shift rows Down
                             {
-                                for (int c = 0; c < 10; c++)
-                                {
+                                for (int c = 0; c < 10; c++) {
                                     Field[w + 1, c] = Field[w, c];
                                 }
                             }
@@ -142,9 +221,9 @@ namespace TetrisMUWP
             }
 
         }
-        public void Rotate_Right()
+        public int [,] Rotate_Right(int [,] block)
         {
-            int len = Rand_Piece.GetLength(0);
+            int len = block.GetLength(0);
             int[,] temp_block = new int[len, len]; //temp block to switch rows and columns
             int i = 0;
             int j = 0;
@@ -152,54 +231,62 @@ namespace TetrisMUWP
             {
                 for (int y = len - 1; y >= 0; y--)
                 {
-                    temp_block[i, j] = Rand_Piece[y, x]; //copies the content from the original to the new 
+                    temp_block[i, j] = block[y, x]; //copies the content from the original to the new 
                     j++;
                 }
                 j = 0;
                 i++;
             }
-            Rand_Piece = temp_block;
+            return temp_block;
 
         }
-        public bool Collision(int x, int y)
+        public bool Collision(int[,] block, int x, int y)
         {
-            for (int BlockY = 0; BlockY < Rand_Piece.GetLength(0); BlockY++)
+        
+            for(int BlockY = 0; BlockY < block.GetLength(0); BlockY++)
             {
 
-                for (int BlockX = 0; BlockX < Rand_Piece.GetLength(0); BlockX++)
+                for (int BlockX = 0; BlockX < block.GetLength(0); BlockX++)
                 {
                     int next_blockY = y + BlockY;
                     int next_blockX = x + BlockX;
-                    if (Rand_Piece[BlockX, BlockY] != 0)
+                    if(Rand_Piece[BlockX, BlockY] != 0)
                     {
-                        if (next_blockX < 0 || next_blockX > 10)
+                        if(next_blockX<0 ||next_blockX > 10)
                         {
                             return true;
                         }
-
                     }
-
-                    if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && Rand_Piece[BlockX, BlockY] != 0))
+                    if (next_blockY >= 18 || (Field[next_blockY, next_blockX] != 0 && block[BlockX, BlockY] != 0))
                     {
+                        if (next_blockY == 18)
+                            Rand_Piece = shiftDown(block);
                         return true;
                     }
-
                 }
-
+                
             }
             return false;
         }
         public void Paste(int Fieldx, int Fieldy)
         {
-            for (int y = 0; y < Rand_Piece.GetLength(0); y++)
+            for(int y=0; y < Rand_Piece.GetLength(0); y++)
             {
-                for (int x = 0; x < Rand_Piece.GetLength(0); x++)
+                for(int x=0; x<Rand_Piece.GetLength(0); x++)
                 {
-                    int pasteX = Fieldx + x;
-                    int pasteY = Fieldy + y;
-                    if (Rand_Piece[x, y] != 0)
+                    int pasteX = Fieldx +x;
+                    int pasteY = Fieldy+y;
+                    if(Rand_Piece[x,y] !=0)
                         Field[pasteY, pasteX] = Rand_Piece[x, y];
                 }
+            }
+            for (int i = 0; i < fieldRow; i++)
+            {
+                for (int j = 0; j < fieldColumn; j++)
+                {
+                    Debug.Write($"{Field[i, j]}");
+                }
+                Debug.WriteLine("");
             }
         }
         /// <summary>
@@ -208,9 +295,6 @@ namespace TetrisMUWP
         /// </summary>
         protected override void LoadContent()
         {
-            //font = Content.Load<SpriteFont>("testfont");
-
-
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             grass = Content.Load<Texture2D>("grass");
@@ -221,36 +305,52 @@ namespace TetrisMUWP
         void KeyboardHandler()
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space))
+            if (!Pause)
             {
-                Rotate_Right();
-            }
-            if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
-            {
-                if (BlockLocation.X < 10)
+                if (state.IsKeyDown(Keys.Escape) && !previousState.IsKeyDown(Keys.Escape))
                 {
-                    Vector2 Next_Position = BlockLocation + new Vector2(1, 0);
-                    if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
-                        BlockLocation = Next_Position;
+                    this.Exit();
                 }
-            }
-            if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
-            {
-                if (BlockLocation.X >= 0)
+                if (state.IsKeyDown(Keys.Space) && !previousState.IsKeyDown(Keys.Space))
                 {
-                    Vector2 Next_Position = BlockLocation + new Vector2(-1, 0);
-                    if (!Collision((int)Next_Position.X, (int)Next_Position.Y))
+                    int[,] Orientation = Rotate_Right(Rand_Piece);
+                    if (!Collision(Orientation, (int)BlockLocation.X, (int)BlockLocation.Y))
+                        Rand_Piece = Orientation;
+                }
+                if (state.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
+                {
+                    if (BlockLocation.X == 10 - Rand_Piece.GetLength(0))
                     {
-                        BlockLocation = Next_Position;
-                        Next_Position.X = -1;
+                        shiftRight();
+                    }
+                    else if (BlockLocation.X < 10)
+                    {
+                        Vector2 Next_Position = BlockLocation + new Vector2(1, 0);
+                        if (!Collision(Rand_Piece, (int)Next_Position.X, (int)Next_Position.Y))
+                            BlockLocation = Next_Position;
+                    }
+                }
+                if (state.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
+                {
+                    if (BlockLocation.X == 0)
+                    {
+                        shiftLeft();
+                    }
+                    if (BlockLocation.X != 0)
+                    {
+                        Vector2 Next_Position = BlockLocation + new Vector2(-1, 0);
+                        if (!Collision(Rand_Piece, (int)Next_Position.X, (int)Next_Position.Y))
+                        {
+                            BlockLocation = Next_Position;
+                            Next_Position.X = -1;
+                        }
                     }
                 }
             }
-            /*if (state.IsKeyDown(Keys.Space))
+            if (state.IsKeyDown(Keys.Enter) && !previousState.IsKeyDown(Keys.Enter))
             {
-                if (ypos <  17 * blockSize)
-                    ypos += 5;
-            }*/
+                Pause = !Pause;
+            }
             previousState = state;
         }
         /// <summary>
@@ -271,24 +371,37 @@ namespace TetrisMUWP
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-            flag = false;
+            Debug.WriteLine(BlockLocation);
 
-            Period_Counter += gameTime.ElapsedGameTime.Milliseconds;
-
+            if (!Pause)
+            {
+                Period_Counter += gameTime.ElapsedGameTime.Milliseconds;
+                ElapseTime += gameTime.ElapsedGameTime.Milliseconds;
+            }
             KeyboardHandler();
             if (Period_Counter > Position_Period)
             {
                 Vector2 NextSpot = BlockLocation + new Vector2(0, 1);
-                if (Collision((int)NextSpot.X, (int)NextSpot.Y))
+                if (Collision(Rand_Piece, (int)NextSpot.X, (int)NextSpot.Y))
                 {
                     Paste((int)BlockLocation.X, (int)BlockLocation.Y);
-                    //Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
-                    Rand_Piece = (int[,])Blocks[6].Clone();
-                    BlockLocation = Vector2.Zero;
+                    Rand_Piece = (int[,])Blocks[rnd.Next(0, Blocks.Count)].Clone();
+                    //generate random pos
+                    int len = Rand_Piece.GetLength(0);
+                    int ran = rnd.Next(0, fieldColumn - len);
+                    Vector2 ranPos = new Vector2(ran, 0);
+                    BlockLocation = ranPos;
+                    if(Collision(Rand_Piece, (int)BlockLocation.X, (int)BlockLocation.Y))
+                    {
+                        Debug.WriteLine("Gameover");
+                        GameOver = true;
+                        Initialize();
+                    }
                 }
                 else
                 {
                     BlockLocation = NextSpot;
+
                 }
                 Check_Line();
                 Period_Counter = 0;
@@ -303,41 +416,37 @@ namespace TetrisMUWP
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-
-            for (int y = 0; y < fieldRow; y++)
+            if (!GameOver)
             {
-                for (int x = 0; x < fieldColumn; x++)
+                for (int y = 0; y < fieldRow; y++)
                 {
-                    Color Field_Color = Block_Color[Field[y, x]];
-                    if (Field[y, x] == 0)
+                    for (int x = 0; x < fieldColumn; x++)
                     {
-                        Field_Color = Color.FromNonPremultiplied(50, 50, 50, 50);
+                        Color Field_Color = Block_Color[Field[y, x]];
+                        if (Field[y, x] == 0)
+                        {
+                            Field_Color = Color.FromNonPremultiplied(50, 50, 50, 50);
+                        }
+                        // Since for the board itself background colors are transparent, we'll go ahead and give this one
+                        // a custom color.  This can be omitted if you draw a background image underneath your board
+                        spriteBatch.Draw(grass, new Rectangle((int)FieldLocation.X + x * blockSize, (int)FieldLocation.Y + y * blockSize, blockSize, blockSize), Field_Color);
                     }
-                    // Since for the board itself background colors are transparent, we'll go ahead and give this one
-                    // a custom color.  This can be omitted if you draw a background image underneath your board
-                    spriteBatch.Draw(grass, new Rectangle((int)FieldLocation.X + x * blockSize, (int)FieldLocation.Y + y * blockSize, blockSize, blockSize), Field_Color);
                 }
-            }
 
-            for (int y = 0; y < Rand_Piece.GetLength(0); y++)
-            {
-                for (int x = 0; x < Rand_Piece.GetLength(0); x++)
+                for (int y = 0; y < Rand_Piece.GetLength(0); y++)
                 {
-                    if (Rand_Piece[x, y] != 0)
-                        spriteBatch.Draw(grass, new Rectangle((int)FieldLocation.X + ((int)BlockLocation.X + x) * blockSize,
-                                                              (int)FieldLocation.Y + ((int)BlockLocation.Y + y) * blockSize, blockSize, blockSize),
-                                                               Block_Color[Rand_Piece[x, y]]);
+                    for (int x = 0; x < Rand_Piece.GetLength(0); x++)
+                    {
+                        if (Rand_Piece[x, y] != 0)
+                            spriteBatch.Draw(grass, new Rectangle((int)FieldLocation.X + ((int)BlockLocation.X + x) * blockSize,
+                                                                  (int)FieldLocation.Y + ((int)BlockLocation.Y + y) * blockSize, blockSize, blockSize),
+                                                                   Block_Color[Rand_Piece[x, y]]);
+                    }
                 }
             }
-
-
-            /*
-            string testingtext = string.Format("highscore is: {0}", Game1.currenthighscore);
-            spriteBatch.DrawString(font, "Score", new Vector2(100, 100), Color.Black);
-            */
-
             spriteBatch.End();
             base.Draw(gameTime);
 
