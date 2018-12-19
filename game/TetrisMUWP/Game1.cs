@@ -96,7 +96,6 @@ namespace TetrisMUWP
         }
         public void shiftDown()
         {
-            Debug.WriteLine("shD");
             int len = Rand_Piece.GetLength(0);
 
             bool go = false;
@@ -117,7 +116,6 @@ namespace TetrisMUWP
                 {
                     for (int col = len-1; col > 0; col--)
                     {
-                        Debug.WriteLine("r:" + row + "col: " + col);
                         Rand_Piece[row, col] = Rand_Piece[row, col-1];
                         Rand_Piece[row, col-1] = 0;
                     }
@@ -126,7 +124,6 @@ namespace TetrisMUWP
         }
         public void shiftLeft()
         {
-            Debug.WriteLine("shL");
             int len = Rand_Piece.GetLength(0);
 
             bool go = false;
@@ -147,7 +144,6 @@ namespace TetrisMUWP
                 {
                     for (int col = 0; col < len; col++)
                     {
-                        Debug.WriteLine("r:" + row + "col: " + col);
                         Rand_Piece[row, col] = Rand_Piece[row + 1, col];
                         Rand_Piece[row + 1, col] = 0;
                     }
@@ -156,7 +152,6 @@ namespace TetrisMUWP
         }
         public void shiftRight()
         {
-            Debug.WriteLine("shR");
             int len = Rand_Piece.GetLength(0);
             bool go = false;
             int counter = 0;
@@ -276,14 +271,14 @@ namespace TetrisMUWP
                         Field[pasteY, pasteX] = Rand_Piece[x, y];
                 }
             }
-            for (int i = 0; i < fieldRow; i++)
+            /*for (int i = 0; i < fieldRow; i++)
             {
                 for (int j = 0; j < fieldColumn; j++)
                 {
                     Debug.Write($"{Field[i, j]}");
                 }
                 Debug.WriteLine("");
-            }
+            }*/
         }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -363,7 +358,7 @@ namespace TetrisMUWP
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-            Debug.WriteLine(BlockLocation);
+            //Debug.WriteLine(BlockLocation);
 
             flag = false;
 
